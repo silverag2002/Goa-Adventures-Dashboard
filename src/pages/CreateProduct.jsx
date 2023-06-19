@@ -5,6 +5,8 @@ import FlexBetween from "components/FlexBetween";
 import { Link } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
 import Loader from "react-loader";
+import { axiosInstance } from "../base/api/axios.util";
+import { URLConstants } from "../base/api/url.constants";
 
 const CreateProduct = () => {
   const theme = useTheme();
@@ -129,7 +131,19 @@ const CreateProduct = () => {
   };
   const onError = (errors) => console.log(errors);
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    setLoaded(false);
+    axiosInstance
+      .get(URLConstants.getCountries())
+      .then((response) => {
+        setLoaded(true);
+        console.log("Response form countries", response);
+      })
+      .catch((err) => {
+        setLoaded(true);
+        console.log(err);
+      });
+  }, []);
 
   return (
     <>
