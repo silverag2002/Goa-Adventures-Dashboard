@@ -130,60 +130,79 @@ const CreateProduct = () => {
   const onError = (errors) => console.log(errors);
 
   return (
-    <Box m="1.5rem 2.5rem">
-      <FlexBetween>
-        <Header title="Edit Product" subtitle="Entire list of product" />
-        <div className="row">
-          <div className="col-md-12">
-            <div className="card mb-0">
-              <div className="card-body">
-                <form onSubmit={handleSubmit(onSubmit, onError)}>
-                  <div className="row">
-                    <div className="col-xl-8">
-                      <div className="form-group row">
-                        <label className="col-lg-3 col-form-label">Title</label>
+    <>
+      <Box m="1.5rem 2.5rem">
+        <FlexBetween>
+          <Header title="Edit Product" subtitle="Entire list of product" />
+        </FlexBetween>
+      </Box>
+      <div className="row">
+        <div className="col-md-12">
+          <div className="card mb-0">
+            <div className="card-body">
+              <form onSubmit={handleSubmit(onSubmit, onError)}>
+                <div className="row">
+                  <div className="col-xl-8">
+                    <div className="form-group row">
+                      <label className="col-lg-3 col-form-label">Title</label>
 
-                        <div className="col-lg-9">
-                          <Controller
-                            name="title"
-                            control={control}
-                            render={({ field: { value, onChange } }) => (
-                              <input
-                                className={`form-control  ${
-                                  errors?.name ? "error-input" : ""
-                                }`}
-                                type="text"
-                                value={value}
-                                onChange={onChange}
-                                autoComplete="false"
-                              />
-                            )}
-                            defaultValue=""
-                          />
-                          <small>{errors?.name?.message}</small>
-                        </div>
+                      <div className="col-lg-9">
+                        <Controller
+                          name="title"
+                          control={control}
+                          render={({ field: { value, onChange } }) => (
+                            <input
+                              className={`form-control  ${
+                                errors?.name ? "error-input" : ""
+                              }`}
+                              type="text"
+                              value={value}
+                              onChange={onChange}
+                              autoComplete="false"
+                            />
+                          )}
+                          defaultValue=""
+                        />
+                        <small>{errors?.name?.message}</small>
                       </div>
+                    </div>
 
-                      <div className="form-group row">
-                        <label className="col-lg-3 col-form-label">
-                          Deposit
-                        </label>
-                        <div className="col-lg-9 selectBox">
-                          <select
-                            {...register("dataFormat")}
-                            className={`${
-                              errors?.dataFormat ? "error-select" : ""
-                            }`}
-                          >
-                            <option value="">Select Data Format</option>
-                            {depositData.map((dataFormat, index) => (
-                              <option value={dataFormat}>{dataFormat}</option>
-                            ))}
-                          </select>
-                          <small>{errors?.dataFormat?.message}</small>
-                        </div>
+                    <div className="form-group row">
+                      <label className="col-lg-3 col-form-label">Deposit</label>
+                      <div className="col-lg-9 selectBox">
+                        <select
+                          {...register("deposit")}
+                          className={`${errors?.deposit ? "error-select" : ""}`}
+                        >
+                          <option value="">Select Deposit Type</option>
+                          {depositData.map((dataFormat, index) => (
+                            <option value={dataFormat}>{dataFormat}</option>
+                          ))}
+                        </select>
+                        <small>{errors?.dataFormat?.message}</small>
                       </div>
-                      {/* <div className="form-group row">
+                    </div>
+
+                    <div className="form-group row">
+                      <label className="col-lg-3 col-form-label">
+                        Allow Cancel
+                      </label>
+                      <div className="col-lg-9 selectBox">
+                        <select
+                          {...register("allow_cancel")}
+                          className={`${
+                            errors?.allow_cancel ? "error-select" : ""
+                          }`}
+                        >
+                          <option value="">Select </option>
+                          {["YES", "NO"].map((dataFormat, index) => (
+                            <option value={dataFormat}>{dataFormat}</option>
+                          ))}
+                        </select>
+                        <small>{errors?.dataFormat?.message}</small>
+                      </div>
+                    </div>
+                    {/* <div className="form-group row">
                           <label className="col-lg-3 col-form-label">
                             {" "}
                             XML Format
@@ -372,7 +391,7 @@ const CreateProduct = () => {
                           </div>
                         </div> */}
 
-                      {/* <div className="form-group row">
+                    {/* <div className="form-group row">
                           <label className="col-lg-3 col-form-label">
                             {" "}
                             State List
@@ -392,7 +411,7 @@ const CreateProduct = () => {
                             <small>{errors?.statelist?.message}</small>
                           </div>
                         </div> */}
-                      {/* <div className="form-group row items-center flex-nowrap">
+                    {/* <div className="form-group row items-center flex-nowrap">
                           <label className="col-lg-3 col-form-label">
                             Logo URL
                           </label>
@@ -404,7 +423,7 @@ const CreateProduct = () => {
                           />
                           {errors.logoLink && <p>Logo field is required</p>} */}
 
-                      {/* <div className="col-lg-9">
+                    {/* <div className="col-lg-9">
                             <Controller
                               name="logoLink"
                               control={control}
@@ -423,7 +442,7 @@ const CreateProduct = () => {
                             />
                             <small>{errors?.logoLink?.message}</small>
                           </div> */}
-                      {/* </div>
+                    {/* </div>
                       </>
 
                       <div className="form-group row">
@@ -836,7 +855,7 @@ const CreateProduct = () => {
                               {runTypes[3]}
                             </label>
                           </div> */}
-                      {/* <div class="form-check">
+                    {/* <div class="form-check">
                               <input
                                 class="form-check-input"
                                 type="checkbox"
@@ -872,7 +891,7 @@ const CreateProduct = () => {
                                 {runTypes[6]}
                               </label>
                             </div> */}
-                      {/* </div>
+                    {/* </div>
                         <div className="col-xl-12 form-group">
                           <label className="lable-color">
                             Experience Levels
@@ -988,45 +1007,44 @@ const CreateProduct = () => {
                           ))}
                         </select>
                         <small>{errors?.dataFormat?.message}</small> */}
-                    </div>
                   </div>
+                </div>
 
-                  <div class="d-grid gap-2 justify-content-md-center">
-                    <Button class="btn btn-primary me-md-2" type="submit">
-                      Submit
-                    </Button>
-                  </div>
-                </form>
-              </div>
+                <div class="d-grid gap-2 justify-content-md-center">
+                  <Button class="btn btn-primary me-md-2" type="submit">
+                    Submit
+                  </Button>
+                </div>
+              </form>
             </div>
           </div>
         </div>
+      </div>
 
-        <div className="spinner">
-          <Loader
-            loaded={loaded}
-            lines={13}
-            length={20}
-            width={10}
-            radius={30}
-            corners={1}
-            rotate={0}
-            direction={1}
-            color="#000"
-            speed={1}
-            trail={60}
-            shadow={false}
-            hwaccel={false}
-            className="spinner"
-            zIndex={2e9}
-            top="50%"
-            left="50%"
-            scale={1.0}
-            loadedClassName="loadedContent"
-          />
-        </div>
-      </FlexBetween>
-    </Box>
+      <div className="spinner">
+        <Loader
+          loaded={loaded}
+          lines={13}
+          length={20}
+          width={10}
+          radius={30}
+          corners={1}
+          rotate={0}
+          direction={1}
+          color="#000"
+          speed={1}
+          trail={60}
+          shadow={false}
+          hwaccel={false}
+          className="spinner"
+          zIndex={2e9}
+          top="50%"
+          left="50%"
+          scale={1.0}
+          loadedClassName="loadedContent"
+        />
+      </div>
+    </>
   );
 };
 
