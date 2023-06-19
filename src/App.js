@@ -17,6 +17,10 @@ import CreateProduct from "pages/CreateProduct";
 import Category from "pages/Category";
 import AddCategory from "pages/AddCategory";
 
+import "bootstrap";
+
+import "bootstrap/dist/js/bootstrap.bundle";
+
 function App() {
   const mode = useSelector((state) => state.global.mode);
   const theme = useMemo(() => createTheme(themeSettings(mode)), [mode]);
