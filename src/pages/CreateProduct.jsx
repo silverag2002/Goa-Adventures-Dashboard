@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Header from "components/Header";
 import { Box, Button, useTheme } from "@mui/material";
 import FlexBetween from "components/FlexBetween";
@@ -128,6 +128,8 @@ const CreateProduct = () => {
     //   });
   };
   const onError = (errors) => console.log(errors);
+
+  useEffect(() => {}, []);
 
   return (
     <>
