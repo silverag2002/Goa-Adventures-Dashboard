@@ -1,13 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import Header from "components/Header";
 import { Box, Button, useTheme } from "@mui/material";
 import FlexBetween from "components/FlexBetween";
 import { Link } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
+import Loader from "react-loader";
 
 const CreateProduct = () => {
   const theme = useTheme();
-  const [loaded, setLoaded] = useState(false);
+  const [loaded, setLoaded] = useState(true);
 
   const {
     handleSubmit,
@@ -19,6 +20,8 @@ const CreateProduct = () => {
     reset,
     formState: { errors },
   } = useForm({});
+
+  const depositData = ["Disallow Deposit", "Deposit by Percent"];
 
   const onSubmit = (data) => {
     //reset({});
@@ -70,14 +73,14 @@ const CreateProduct = () => {
     //                 },
     //                 data: formData,
     //               };
-    var config = {
-      method: "put",
-      url: URLConstants.updateClientInfo(clientDataAssignment.clientCompId),
-      headers: {
-        headers: { "content-type": "multipart/form-data" },
-      },
-      data: formData,
-    };
+    // var config = {
+    //   method: "put",
+    //   url: URLConstants.updateClientInfo(clientDataAssignment.clientCompId),
+    //   headers: {
+    //     headers: { "content-type": "multipart/form-data" },
+    //   },
+    //   data: formData,
+    // };
 
     // axios(config)
     //   .then((response) => {
@@ -138,11 +141,11 @@ const CreateProduct = () => {
                   <div className="row">
                     <div className="col-xl-8">
                       <div className="form-group row">
-                        <label className="col-lg-3 col-form-label">Name</label>
+                        <label className="col-lg-3 col-form-label">Title</label>
 
                         <div className="col-lg-9">
                           <Controller
-                            name="name"
+                            name="title"
                             control={control}
                             render={({ field: { value, onChange } }) => (
                               <input
@@ -161,27 +164,26 @@ const CreateProduct = () => {
                         </div>
                       </div>
 
-                      <>
-                        <div className="form-group row">
-                          <label className="col-lg-3 col-form-label">
-                            Deposit
-                          </label>
-                          <div className="col-lg-9 selectBox">
-                            <select
-                              {...register("dataFormat")}
-                              className={`${
-                                errors?.dataFormat ? "error-select" : ""
-                              }`}
-                            >
-                              <option value="">Select Data Format</option>
-                              {dataSubmissionConsts.map((dataFormat, index) => (
-                                <option value={dataFormat}>{dataFormat}</option>
-                              ))}
-                            </select>
-                            <small>{errors?.dataFormat?.message}</small>
-                          </div>
+                      <div className="form-group row">
+                        <label className="col-lg-3 col-form-label">
+                          Deposit
+                        </label>
+                        <div className="col-lg-9 selectBox">
+                          <select
+                            {...register("dataFormat")}
+                            className={`${
+                              errors?.dataFormat ? "error-select" : ""
+                            }`}
+                          >
+                            <option value="">Select Data Format</option>
+                            {depositData.map((dataFormat, index) => (
+                              <option value={dataFormat}>{dataFormat}</option>
+                            ))}
+                          </select>
+                          <small>{errors?.dataFormat?.message}</small>
                         </div>
-                        <div className="form-group row">
+                      </div>
+                      {/* <div className="form-group row">
                           <label className="col-lg-3 col-form-label">
                             {" "}
                             XML Format
@@ -368,9 +370,9 @@ const CreateProduct = () => {
                             />
                             <small>{errors?.leadPushURL?.message}</small>
                           </div>
-                        </div>
+                        </div> */}
 
-                        {/* <div className="form-group row">
+                      {/* <div className="form-group row">
                           <label className="col-lg-3 col-form-label">
                             {" "}
                             State List
@@ -390,7 +392,7 @@ const CreateProduct = () => {
                             <small>{errors?.statelist?.message}</small>
                           </div>
                         </div> */}
-                        <div className="form-group row items-center flex-nowrap">
+                      {/* <div className="form-group row items-center flex-nowrap">
                           <label className="col-lg-3 col-form-label">
                             Logo URL
                           </label>
@@ -400,9 +402,9 @@ const CreateProduct = () => {
                             placeholder="Image URL"
                             {...register("logoLink", { required: true })}
                           />
-                          {errors.logoLink && <p>Logo field is required</p>}
+                          {errors.logoLink && <p>Logo field is required</p>} */}
 
-                          {/* <div className="col-lg-9">
+                      {/* <div className="col-lg-9">
                             <Controller
                               name="logoLink"
                               control={control}
@@ -421,7 +423,7 @@ const CreateProduct = () => {
                             />
                             <small>{errors?.logoLink?.message}</small>
                           </div> */}
-                        </div>
+                      {/* </div>
                       </>
 
                       <div className="form-group row">
@@ -449,31 +451,7 @@ const CreateProduct = () => {
                           <small>{errors?.clientDesc?.message}</small>
                         </div>
                       </div>
-                      {/* <div className="form-group row">
-                          <label className="col-lg-3 col-form-label">
-                            Client Profile
-                          </label>
-                          <div className="col-lg-9">
-                            <Controller
-                              name="clientProfile"
-                              control={control}
-                              render={({ field: { value, onChange } }) => (
-                                <textarea
-                                  className={`form-control height40  ${
-                                    errors?.clientProfile ? "error-input" : ""
-                                  }`}
-                                  rows="4"
-                                  cols="50"
-                                  onChange={onChange}
-                                  value={value}
-                                />
-                              )}
-                              defaultValue=""
-                            />
-                            <small>{errors?.clientProfile?.message}</small>
-                          </div>
-                        </div> */}
-
+                     
                       <>
                         <div className="form-group row items-center">
                           <label className="col-lg-3 col-form-label">
@@ -538,25 +516,7 @@ const CreateProduct = () => {
                           />
                           {errors.bannerLink && <p>Banner field is required</p>}
 
-                          {/* <div className="col-lg-9 align-middle">
-                            <Controller
-                              name="bannerLink"
-                              control={control}
-                              render={({ field: { value, onChange } }) => (
-                                <input
-                                  className={`form-control  ${
-                                    errors?.bannerLink ? "error-input" : ""
-                                  }`}
-                                  type="text"
-                                  value={value}
-                                  onChange={onChange}
-                                  autoComplete="false"
-                                />
-                              )}
-                              defaultValue=""
-                            />
-                            <small>{errors?.bannerLink?.message}</small>
-                          </div> */}
+                         
                         </div>
                       </>
                     </div>
@@ -875,8 +835,8 @@ const CreateProduct = () => {
                             <label class="form-check-label" for="four">
                               {runTypes[3]}
                             </label>
-                          </div>
-                          {/* <div class="form-check">
+                          </div> */}
+                      {/* <div class="form-check">
                               <input
                                 class="form-check-input"
                                 type="checkbox"
@@ -912,7 +872,7 @@ const CreateProduct = () => {
                                 {runTypes[6]}
                               </label>
                             </div> */}
-                        </div>
+                      {/* </div>
                         <div className="col-xl-12 form-group">
                           <label className="lable-color">
                             Experience Levels
@@ -1027,57 +987,12 @@ const CreateProduct = () => {
                             <option value={dataFormat}>{dataFormat}</option>
                           ))}
                         </select>
-                        <small>{errors?.dataFormat?.message}</small>
-                      </div>
-                    </div>
-                    <div className="col-xl-12 form-group mt-4">
-                      <label className="lable-color">Select States</label>
-                      {showWarning.show ? (
-                        <div className="text-danger mb-2">
-                          {"*"} {showWarning.message}
-                        </div>
-                      ) : null}
-
-                      <div class="row">
-                        {statesList1.map((stateName, index) => {
-                          return (
-                            <div className="col-2" key={index}>
-                              <div className="form-check">
-                                <input
-                                  className="form-check-input"
-                                  type="checkbox"
-                                  value={stateName}
-                                  name={`statesList1[${index}]`}
-                                  {...register("states", {
-                                    onChange: (event) =>
-                                      handleStateSelection(event),
-                                  })}
-                                />
-                                <label className="form-check-label">
-                                  {stateName}
-                                </label>
-                              </div>
-                            </div>
-                          );
-                        })}
-                      </div>
+                        <small>{errors?.dataFormat?.message}</small> */}
                     </div>
                   </div>
 
                   <div class="d-grid gap-2 justify-content-md-center">
-                    <Button
-                      class="btn btn-primary me-md-2"
-                      type="submit"
-                      disabled={showWarning.show}
-                    >
-                      Next
-                    </Button>
-
-                    <Button
-                      class="btn btn-primary me-md-2"
-                      type="submit"
-                      disabled={showWarning.show}
-                    >
+                    <Button class="btn btn-primary me-md-2" type="submit">
                       Submit
                     </Button>
                   </div>
