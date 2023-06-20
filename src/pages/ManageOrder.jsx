@@ -4,7 +4,6 @@ import { DataGrid } from "@mui/x-data-grid";
 import { useGetTransactionsQuery } from "state/api";
 import Header from "components/Header";
 import DataGridCustomToolbar from "components/DataGridCustomToolbar";
-import { AiOutlineFilePdf } from "react-icons/ai";
 
 const ManageOrder = () => {
   const theme = useTheme();

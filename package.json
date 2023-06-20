@@ -25,12 +25,7 @@
     "react-bootstrap": "^2.7.4",
     "react-datepicker": "^4.8.0",
     "react-dom": "^18.2.0",
-<<<<<<< HEAD
-=======
     "react-hook-form": "^7.45.0",
-    "react-icons": "^4.9.0",
-    "react-loader": "^2.4.7",
->>>>>>> d27844da77c37215dbda37ae8505b6e5d47b2751
     "react-redux": "^8.0.5",
     "react-router-dom": "^6.13.0",
     "react-scripts": "5.0.1",

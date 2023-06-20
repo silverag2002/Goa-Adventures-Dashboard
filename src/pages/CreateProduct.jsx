@@ -4,7 +4,6 @@ import { Box, Button, useTheme } from "@mui/material";
 import FlexBetween from "components/FlexBetween";
 import { Link } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
-import Loader from "react-loader";
 import { axiosInstance } from "../base/api/axios.util";
 import { URLConstants } from "../base/api/url.constants";
 import JoditEditor from "jodit-react";
@@ -677,7 +676,7 @@ const CreateProduct = () => {
       </div>
 
       <div className="spinner">
-        <Loader
+        {/* <Loader
           loaded={loaded}
           lines={13}
           length={20}
@@ -697,7 +696,7 @@ const CreateProduct = () => {
           left="50%"
           scale={1.0}
           loadedClassName="loadedContent"
-        />
+        /> */}
       </div>
     </>
   );

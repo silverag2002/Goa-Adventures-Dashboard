@@ -8,8 +8,6 @@ import { Provider } from "react-redux";
 import { setupListeners } from "@reduxjs/toolkit/query";
 import { api } from "state/api";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap";
-
 import "bootstrap/dist/js/bootstrap.bundle";
 
 const store = configureStore({
