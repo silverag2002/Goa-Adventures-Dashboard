@@ -9,6 +9,7 @@ import { axiosInstance } from "../base/api/axios.util";
 import { URLConstants } from "../base/api/url.constants";
 import JoditEditor from "jodit-react";
 import axios, * as others from "axios";
+import { useNavigate } from "react-router-dom";
 
 const CreateProduct = () => {
   const theme = useTheme();
@@ -20,6 +21,7 @@ const CreateProduct = () => {
   const [stateCities, setStateCities] = useState([]);
   const [highlight, setHighlight] = useState("");
   const [overview, setOverview] = useState("");
+  const navigate = useNavigate();
 
   const {
     handleSubmit,
@@ -109,7 +111,7 @@ const CreateProduct = () => {
       .then((response) => {
         setLoaded(true);
         console.log("Response after submitting form", response);
-        setCountries(response);
+        navigate("/products");
       })
       .catch((err) => {
         setLoaded(true);
