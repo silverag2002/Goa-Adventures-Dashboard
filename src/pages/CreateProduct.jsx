@@ -8,6 +8,7 @@ import Loader from "react-loader";
 import { axiosInstance } from "../base/api/axios.util";
 import { URLConstants } from "../base/api/url.constants";
 import JoditEditor from "jodit-react";
+import axios, * as others from "axios";
 
 const CreateProduct = () => {
   const theme = useTheme();
@@ -74,7 +75,7 @@ const CreateProduct = () => {
     console.log("Testing acii code", content);
     setOverview(content);
   };
-
+  console.log("URL COnstants", URLConstants.product);
   const handleHighlightChange = (content) => {
     console.log(" handleEditorChang ", content); //Get Content Inside Editor
     // var resultBuffer = encoding.convert(content,  'ASCII','UTF-8');
@@ -88,6 +89,7 @@ const CreateProduct = () => {
   const onSubmit = (data) => {
     //reset({});
     // setClientType(undefined);
+    setLoaded(false);
     data.overview = overview;
     data.highlight = highlight;
     data.activityExclusion = data.activityExclusion.split(",");
@@ -96,104 +98,23 @@ const CreateProduct = () => {
     data.creator = "SUPER_ADMIN";
     console.log("Submitted Data,", data);
 
-    setLoaded(false);
-    delete data.email;
-    data.XMLCompID = data.clientCompId;
-    data.activationStatus = true;
-    var formData = new FormData();
-    formData.append("XMLCompID", data.XMLCompID);
-    formData.append("XMLFormat", data.XMLFormat);
-    formData.append("acceptLocalLeads", data.acceptLocalLeads);
-    formData.append("activationStatus", data.activationStatus);
-    if (data.bannerLink[0]?.size) {
-      formData.append("bannerLink", data.bannerLink[0]);
-    }
-    if (data.logoLink[0]?.size) {
-      formData.append("logoLink", data.logoLink[0]);
-    }
-    formData.append("clientCompId", data.clientCompId);
-    formData.append("clientDesc", data.clientDesc);
-    formData.append("clientProfile", data.clientProfile);
-    formData.append("dailyTargetLeads", data.dailyTargetLeads);
-    formData.append("dataFormat", data.dataFormat);
-    formData.append("driverDb", data.driverDb);
-    formData.append("driverTypes", JSON.stringify(data.driverTypes));
-    formData.append("experiences", JSON.stringify(data.experiences));
-    formData.append("featuredCompany", data.featuredCompany);
-    formData.append("freightTypes", JSON.stringify(data.freightTypes));
-    formData.append("jobFetchURL", data.jobFetchURL);
-    formData.append("leadPushURL", data.leadPushURL);
-    formData.append("mobileNumber", data.mobileNumber);
-    formData.append("name", data.name);
-    formData.append("runTypes", JSON.stringify(data.runTypes));
-    formData.append("showPromotionalBanner", data.showPromotionalBanner);
-    formData.append("states", JSON.stringify(data.states));
-    formData.append("websiteLink", data.websiteLink);
-    console.log("Form data", formData);
+    var config = {
+      method: "post",
+      url: URLConstants.product(),
 
-    console.log(" Client Updation Data --------------> ", data);
+      data: data,
+    };
 
-    // var config = {
-    //                 method: "post",
-    //                  url: URLConstants.updateClientInfo(clientDataAssignment.clientCompId,
-    //                 headers: {
-    //                   headers: { "content-type": "multipart/form-data" },
-    //                 },
-    //                 data: formData,
-    //               };
-    // var config = {
-    //   method: "put",
-    //   url: URLConstants.updateClientInfo(clientDataAssignment.clientCompId),
-    //   headers: {
-    //     headers: { "content-type": "multipart/form-data" },
-    //   },
-    //   data: formData,
-    // };
-
-    // axios(config)
-    //   .then((response) => {
-    //     try {
-    //       if (
-    //         client.clientType == "CLIENT" &&
-    //         !client.client.totalSubscription
-    //       ) {
-    //         history.push("/renewBuySubscription", {
-    //           params: {
-    //             showToast: true,
-    //             toastMessage: "Information Saved Successfully !",
-    //           },
-    //         });
-    //       } else if (client.clientType == "CLIENT") {
-    //         history.push("/AdminPage", {
-    //           params: {
-    //             showToast: true,
-    //             toastMessage: "Customer Information Updated Success !",
-    //           },
-    //         });
-    //       } else {
-    //         history.push("companies-list", {
-    //           params: {
-    //             showToast: true,
-    //             toastMessage: "Customer Information Updated Success !",
-    //           },
-    //         });
-    //       }
-
-    //       setLoaded(true);
-    //       reset({});
-    //       toast.success("Client Information Update Successful !");
-
-    //       clientDataAssignment = {};
-    //     } catch (error) {
-    //       console.error(error);
-    //     }
-    //     resolve({ user, client });
-    //   })
-    //   .catch((err) => {
-    //     setLoaded(true);
-    //     const errorMsg = err?.response?.data?.message;
-    //     // reject(errorMsg);
-    //   });
+    axios(config)
+      .then((response) => {
+        setLoaded(true);
+        console.log("Response after submitting form", response);
+        setCountries(response);
+      })
+      .catch((err) => {
+        setLoaded(true);
+        console.log(err);
+      });
   };
   const onError = (errors) => console.log(errors);
 
