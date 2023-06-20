@@ -12,6 +12,7 @@ const CreateProduct = () => {
   const theme = useTheme();
   const [loaded, setLoaded] = useState(true);
   const [countries, setCountries] = useState([]);
+  const [countryStates, setCountryStates] = useState([]);
 
   const {
     handleSubmit,
@@ -147,6 +148,40 @@ const CreateProduct = () => {
   };
   const onError = (errors) => console.log(errors);
 
+  function handleCountryChange(country) {
+    console.log("COuntry selecrted", country);
+
+    setLoaded(false);
+    axiosInstance
+      .get(URLConstants.getStates(country))
+      .then((response) => {
+        setLoaded(true);
+        console.log("Response form states", response);
+        setCountryStates(response.states);
+      })
+      .catch((err) => {
+        setLoaded(true);
+        console.log(err);
+      });
+  }
+
+  function handleStateChange(state) {
+    console.log("COuntry selecrted", state);
+
+    setLoaded(false);
+    axiosInstance
+      .get(URLConstants.getCities(state))
+      .then((response) => {
+        setLoaded(true);
+        console.log("Response form cities", response);
+        // setCountryStates(response.states);
+      })
+      .catch((err) => {
+        setLoaded(true);
+        console.log(err);
+      });
+  }
+
   return (
     <>
       <Box m="1.5rem 2.5rem">
@@ -221,18 +256,41 @@ const CreateProduct = () => {
                       </div>
                     </div>
                     <div className="form-group row">
-                      <label className="col-lg-3 col-form-label">
-                        Countries
-                      </label>
+                      <label className="col-lg-3 col-form-label">Country</label>
                       <div className="col-lg-9 selectBox">
                         <select
-                          {...register("country")}
+                          {...register("country", {
+                            onChange: (e) => {
+                              handleCountryChange(e.target.value);
+                            },
+                          })}
                           className={`${errors?.country ? "error-select" : ""}`}
                         >
                           <option value="">Select Country </option>
                           {countries.map((dataFormat, index) => (
                             <option value={dataFormat.country_name}>
                               {dataFormat.country_name}
+                            </option>
+                          ))}
+                        </select>
+                        <small>{errors?.dataFormat?.message}</small>
+                      </div>
+                    </div>
+                    <div className="form-group row">
+                      <label className="col-lg-3 col-form-label">State</label>
+                      <div className="col-lg-9 selectBox">
+                        <select
+                          {...register("state", {
+                            onChange: (e) => {
+                              handleStateChange(e.target.value);
+                            },
+                          })}
+                          className={`${errors?.state ? "error-select" : ""}`}
+                        >
+                          <option value="">Select State </option>
+                          {countryStates.map((dataFormat, index) => (
+                            <option value={dataFormat.state_name}>
+                              {dataFormat.state_name}
                             </option>
                           ))}
                         </select>
