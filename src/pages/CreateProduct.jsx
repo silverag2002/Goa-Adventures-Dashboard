@@ -13,6 +13,7 @@ const CreateProduct = () => {
   const [loaded, setLoaded] = useState(true);
   const [countries, setCountries] = useState([]);
   const [countryStates, setCountryStates] = useState([]);
+  const [stateCities, setStateCities] = useState([]);
 
   const {
     handleSubmit,
@@ -26,6 +27,14 @@ const CreateProduct = () => {
   } = useForm({});
 
   const depositData = ["Disallow Deposit", "Deposit by Percent"];
+  const categories = ["Activity", "Tour"];
+  const categoriesType = [
+    "Scuba Diving",
+    "Watersports",
+    "Combo Pack",
+    "Sightseeing",
+    "River Rafting",
+  ];
 
   useEffect(() => {
     setLoaded(false);
@@ -174,7 +183,7 @@ const CreateProduct = () => {
       .then((response) => {
         setLoaded(true);
         console.log("Response form cities", response);
-        // setCountryStates(response.states);
+        setStateCities(response.city_info);
       })
       .catch((err) => {
         setLoaded(true);
@@ -221,6 +230,32 @@ const CreateProduct = () => {
                     </div>
 
                     <div className="form-group row">
+                      <label className="col-lg-3 col-form-label">
+                        Gallery Image
+                      </label>
+
+                      <div className="col-lg-9">
+                        <Controller
+                          name="gallery"
+                          control={control}
+                          render={({ field: { value, onChange } }) => (
+                            <input
+                              className={`form-control  ${
+                                errors?.gallery ? "error-input" : ""
+                              }`}
+                              type="text"
+                              value={value}
+                              onChange={onChange}
+                              autoComplete="false"
+                            />
+                          )}
+                          defaultValue=""
+                        />
+                        <small>{errors?.gallery?.message}</small>
+                      </div>
+                    </div>
+
+                    <div className="form-group row">
                       <label className="col-lg-3 col-form-label">Deposit</label>
                       <div className="col-lg-9 selectBox">
                         <select
@@ -261,7 +296,9 @@ const CreateProduct = () => {
                         <select
                           {...register("country", {
                             onChange: (e) => {
-                              handleCountryChange(e.target.value);
+                              handleCountryChange(
+                                encodeURIComponent(e.target.value)
+                              );
                             },
                           })}
                           className={`${errors?.country ? "error-select" : ""}`}
@@ -282,7 +319,9 @@ const CreateProduct = () => {
                         <select
                           {...register("state", {
                             onChange: (e) => {
-                              handleStateChange(e.target.value);
+                              handleStateChange(
+                                encodeURIComponent(e.target.value)
+                              );
                             },
                           })}
                           className={`${errors?.state ? "error-select" : ""}`}
@@ -292,6 +331,61 @@ const CreateProduct = () => {
                             <option value={dataFormat.state_name}>
                               {dataFormat.state_name}
                             </option>
+                          ))}
+                        </select>
+                        <small>{errors?.dataFormat?.message}</small>
+                      </div>
+                    </div>
+                    <div className="form-group row">
+                      <label className="col-lg-3 col-form-label">City</label>
+                      <div className="col-lg-9 selectBox">
+                        <select
+                          {...register("city")}
+                          className={`${errors?.state ? "error-select" : ""}`}
+                        >
+                          <option value="">Select City </option>
+                          {stateCities.map((dataFormat, index) => (
+                            <option value={dataFormat.city_name}>
+                              {dataFormat.city_name}
+                            </option>
+                          ))}
+                        </select>
+                        <small>{errors?.dataFormat?.message}</small>
+                      </div>
+                    </div>
+                    <div className="form-group row">
+                      <label className="col-lg-3 col-form-label">
+                        Category
+                      </label>
+                      <div className="col-lg-9 selectBox">
+                        <select
+                          {...register("category")}
+                          className={`${
+                            errors?.category ? "error-select" : ""
+                          }`}
+                        >
+                          <option value="">Select category </option>
+                          {categories.map((dataFormat, index) => (
+                            <option value={dataFormat}>{dataFormat}</option>
+                          ))}
+                        </select>
+                        <small>{errors?.dataFormat?.message}</small>
+                      </div>
+                    </div>
+                    <div className="form-group row">
+                      <label className="col-lg-3 col-form-label">
+                        Category Type
+                      </label>
+                      <div className="col-lg-9 selectBox">
+                        <select
+                          {...register("categoryType")}
+                          className={`${
+                            errors?.categoryType ? "error-select" : ""
+                          }`}
+                        >
+                          <option value="">Select category type </option>
+                          {categoriesType.map((dataFormat, index) => (
+                            <option value={dataFormat}>{dataFormat}</option>
                           ))}
                         </select>
                         <small>{errors?.dataFormat?.message}</small>
