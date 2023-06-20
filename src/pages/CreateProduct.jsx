@@ -54,6 +54,11 @@ const CreateProduct = () => {
   const onSubmit = (data) => {
     //reset({});
     // setClientType(undefined);
+
+    data.activityExclusion = activityExclusion.split(",");
+    data.activityInclusion = activityInclusion.split(",");
+    data.last_update_by = "SUPER_ADMIN";
+    data.creator = "SUPER_ADMIN";
     console.log("Submitted Data,", data);
 
     setLoaded(false);
@@ -256,6 +261,286 @@ const CreateProduct = () => {
                     </div>
 
                     <div className="form-group row">
+                      <label className="col-lg-3 col-form-label">video</label>
+
+                      <div className="col-lg-9">
+                        <Controller
+                          name="video"
+                          control={control}
+                          render={({ field: { value, onChange } }) => (
+                            <input
+                              className={`form-control  ${
+                                errors?.video ? "error-input" : ""
+                              }`}
+                              type="text"
+                              value={value}
+                              onChange={onChange}
+                              autoComplete="false"
+                            />
+                          )}
+                          defaultValue=""
+                        />
+                        <small>{errors?.video?.message}</small>
+                      </div>
+                    </div>
+
+                    <div className="form-group row">
+                      <label className="col-lg-3 col-form-label">price</label>
+
+                      <div className="col-lg-9">
+                        <Controller
+                          name="price"
+                          control={control}
+                          render={({ field: { value, onChange } }) => (
+                            <input
+                              className={`form-control  ${
+                                errors?.price ? "error-input" : ""
+                              }`}
+                              type="number"
+                              value={value}
+                              onChange={onChange}
+                              autoComplete="false"
+                            />
+                          )}
+                          defaultValue=""
+                        />
+                        <small>{errors?.price?.message}</small>
+                      </div>
+                    </div>
+
+                    <div className="form-group row">
+                      <label className="col-lg-3 col-form-label">
+                        discount_percent
+                      </label>
+
+                      <div className="col-lg-9">
+                        <Controller
+                          name="discount_percent"
+                          control={control}
+                          render={({ field: { value, onChange } }) => (
+                            <input
+                              className={`form-control  ${
+                                errors?.discount_percent ? "error-input" : ""
+                              }`}
+                              type="number"
+                              value={value}
+                              onChange={onChange}
+                              autoComplete="false"
+                            />
+                          )}
+                          defaultValue=""
+                        />
+                        <small>{errors?.discount_percent?.message}</small>
+                      </div>
+                    </div>
+
+                    <div className="form-group row">
+                      <label className="col-lg-3 col-form-label">
+                        min_people
+                      </label>
+
+                      <div className="col-lg-9">
+                        <Controller
+                          name="min_people"
+                          control={control}
+                          render={({ field: { value, onChange } }) => (
+                            <input
+                              className={`form-control  ${
+                                errors?.min_people ? "error-input" : ""
+                              }`}
+                              type="number"
+                              value={value}
+                              onChange={onChange}
+                              autoComplete="false"
+                            />
+                          )}
+                          defaultValue=""
+                        />
+                        <small>{errors?.min_people?.message}</small>
+                      </div>
+                    </div>
+
+                    <div className="form-group row">
+                      <label className="col-lg-3 col-form-label">
+                        max_people
+                      </label>
+
+                      <div className="col-lg-9">
+                        <Controller
+                          name="max_people"
+                          control={control}
+                          render={({ field: { value, onChange } }) => (
+                            <input
+                              className={`form-control  ${
+                                errors?.max_people ? "error-input" : ""
+                              }`}
+                              type="number"
+                              value={value}
+                              onChange={onChange}
+                              autoComplete="false"
+                            />
+                          )}
+                          defaultValue=""
+                        />
+                        <small>{errors?.max_people?.message}</small>
+                      </div>
+                    </div>
+
+                    <div className="form-group row">
+                      <label className="col-lg-3 col-form-label">
+                        Start Time
+                      </label>
+
+                      <div className="col-lg-9">
+                        <Controller
+                          name="start_time"
+                          control={control}
+                          render={({ field: { value, onChange } }) => (
+                            <input
+                              className={`form-control  ${
+                                errors?.start_time ? "error-input" : ""
+                              }`}
+                              type="time"
+                              value={value}
+                              onChange={onChange}
+                              autoComplete="false"
+                            />
+                          )}
+                          defaultValue=""
+                        />
+                        <small>{errors?.start_time?.message}</small>
+                      </div>
+                    </div>
+
+                    <div className="form-group row">
+                      <label className="col-lg-3 col-form-label">
+                        featured_image
+                      </label>
+
+                      <div className="col-lg-9">
+                        <Controller
+                          name="featured_image"
+                          control={control}
+                          render={({ field: { value, onChange } }) => (
+                            <input
+                              className={`form-control  ${
+                                errors?.featured_image ? "error-input" : ""
+                              }`}
+                              type="text"
+                              value={value}
+                              onChange={onChange}
+                              autoComplete="false"
+                            />
+                          )}
+                          defaultValue=""
+                        />
+                        <small>{errors?.featured_image?.message}</small>
+                      </div>
+                    </div>
+
+                    <div className="form-group row">
+                      <label className="col-lg-3 col-form-label">
+                        duration
+                      </label>
+
+                      <div className="col-lg-9">
+                        <Controller
+                          name="duration"
+                          control={control}
+                          render={({ field: { value, onChange } }) => (
+                            <input
+                              className={`form-control  ${
+                                errors?.duration ? "error-input" : ""
+                              }`}
+                              type="text"
+                              value={value}
+                              onChange={onChange}
+                              autoComplete="false"
+                            />
+                          )}
+                          defaultValue=""
+                        />
+                        <small>{errors?.duration?.message}</small>
+                      </div>
+                    </div>
+
+                    <div className="form-group row">
+                      <label className="col-lg-3 col-form-label">
+                        Booking Period
+                      </label>
+
+                      <div className="col-lg-9">
+                        <Controller
+                          name="booking_period"
+                          control={control}
+                          render={({ field: { value, onChange } }) => (
+                            <input
+                              className={`form-control  ${
+                                errors?.booking_period ? "error-input" : ""
+                              }`}
+                              type="number"
+                              value={value}
+                              onChange={onChange}
+                              autoComplete="false"
+                            />
+                          )}
+                          defaultValue=""
+                        />
+                        <small>{errors?.booking_period?.message}</small>
+                      </div>
+                    </div>
+
+                    <div className="form-group row">
+                      <label className="col-lg-3 col-form-label">
+                        Activity Exclusion Enter comma seperated value
+                      </label>
+
+                      <div className="col-lg-9">
+                        <Controller
+                          name="activityExclusion"
+                          control={control}
+                          render={({ field: { value, onChange } }) => (
+                            <input
+                              className={`form-control  ${
+                                errors?.activityExclusion ? "error-input" : ""
+                              }`}
+                              type="number"
+                              value={value}
+                              onChange={onChange}
+                              autoComplete="false"
+                            />
+                          )}
+                          defaultValue=""
+                        />
+                        <small>{errors?.activityExclusion?.message}</small>
+                      </div>
+                    </div>
+                    <div className="form-group row">
+                      <label className="col-lg-3 col-form-label">
+                        Activity Inclusion Enter comma seperated value
+                      </label>
+
+                      <div className="col-lg-9">
+                        <Controller
+                          name="activityInclusion"
+                          control={control}
+                          render={({ field: { value, onChange } }) => (
+                            <input
+                              className={`form-control  ${
+                                errors?.activityInclusion ? "error-input" : ""
+                              }`}
+                              type="number"
+                              value={value}
+                              onChange={onChange}
+                              autoComplete="false"
+                            />
+                          )}
+                          defaultValue=""
+                        />
+                        <small>{errors?.activityInclusion?.message}</small>
+                      </div>
+                    </div>
+                    <div className="form-group row">
                       <label className="col-lg-3 col-form-label">Deposit</label>
                       <div className="col-lg-9 selectBox">
                         <select
@@ -391,811 +676,6 @@ const CreateProduct = () => {
                         <small>{errors?.dataFormat?.message}</small>
                       </div>
                     </div>
-                    {/* <div className="form-group row">
-                          <label className="col-lg-3 col-form-label">
-                            {" "}
-                            XML Format
-                          </label>
-                          <div className="col-lg-9 selectBox">
-                            <select
-                              {...register("XMLFormat")}
-                              className={`${
-                                errors?.XMLFormat ? "error-select" : ""
-                              }`}
-                            >
-                              <option value="">Select XML Format</option>
-                              {xmlFormatList.map((XMLFormat, index) => (
-                                <option value={XMLFormat}>{XMLFormat}</option>
-                              ))}
-                            </select>
-                            <small>{errors?.XMLFormat?.message}</small>
-                          </div>
-                        </div>
-                        <div className="form-group row">
-                          <label className="col-lg-3 col-form-label">
-                            XML Company ID
-                          </label>
-                          <div className="col-lg-9">
-                            <Controller
-                              name="clientCompId"
-                              control={control}
-                              render={({ field: { value, onChange } }) => (
-                                <input
-                                  className={`form-control  ${
-                                    errors?.clientCompId ? "error-input" : ""
-                                  }`}
-                                  type="text"
-                                  value={value}
-                                  onChange={onChange}
-                                  autoComplete="false"
-                                />
-                              )}
-                              defaultValue=""
-                            />
-                            <small>{errors?.clientCompId?.message}</small>
-                          </div>
-                        </div>
-                        <div className="form-group row items-center flex-nowrap">
-                          <label className="col-lg-3 col-form-label">
-                            Accept Leads Interested in Local Offers Only
-                          </label>
-                          <div className="ml-12 flx-shrink">
-                            <input
-                              class="form-check-input"
-                              type="checkbox"
-                              value={acceptLocalLeads}
-                              name="acceptLocalLeads"
-                              {...register("acceptLocalLeads")}
-                            />
-                            <lable>
-                              {" "}
-                              YES (accept leads 'local offers only')
-                            </lable>
-                          </div>
-                        </div>
-                        <div className="form-group row">
-                          <label className="col-lg-3 col-form-label">
-                            Daily Targeted Leads
-                          </label>
-                          <div className="col-lg-9">
-                            <Controller
-                              name="dailyTargetLeads"
-                              control={control}
-                              render={({ field: { value, onChange } }) => (
-                                <input
-                                  className={`form-control  ${
-                                    errors?.dailyTargetLeads
-                                      ? "error-input"
-                                      : ""
-                                  }`}
-                                  type="text"
-                                  value={value}
-                                  onChange={onChange}
-                                  autoComplete="false"
-                                />
-                              )}
-                              defaultValue=""
-                            />
-                            <small>{errors?.dailyTargetLeads?.message}</small>
-                          </div>
-                        </div>
-                      </>
-
-                      <div className="form-group row">
-                        <label className="col-lg-3 col-form-label">
-                          WebSite URL
-                        </label>
-                        <div className="col-lg-9">
-                          <Controller
-                            name="websiteLink"
-                            control={control}
-                            render={({ field: { value, onChange } }) => (
-                              <input
-                                className={`form-control  ${
-                                  errors?.websiteLink ? "error-input" : ""
-                                }`}
-                                type="text"
-                                value={value}
-                                onChange={onChange}
-                                autoComplete="false"
-                              />
-                            )}
-                            defaultValue=""
-                          />
-                          <small>{errors?.websiteLink?.message}</small>
-                        </div>
-                      </div>
-                      <div className="form-group row">
-                        <label className="col-lg-3 col-form-label">
-                          Mobile No.
-                        </label>
-                        <div className="col-lg-9">
-                          <Controller
-                            name="mobileNumber"
-                            control={control}
-                            render={({ field: { value, onChange } }) => (
-                              <input
-                                className={`form-control  ${
-                                  errors?.mobileNumber ? "error-input" : ""
-                                }`}
-                                type="text"
-                                value={value}
-                                onChange={onChange}
-                                autoComplete="false"
-                              />
-                            )}
-                            defaultValue=""
-                          />
-                          <small>{errors?.mobileNumber?.message}</small>
-                        </div>
-                      </div>
-
-                      <>
-                        <div className="form-group row">
-                          <label className="col-lg-3 col-form-label">
-                            Job Fetch URL
-                          </label>
-                          <div className="col-lg-9">
-                            <Controller
-                              name="jobFetchURL"
-                              control={control}
-                              render={({ field: { value, onChange } }) => (
-                                <input
-                                  className={`form-control  ${
-                                    errors?.jobFetchURL ? "error-input" : ""
-                                  }`}
-                                  type="text"
-                                  value={value}
-                                  onChange={onChange}
-                                  autoComplete="false"
-                                />
-                              )}
-                              defaultValue=""
-                            />
-                            <small>{errors?.jobFetchURL?.message}</small>
-                          </div>
-                        </div>
-                        <div className="form-group row">
-                          <label className="col-lg-3 col-form-label">
-                            Lead Push URL
-                          </label>
-                          <div className="col-lg-9">
-                            <Controller
-                              name="leadPushURL"
-                              control={control}
-                              render={({ field: { value, onChange } }) => (
-                                <input
-                                  className={`form-control  ${
-                                    errors?.leadPushURL ? "error-input" : ""
-                                  }`}
-                                  type="text"
-                                  value={value}
-                                  onChange={onChange}
-                                  autoComplete="false"
-                                />
-                              )}
-                              defaultValue=""
-                            />
-                            <small>{errors?.leadPushURL?.message}</small>
-                          </div>
-                        </div> */}
-
-                    {/* <div className="form-group row">
-                          <label className="col-lg-3 col-form-label">
-                            {" "}
-                            State List
-                          </label>
-                          <div className="col-lg-9 selectBox">
-                            <select
-                              {...register("statelist")}
-                              className={`${
-                                errors?.statelist ? "error-select" : ""
-                              }`}
-                            >
-                              <option value="">Select State</option>
-                              {stateList.map(({ id, ststeList }, index) => (
-                                <option value={ststeList}>{ststeList}</option>
-                              ))}
-                            </select>
-                            <small>{errors?.statelist?.message}</small>
-                          </div>
-                        </div> */}
-                    {/* <div className="form-group row items-center flex-nowrap">
-                          <label className="col-lg-3 col-form-label">
-                            Logo URL
-                          </label>
-                          <input
-                            className="flx-shrink m-0"
-                            type="file"
-                            placeholder="Image URL"
-                            {...register("logoLink", { required: true })}
-                          />
-                          {errors.logoLink && <p>Logo field is required</p>} */}
-
-                    {/* <div className="col-lg-9">
-                            <Controller
-                              name="logoLink"
-                              control={control}
-                              render={({ field: { value, onChange } }) => (
-                                <input
-                                  className={`form-control  ${
-                                    errors?.logoLink ? "error-input" : ""
-                                  }`}
-                                  type="text"
-                                  value={value}
-                                  onChange={onChange}
-                                  autoComplete="false"
-                                />
-                              )}
-                              defaultValue=""
-                            />
-                            <small>{errors?.logoLink?.message}</small>
-                          </div> */}
-                    {/* </div>
-                      </>
-
-                      <div className="form-group row">
-                        <label className="col-lg-3 col-form-label">
-                          Client Description
-                        </label>
-                        <div className="col-lg-9">
-                          <Controller
-                            name="clientDesc"
-                            control={control}
-                            render={({ field: { value, onChange } }) => (
-                              <textarea
-                                className={`form-control   ${
-                                  errors?.clientProfile ? "error-input" : ""
-                                }`}
-                                style={{ height: "200px" }}
-                                rows="8"
-                                cols="50"
-                                onChange={onChange}
-                                value={value}
-                              />
-                            )}
-                            defaultValue=""
-                          />
-                          <small>{errors?.clientDesc?.message}</small>
-                        </div>
-                      </div>
-                     
-                      <>
-                        <div className="form-group row items-center">
-                          <label className="col-lg-3 col-form-label">
-                            Show Promotional Banner
-                          </label>
-                          <div className="col-lg-9">
-                            <input
-                              class="form-check-input"
-                              type="checkbox"
-                              value={showPromotionalBanner}
-                              name="showPromotionalBanner"
-                              {...register("showPromotionalBanner")}
-                            />
-                            <lable>
-                              {" "}
-                              YES (Will Show Banner on SPT Website')
-                            </lable>
-                          </div>
-                        </div>
-                        <div className="form-group row items-center">
-                          <label className="col-lg-3 col-form-label">
-                            Is it a featured Company
-                          </label>
-                          <div className="col-lg-9 align-middle">
-                            <input
-                              class="form-check-input"
-                              type="checkbox"
-                              value={featuredCompany}
-                              name="featuredCompany"
-                              {...register("featuredCompany")}
-                            />
-                            <lable>
-                              {" "}
-                              YES (Will Show as Featured Company on SPT
-                              Website')
-                            </lable>
-                          </div>
-                        </div>
-                        <div className="form-group row items-center">
-                          <label className="col-lg-3 col-form-label">
-                            Show driver DB
-                          </label>
-                          <div className="col-lg-9 align-middle">
-                            <input
-                              class="form-check-input"
-                              type="checkbox"
-                              value={driverDb}
-                              name="driverDb"
-                              {...register("driverDb")}
-                            />
-                            <lable> YES</lable>
-                          </div>
-                        </div>
-                        <div className="grid gap-4">
-                          <label className="col-form-label">
-                            Promotional Banner URL
-                          </label>
-                          <input
-                            type="file"
-                            placeholder="Image URL"
-                            {...register("bannerLink", { required: true })}
-                          />
-                          {errors.bannerLink && <p>Banner field is required</p>}
-
-                         
-                        </div>
-                      </>
-                    </div>
-                    <div className="col-xl-4">
-                      <div className="row">
-                        <div className="col-xl-12 form-group">
-                          <label className="lable-color">Driver Type :</label>
-
-                          <div class="form-check">
-                            <input
-                              class="form-check-input"
-                              type="checkbox"
-                              value={driverTypes[0]}
-                              name="driverTypes[0]"
-                              {...register("driverTypes")}
-                            />
-                            {""}
-                            <label class="form-check-label" for="driverSolo">
-                              {driverTypes[0]}
-                            </label>
-                          </div>
-                          <div class="form-check">
-                            <input
-                              class="form-check-input"
-                              type="checkbox"
-                              value={driverTypes[1]}
-                              name="driverTypes[1]"
-                              {...register("driverTypes")}
-                            />
-                            {""}
-                            <label class="form-check-label" for="driverTeam">
-                              {driverTypes[1]}
-                            </label>
-                          </div>
-                          <div class="form-check">
-                            <input
-                              class="form-check-input"
-                              type="checkbox"
-                              value={driverTypes[2]}
-                              name="driverTypes[2]"
-                              {...register("driverTypes")}
-                            />
-                            <label class="form-check-label" for="leasePurchase">
-                              {driverTypes[2]}
-                            </label>
-                          </div>
-                          <div class="form-check">
-                            <input
-                              class="form-check-input"
-                              type="checkbox"
-                              value={driverTypes[3]}
-                              name="driverTypes[3]"
-                              {...register("driverTypes")}
-                            />
-                            <label class="form-check-label" for="operatorSolo">
-                              {driverTypes[3]}
-                            </label>
-                          </div>
-                          <div class="form-check">
-                            <input
-                              class="form-check-input"
-                              type="checkbox"
-                              value={driverTypes[4]}
-                              name="driverTypes[4]"
-                              {...register("driverTypes")}
-                            />
-                            <label class="form-check-label" for="operatorTeam">
-                              {driverTypes[4]}
-                            </label>
-                          </div>
-                          <div class="form-check">
-                            <input
-                              class="form-check-input"
-                              type="checkbox"
-                              value={driverTypes[5]}
-                              name="driverTypes[5]"
-                              {...register("driverTypes")}
-                            />
-                            <label class="form-check-label" for="student">
-                              {driverTypes[5]}
-                            </label>
-                          </div>
-                        </div>
-                        <div className=" col-xl-12 form-group">
-                          <label className="lable-color">Freight Type</label>
-                          <div class="form-check">
-                            <input
-                              class="form-check-input"
-                              type="checkbox"
-                              value={freightTypes[0]}
-                              name="freightTypes[0]"
-                              {...register("freightTypes")}
-                            />
-                            <label class="form-check-label" for="autohauler">
-                              {freightTypes[0]}
-                            </label>
-                          </div>
-                          <div class="form-check">
-                            <input
-                              class="form-check-input"
-                              type="checkbox"
-                              value={freightTypes[1]}
-                              name="freightTypes[1]"
-                              {...register("freightTypes")}
-                            />
-                            <label class="form-check-label" for="bus">
-                              {freightTypes[1]}
-                            </label>
-                          </div>
-                          <div class="form-check">
-                            <input
-                              class="form-check-input"
-                              type="checkbox"
-                              value={freightTypes[2]}
-                              name="freightTypes[2]"
-                              {...register("freightTypes")}
-                            />
-                            <label class="form-check-label" for="carHauler">
-                              {freightTypes[2]}
-                            </label>
-                          </div>
-                          <div class="form-check">
-                            <input
-                              class="form-check-input"
-                              type="checkbox"
-                              value={freightTypes[3]}
-                              name="freightTypes[3]"
-                              {...register("freightTypes")}
-                            />
-                            <label class="form-check-label" for="cattleHauling">
-                              {freightTypes[3]}
-                            </label>
-                          </div>
-                          <div class="form-check">
-                            <input
-                              class="form-check-input"
-                              type="checkbox"
-                              value={freightTypes[4]}
-                              name="freightTypes[4]"
-                              {...register("freightTypes")}
-                            />
-                            <label class="form-check-label" for="dryBulk">
-                              {freightTypes[4]}
-                            </label>
-                          </div>
-                          <div class="form-check">
-                            <input
-                              class="form-check-input"
-                              type="checkbox"
-                              value={freightTypes[5]}
-                              name="freightTypes[5]"
-                              {...register("freightTypes")}
-                            />
-                            <label class="form-check-label" for="dryVan">
-                              {freightTypes[5]}
-                            </label>
-                          </div>
-                          <div class="form-check">
-                            <input
-                              class="form-check-input"
-                              type="checkbox"
-                              value={freightTypes[6]}
-                              name="freightTypes[6]"
-                              {...register("freightTypes")}
-                            />
-                            <label class="form-check-label" for="dump">
-                              {freightTypes[6]}
-                            </label>
-                          </div>
-                          <div class="form-check">
-                            <input
-                              class="form-check-input"
-                              type="checkbox"
-                              value={freightTypes[7]}
-                              name="freightTypes[7]"
-                              {...register("freightTypes")}
-                            />
-                            <label class="form-check-label" for="flatbed">
-                              {freightTypes[7]}
-                            </label>
-                          </div>
-                          <div class="form-check">
-                            <input
-                              class="form-check-input"
-                              type="checkbox"
-                              value={freightTypes[8]}
-                              name="freightTypes[8]"
-                              {...register("freightTypes")}
-                            />
-                            <label class="form-check-label" for="hopperBottom">
-                              {freightTypes[8]}
-                            </label>
-                          </div>
-                          <div class="form-check">
-                            <input
-                              class="form-check-input"
-                              type="checkbox"
-                              value={freightTypes[9]}
-                              name="freightTypes[9]"
-                              {...register("freightTypes")}
-                            />
-                            <label
-                              class="form-check-label"
-                              for="householdGoods"
-                            >
-                              {freightTypes[9]}
-                            </label>
-                          </div>
-                          <div class="form-check">
-                            <input
-                              class="form-check-input"
-                              type="checkbox"
-                              value={freightTypes[10]}
-                              name="freightTypes[10]"
-                              {...register("freightTypes")}
-                            />
-                            <label class="form-check-label" for="intermodal">
-                              {freightTypes[10]}
-                            </label>
-                          </div>
-                          <div class="form-check">
-                            <input
-                              class="form-check-input"
-                              type="checkbox"
-                              value={freightTypes[11]}
-                              name="freightTypes[11]"
-                              {...register("freightTypes")}
-                            />
-                            <label class="form-check-label" for="lowboy">
-                              {freightTypes[11]}
-                            </label>
-                          </div>
-                          <div class="form-check">
-                            <input
-                              class="form-check-input"
-                              type="checkbox"
-                              value={freightTypes[12]}
-                              name="freightTypes[12]"
-                              {...register("freightTypes")}
-                            />
-                            <label class="form-check-label" for="refrigerated">
-                              {freightTypes[12]}
-                            </label>
-                          </div>
-                          <div class="form-check">
-                            <input
-                              class="form-check-input"
-                              type="checkbox"
-                              value={freightTypes[13]}
-                              name="freightTypes[13]"
-                              {...register("freightTypes")}
-                            />
-                            <label class="form-check-label" for="straightTruck">
-                              {freightTypes[13]}
-                            </label>
-                          </div>
-                          <div class="form-check">
-                            <input
-                              class="form-check-input"
-                              type="checkbox"
-                              value={freightTypes[14]}
-                              name="freightTypes[14]"
-                              {...register("freightTypes")}
-                            />
-                            <label class="form-check-label" for="tanker">
-                              {freightTypes[14]}
-                            </label>
-                          </div>
-                        </div>
-                        <div className="col-xl-12 form-group">
-                          <label className="lable-color">Run Types</label>
-                          <div class="form-check">
-                            <input
-                              class="form-check-input"
-                              type="checkbox"
-                              value={runTypes[0]}
-                              name="runTypes[0]"
-                              {...register("runTypes")}
-                            />
-                            <label class="form-check-label" for="one">
-                              {runTypes[0]}
-                            </label>
-                          </div>
-                          <div class="form-check">
-                            <input
-                              class="form-check-input"
-                              type="checkbox"
-                              value={runTypes[1]}
-                              name="runTypes[1]"
-                              {...register("runTypes")}
-                            />
-                            <label class="form-check-label" for="two">
-                              {runTypes[1]}
-                            </label>
-                          </div>
-                          <div class="form-check">
-                            <input
-                              class="form-check-input"
-                              type="checkbox"
-                              value={runTypes[2]}
-                              name="runTypes[2]"
-                              {...register("runTypes")}
-                            />
-                            <label class="form-check-label" for="three">
-                              {runTypes[2]}
-                            </label>
-                          </div>
-                          <div class="form-check">
-                            <input
-                              class="form-check-input"
-                              type="checkbox"
-                              value={runTypes[3]}
-                              name="runTypes[3]"
-                              {...register("runTypes")}
-                            />
-                            <label class="form-check-label" for="four">
-                              {runTypes[3]}
-                            </label>
-                          </div> */}
-                    {/* <div class="form-check">
-                              <input
-                                class="form-check-input"
-                                type="checkbox"
-                                value={runTypes[4]}
-                                name="runTypes[4]"
-                                {...register("runTypes")}
-                              />
-                              <label class="form-check-label" for="five">
-                                {runTypes[4]}
-                              </label>
-                            </div>
-                            <div class="form-check">
-                              <input
-                                class="form-check-input"
-                                type="checkbox"
-                                value={runTypes[5]}
-                                name="runTypes[5]"
-                                {...register("runTypes")}
-                              />
-                              <label class="form-check-label" for="six">
-                                {runTypes[5]}
-                              </label>
-                            </div>
-                            <div class="form-check">
-                              <input
-                                class="form-check-input"
-                                type="checkbox"
-                                value={runTypes[6]}
-                                name="runTypes[6]"
-                                {...register("runTypes")}
-                              />
-                              <label class="form-check-label" for="six">
-                                {runTypes[6]}
-                              </label>
-                            </div> */}
-                    {/* </div>
-                        <div className="col-xl-12 form-group">
-                          <label className="lable-color">
-                            Experience Levels
-                          </label>
-                          <div class="form-check">
-                            <input
-                              class="form-check-input"
-                              type="checkbox"
-                              value={experience.one}
-                              name="experience.one"
-                              {...register("experiences")}
-                            />
-                            <label class="form-check-label" for="one">
-                              {experience.one}
-                            </label>
-                          </div>
-                          <div class="form-check">
-                            <input
-                              class="form-check-input"
-                              type="checkbox"
-                              value={experience.two}
-                              name="experience.two"
-                              {...register("experiences")}
-                            />
-                            <label class="form-check-label" for="two">
-                              {experience.two}
-                            </label>
-                          </div>
-                          <div class="form-check">
-                            <input
-                              class="form-check-input"
-                              type="checkbox"
-                              value={experience.three}
-                              name="experience.three"
-                              {...register("experiences")}
-                            />
-                            <label class="form-check-label" for="three">
-                              {experience.three}
-                            </label>
-                          </div>
-                          <div class="form-check">
-                            <input
-                              class="form-check-input"
-                              type="checkbox"
-                              value={experience.four}
-                              name="experience.four"
-                              {...register("experiences")}
-                            />
-                            <label class="form-check-label" for="four">
-                              {experience.four}
-                            </label>
-                          </div>
-                          <div class="form-check">
-                            <input
-                              class="form-check-input"
-                              type="checkbox"
-                              value={experience.five}
-                              name="experience.five"
-                              {...register("experiences")}
-                            />
-                            <label class="form-check-label" for="five">
-                              {experience.five}
-                            </label>
-                          </div>
-                          <div class="form-check">
-                            <input
-                              class="form-check-input"
-                              type="checkbox"
-                              value={experience.six}
-                              name="experience.six"
-                              {...register("experiences")}
-                            />
-                            <label class="form-check-label" for="six">
-                              {experience.six}
-                            </label>
-                          </div>
-                          <div class="form-check">
-                            <input
-                              class="form-check-input"
-                              type="checkbox"
-                              value={experience.seven}
-                              name="experience.seven"
-                              {...register("experiences")}
-                            />
-                            <label class="form-check-label" for="seven">
-                              {experience.seven}
-                            </label>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="col-xl-12 form-group p-0">
-                      <label className="col-lg-3 col-form-label lable-color">
-                        State Type
-                      </label>
-                      <div className="col-lg-9 selectBox">
-                        <select
-                          {...register("clientStateType", {
-                            onChange: (event) => {
-                              setStateStateSelected(event.target.value);
-                              setShowWarning({ message: "", show: false });
-                              handleStateSelection(null, event.target.value);
-                            },
-                          })}
-                          className={`${
-                            errors?.dataFormat ? "error-select" : ""
-                          }`}
-                        >
-                          <option value="">Select State Type</option>
-                          {stateType.map((dataFormat, index) => (
-                            <option value={dataFormat}>{dataFormat}</option>
-                          ))}
-                        </select>
-                        <small>{errors?.dataFormat?.message}</small> */}
                   </div>
                 </div>
 
