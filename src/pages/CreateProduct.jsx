@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Header from "components/Header";
 import { Box, Button, useTheme } from "@mui/material";
 import FlexBetween from "components/FlexBetween";
@@ -7,13 +7,18 @@ import { useForm, Controller } from "react-hook-form";
 import Loader from "react-loader";
 import { axiosInstance } from "../base/api/axios.util";
 import { URLConstants } from "../base/api/url.constants";
+import JoditEditor from "jodit-react";
 
 const CreateProduct = () => {
   const theme = useTheme();
+  const editor1 = useRef();
+  const editor2 = useRef();
   const [loaded, setLoaded] = useState(true);
   const [countries, setCountries] = useState([]);
   const [countryStates, setCountryStates] = useState([]);
   const [stateCities, setStateCities] = useState([]);
+  const [highlight, setHighlight] = useState("");
+  const [overview, setOverview] = useState("");
 
   const {
     handleSubmit,
@@ -51,12 +56,42 @@ const CreateProduct = () => {
       });
   }, []);
 
+  const getSunEditor1Instance = (sunEditor) => {
+    editor1.current = sunEditor;
+    console.log(" editor.current ", editor1.current);
+  };
+  const getSunEditor2Instance = (sunEditor) => {
+    editor2.current = sunEditor;
+    console.log(" editor.current ", editor2.current);
+  };
+
+  const handleOverviewChange = (content) => {
+    console.log(" handleEditorChang ", content); //Get Content Inside Editor
+    // var resultBuffer = encoding.convert(content,  'ASCII','UTF-8');
+
+    // const asciiText = iconv.decode(Buffer.from(content, 'binary'), 'ascii');
+
+    console.log("Testing acii code", content);
+    setOverview(content);
+  };
+
+  const handleHighlightChange = (content) => {
+    console.log(" handleEditorChang ", content); //Get Content Inside Editor
+    // var resultBuffer = encoding.convert(content,  'ASCII','UTF-8');
+
+    // const asciiText = iconv.decode(Buffer.from(content, 'binary'), 'ascii');
+
+    console.log("Testing acii code", content);
+    setHighlight(content);
+  };
+
   const onSubmit = (data) => {
     //reset({});
     // setClientType(undefined);
-
-    data.activityExclusion = activityExclusion.split(",");
-    data.activityInclusion = activityInclusion.split(",");
+    data.overview = overview;
+    data.highlight = highlight;
+    data.activityExclusion = data.activityExclusion.split(",");
+    data.activityInclusion = data.activityInclusion.split(",");
     data.last_update_by = "SUPER_ADMIN";
     data.creator = "SUPER_ADMIN";
     console.log("Submitted Data,", data);
@@ -232,6 +267,34 @@ const CreateProduct = () => {
                         />
                         <small>{errors?.name?.message}</small>
                       </div>
+                    </div>
+                    <div className="form-group">
+                      <label className="col-lg-3 col-form-label required pl-0">
+                        HighLight
+                      </label>
+
+                      <JoditEditor
+                        value={highlight}
+                        height={100}
+                        name="highlight"
+                        getSunEditorInstance={getSunEditor1Instance}
+                        onChange={handleHighlightChange}
+                        setContents={highlight}
+                      />
+                    </div>
+                    <div className="form-group">
+                      <label className="col-lg-3 col-form-label required pl-0">
+                        Overview
+                      </label>
+
+                      <JoditEditor
+                        value={overview}
+                        height={100}
+                        name="overview"
+                        getSunEditorInstance={getSunEditor2Instance}
+                        onChange={handleOverviewChange}
+                        setContents={highlight}
+                      />
                     </div>
 
                     <div className="form-group row">
@@ -504,7 +567,7 @@ const CreateProduct = () => {
                               className={`form-control  ${
                                 errors?.activityExclusion ? "error-input" : ""
                               }`}
-                              type="number"
+                              type="text"
                               value={value}
                               onChange={onChange}
                               autoComplete="false"
@@ -529,7 +592,7 @@ const CreateProduct = () => {
                               className={`form-control  ${
                                 errors?.activityInclusion ? "error-input" : ""
                               }`}
-                              type="number"
+                              type="text"
                               value={value}
                               onChange={onChange}
                               autoComplete="false"
