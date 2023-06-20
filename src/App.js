@@ -13,7 +13,7 @@ import AddCustomer from "pages/AddCustomer";
 import ManageStaffs from "pages/ManageStaffs";
 import AddStaff from "pages/AddStaff";
 import ManageOrder from "pages/ManageOrder";
-
+import CreateProduct from "pages/CreateProduct";
 import Category from "pages/Category";
 import AddCategory from "pages/AddCategory";
 
@@ -38,6 +38,7 @@ function App() {
               <Route path="/add-staff" element={<AddStaff />} />
               <Route path="/category" element={<Category />} />
               <Route path="/add-category" element={<AddCategory />} />
+              <Route path="/create-product" element={<CreateProduct />} />
             </Route>
           </Routes>
         </ThemeProvider>

@@ -3,6 +3,7 @@ import Header from "components/Header";
 import { Box, Button, useTheme, Pagination } from "@mui/material";
 import FlexBetween from "components/FlexBetween";
 import ProductCard from "components/ProductCard";
+import { Link } from "react-router-dom";
 
 const Products = () => {
   const theme = useTheme();
