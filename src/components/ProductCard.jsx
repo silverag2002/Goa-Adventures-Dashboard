@@ -42,6 +42,9 @@ const ProductCard = () => {
           >
             Mac Miller
           </Typography>
+          <Box>
+            <span></span>
+          </Box>
         </CardContent>
       </Box>
     </Card>
