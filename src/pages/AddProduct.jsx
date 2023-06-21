@@ -1,7 +1,8 @@
 import React, { useRef } from "react";
-import { Box, Typography, useTheme } from "@mui/material";
+import { Box, Typography, useTheme, Button } from "@mui/material";
 import Header from "../components/Header";
 import JoditEditor from "jodit-react";
+import FlexBetween from "components/FlexBetween";
 
 const AddProduct = () => {
   const theme = useTheme();
@@ -13,7 +14,21 @@ const AddProduct = () => {
 
   return (
     <Box m="1.5rem 2.5rem">
-      <Header title="Add Product" subtitle="List a new product" />
+      <FlexBetween>
+        <Header title="Add Product" subtitle="Add a new activity or tour" />
+        <Button
+          variant="contained"
+          size="large"
+          style={{
+            backgroundColor: theme.palette.secondary.main,
+            color: theme.palette.neutral[600],
+            fontWeight: "bold",
+          }}
+          href="/products"
+        >
+          View Products
+        </Button>
+      </FlexBetween>
       <Box mt="1.5rem">
         <form className="flex flex-col gap-4">
           <div className="flex flex-col items-start w-full">
@@ -64,7 +79,7 @@ const AddProduct = () => {
           <div className="flex flex-row gap-4">
             <div className="flex flex-col items-start w-full">
               <label htmlFor="highlight">Highlight</label>
-              <textarea rows={8} className="w-full" />
+              <textarea rows={8} className="w-full text-black" />
             </div>
             <div className="flex flex-col items-start w-full">
               <label htmlFor="inclusion">Inclusion</label>
