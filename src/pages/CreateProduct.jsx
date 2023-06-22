@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import Header from "components/Header";
-import { Box, Button, useTheme } from "@mui/material";
+import { Box, Button, useTheme, TextField, Grid } from "@mui/material";
 import FlexBetween from "components/FlexBetween";
-import { Link } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
 import { axiosInstance } from "../base/api/axios.util";
 import { URLConstants } from "../base/api/url.constants";
@@ -157,524 +156,362 @@ const CreateProduct = () => {
     <>
       <Box m="1.5rem 2.5rem">
         <FlexBetween>
-          <Header title="Edit Product" subtitle="Entire list of product" />
+          <Header
+            title="Add Product"
+            subtitle="Create a new activity or tour"
+          />
         </FlexBetween>
       </Box>
-      <div className="row">
-        <div className="col-md-12">
-          <div className="card mb-0">
-            <div className="card-body">
-              <form onSubmit={handleSubmit(onSubmit, onError)}>
-                <div className="row">
-                  <div className="col-xl-8">
-                    <div className="form-group row">
-                      <label className="col-lg-3 col-form-label">Title</label>
+      <Box>
+        <Grid container spacing={2}>
+          <form onSubmit={handleSubmit(onSubmit, onError)}>
+            <Controller
+              name="title"
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  id="title"
+                  label="Title"
+                  variant="filled"
+                  placeholder="Activity Or Tour Title"
+                  fullWidth
+                  margin="normal"
+                  {...field}
+                />
+              )}
+            />
 
-                      <div className="col-lg-9">
-                        <Controller
-                          name="title"
-                          control={control}
-                          render={({ field: { value, onChange } }) => (
-                            <input
-                              className={`form-control  ${
-                                errors?.name ? "error-input" : ""
-                              }`}
-                              type="text"
-                              value={value}
-                              onChange={onChange}
-                              autoComplete="false"
-                            />
-                          )}
-                          defaultValue=""
-                        />
-                        <small>{errors?.name?.message}</small>
-                      </div>
-                    </div>
-                    <div className="form-group">
-                      <label className="col-lg-3 col-form-label required pl-0">
-                        HighLight
-                      </label>
+            <JoditEditor
+              value={highlight}
+              height={100}
+              name="highlight"
+              getSunEditorInstance={getSunEditor1Instance}
+              onChange={handleHighlightChange}
+              setContents={highlight}
+            />
 
-                      <JoditEditor
-                        value={highlight}
-                        height={100}
-                        name="highlight"
-                        getSunEditorInstance={getSunEditor1Instance}
-                        onChange={handleHighlightChange}
-                        setContents={highlight}
-                      />
-                    </div>
-                    <div className="form-group">
-                      <label className="col-lg-3 col-form-label required pl-0">
-                        Overview
-                      </label>
+            <JoditEditor
+              value={overview}
+              height={100}
+              name="overview"
+              getSunEditorInstance={getSunEditor2Instance}
+              onChange={handleOverviewChange}
+              setContents={highlight}
+            />
+            <Controller
+              name="gallery"
+              control={control}
+              render={({ field: { value, onChange } }) => (
+                <input
+                  className={`form-control  ${
+                    errors?.gallery ? "error-input" : ""
+                  }`}
+                  type="text"
+                  value={value}
+                  onChange={onChange}
+                  autoComplete="false"
+                />
+              )}
+              defaultValue=""
+            />
+            <small>{errors?.gallery?.message}</small>
 
-                      <JoditEditor
-                        value={overview}
-                        height={100}
-                        name="overview"
-                        getSunEditorInstance={getSunEditor2Instance}
-                        onChange={handleOverviewChange}
-                        setContents={highlight}
-                      />
-                    </div>
+            <Controller
+              name="video"
+              control={control}
+              render={({ field: { value, onChange } }) => (
+                <input
+                  className={`form-control  ${
+                    errors?.video ? "error-input" : ""
+                  }`}
+                  type="text"
+                  value={value}
+                  onChange={onChange}
+                  autoComplete="false"
+                />
+              )}
+              defaultValue=""
+            />
+            <small>{errors?.video?.message}</small>
 
-                    <div className="form-group row">
-                      <label className="col-lg-3 col-form-label">
-                        Gallery Image
-                      </label>
+            <Controller
+              name="price"
+              control={control}
+              render={({ field: { value, onChange } }) => (
+                <input
+                  className={`form-control  ${
+                    errors?.price ? "error-input" : ""
+                  }`}
+                  type="number"
+                  value={value}
+                  onChange={onChange}
+                  autoComplete="false"
+                />
+              )}
+              defaultValue=""
+            />
+            <small>{errors?.price?.message}</small>
 
-                      <div className="col-lg-9">
-                        <Controller
-                          name="gallery"
-                          control={control}
-                          render={({ field: { value, onChange } }) => (
-                            <input
-                              className={`form-control  ${
-                                errors?.gallery ? "error-input" : ""
-                              }`}
-                              type="text"
-                              value={value}
-                              onChange={onChange}
-                              autoComplete="false"
-                            />
-                          )}
-                          defaultValue=""
-                        />
-                        <small>{errors?.gallery?.message}</small>
-                      </div>
-                    </div>
+            <Controller
+              name="discount_percent"
+              control={control}
+              render={({ field: { value, onChange } }) => (
+                <input
+                  className={`form-control  ${
+                    errors?.discount_percent ? "error-input" : ""
+                  }`}
+                  type="number"
+                  value={value}
+                  onChange={onChange}
+                  autoComplete="false"
+                />
+              )}
+              defaultValue=""
+            />
+            <small>{errors?.discount_percent?.message}</small>
 
-                    <div className="form-group row">
-                      <label className="col-lg-3 col-form-label">video</label>
+            <Controller
+              name="min_people"
+              control={control}
+              render={({ field: { value, onChange } }) => (
+                <input
+                  className={`form-control  ${
+                    errors?.min_people ? "error-input" : ""
+                  }`}
+                  type="number"
+                  value={value}
+                  onChange={onChange}
+                  autoComplete="false"
+                />
+              )}
+              defaultValue=""
+            />
 
-                      <div className="col-lg-9">
-                        <Controller
-                          name="video"
-                          control={control}
-                          render={({ field: { value, onChange } }) => (
-                            <input
-                              className={`form-control  ${
-                                errors?.video ? "error-input" : ""
-                              }`}
-                              type="text"
-                              value={value}
-                              onChange={onChange}
-                              autoComplete="false"
-                            />
-                          )}
-                          defaultValue=""
-                        />
-                        <small>{errors?.video?.message}</small>
-                      </div>
-                    </div>
+            <Controller
+              name="max_people"
+              control={control}
+              render={({ field: { value, onChange } }) => (
+                <input
+                  className={`form-control  ${
+                    errors?.max_people ? "error-input" : ""
+                  }`}
+                  type="number"
+                  value={value}
+                  onChange={onChange}
+                  autoComplete="false"
+                />
+              )}
+              defaultValue=""
+            />
+            <small>{errors?.max_people?.message}</small>
 
-                    <div className="form-group row">
-                      <label className="col-lg-3 col-form-label">price</label>
+            <Controller
+              name="start_time"
+              control={control}
+              render={({ field: { value, onChange } }) => (
+                <input
+                  className={`form-control  ${
+                    errors?.start_time ? "error-input" : ""
+                  }`}
+                  type="time"
+                  value={value}
+                  onChange={onChange}
+                  autoComplete="false"
+                />
+              )}
+              defaultValue=""
+            />
+            <small>{errors?.start_time?.message}</small>
 
-                      <div className="col-lg-9">
-                        <Controller
-                          name="price"
-                          control={control}
-                          render={({ field: { value, onChange } }) => (
-                            <input
-                              className={`form-control  ${
-                                errors?.price ? "error-input" : ""
-                              }`}
-                              type="number"
-                              value={value}
-                              onChange={onChange}
-                              autoComplete="false"
-                            />
-                          )}
-                          defaultValue=""
-                        />
-                        <small>{errors?.price?.message}</small>
-                      </div>
-                    </div>
+            <Controller
+              name="featured_image"
+              control={control}
+              render={({ field: { value, onChange } }) => (
+                <input
+                  className={`form-control  ${
+                    errors?.featured_image ? "error-input" : ""
+                  }`}
+                  type="text"
+                  value={value}
+                  onChange={onChange}
+                  autoComplete="false"
+                />
+              )}
+              defaultValue=""
+            />
+            <small>{errors?.featured_image?.message}</small>
 
-                    <div className="form-group row">
-                      <label className="col-lg-3 col-form-label">
-                        discount_percent
-                      </label>
+            <Controller
+              name="duration"
+              control={control}
+              render={({ field: { value, onChange } }) => (
+                <input
+                  className={`form-control  ${
+                    errors?.duration ? "error-input" : ""
+                  }`}
+                  type="text"
+                  value={value}
+                  onChange={onChange}
+                  autoComplete="false"
+                />
+              )}
+              defaultValue=""
+            />
+            <small>{errors?.duration?.message}</small>
 
-                      <div className="col-lg-9">
-                        <Controller
-                          name="discount_percent"
-                          control={control}
-                          render={({ field: { value, onChange } }) => (
-                            <input
-                              className={`form-control  ${
-                                errors?.discount_percent ? "error-input" : ""
-                              }`}
-                              type="number"
-                              value={value}
-                              onChange={onChange}
-                              autoComplete="false"
-                            />
-                          )}
-                          defaultValue=""
-                        />
-                        <small>{errors?.discount_percent?.message}</small>
-                      </div>
-                    </div>
+            <Controller
+              name="booking_period"
+              control={control}
+              render={({ field: { value, onChange } }) => (
+                <input
+                  className={`form-control  ${
+                    errors?.booking_period ? "error-input" : ""
+                  }`}
+                  type="number"
+                  value={value}
+                  onChange={onChange}
+                  autoComplete="false"
+                />
+              )}
+              defaultValue=""
+            />
+            <small>{errors?.booking_period?.message}</small>
 
-                    <div className="form-group row">
-                      <label className="col-lg-3 col-form-label">
-                        min_people
-                      </label>
+            <Controller
+              name="activityExclusion"
+              control={control}
+              render={({ field: { value, onChange } }) => (
+                <input
+                  className={`form-control  ${
+                    errors?.activityExclusion ? "error-input" : ""
+                  }`}
+                  type="text"
+                  value={value}
+                  onChange={onChange}
+                  autoComplete="false"
+                />
+              )}
+              defaultValue=""
+            />
+            <small>{errors?.activityExclusion?.message}</small>
 
-                      <div className="col-lg-9">
-                        <Controller
-                          name="min_people"
-                          control={control}
-                          render={({ field: { value, onChange } }) => (
-                            <input
-                              className={`form-control  ${
-                                errors?.min_people ? "error-input" : ""
-                              }`}
-                              type="number"
-                              value={value}
-                              onChange={onChange}
-                              autoComplete="false"
-                            />
-                          )}
-                          defaultValue=""
-                        />
-                        <small>{errors?.min_people?.message}</small>
-                      </div>
-                    </div>
+            <Controller
+              name="activityInclusion"
+              control={control}
+              render={({ field: { value, onChange } }) => (
+                <input
+                  className={`form-control  ${
+                    errors?.activityInclusion ? "error-input" : ""
+                  }`}
+                  type="text"
+                  value={value}
+                  onChange={onChange}
+                  autoComplete="false"
+                />
+              )}
+              defaultValue=""
+            />
+            <small>{errors?.activityInclusion?.message}</small>
 
-                    <div className="form-group row">
-                      <label className="col-lg-3 col-form-label">
-                        max_people
-                      </label>
+            <select
+              {...register("deposit")}
+              className={`${errors?.deposit ? "error-select" : ""}`}
+            >
+              <option value="">Select Deposit Type</option>
+              {depositData.map((dataFormat, index) => (
+                <option value={dataFormat}>{dataFormat}</option>
+              ))}
+            </select>
+            <small>{errors?.dataFormat?.message}</small>
 
-                      <div className="col-lg-9">
-                        <Controller
-                          name="max_people"
-                          control={control}
-                          render={({ field: { value, onChange } }) => (
-                            <input
-                              className={`form-control  ${
-                                errors?.max_people ? "error-input" : ""
-                              }`}
-                              type="number"
-                              value={value}
-                              onChange={onChange}
-                              autoComplete="false"
-                            />
-                          )}
-                          defaultValue=""
-                        />
-                        <small>{errors?.max_people?.message}</small>
-                      </div>
-                    </div>
+            <select
+              {...register("allow_cancel")}
+              className={`${errors?.allow_cancel ? "error-select" : ""}`}
+            >
+              <option value="">Select </option>
+              {["YES", "NO"].map((dataFormat, index) => (
+                <option value={dataFormat}>{dataFormat}</option>
+              ))}
+            </select>
+            <small>{errors?.dataFormat?.message}</small>
 
-                    <div className="form-group row">
-                      <label className="col-lg-3 col-form-label">
-                        Start Time
-                      </label>
+            <select
+              {...register("country", {
+                onChange: (e) => {
+                  handleCountryChange(encodeURIComponent(e.target.value));
+                },
+              })}
+              className={`${errors?.country ? "error-select" : ""}`}
+            >
+              <option value="">Select Country </option>
+              {countries.map((dataFormat, index) => (
+                <option value={dataFormat.country_name}>
+                  {dataFormat.country_name}
+                </option>
+              ))}
+            </select>
+            <small>{errors?.dataFormat?.message}</small>
 
-                      <div className="col-lg-9">
-                        <Controller
-                          name="start_time"
-                          control={control}
-                          render={({ field: { value, onChange } }) => (
-                            <input
-                              className={`form-control  ${
-                                errors?.start_time ? "error-input" : ""
-                              }`}
-                              type="time"
-                              value={value}
-                              onChange={onChange}
-                              autoComplete="false"
-                            />
-                          )}
-                          defaultValue=""
-                        />
-                        <small>{errors?.start_time?.message}</small>
-                      </div>
-                    </div>
+            <select
+              {...register("state", {
+                onChange: (e) => {
+                  handleStateChange(encodeURIComponent(e.target.value));
+                },
+              })}
+              className={`${errors?.state ? "error-select" : ""}`}
+            >
+              <option value="">Select State </option>
+              {countryStates.map((dataFormat, index) => (
+                <option value={dataFormat.state_name}>
+                  {dataFormat.state_name}
+                </option>
+              ))}
+            </select>
+            <small>{errors?.dataFormat?.message}</small>
 
-                    <div className="form-group row">
-                      <label className="col-lg-3 col-form-label">
-                        featured_image
-                      </label>
+            <select
+              {...register("city")}
+              className={`${errors?.state ? "error-select" : ""}`}
+            >
+              <option value="">Select City </option>
+              {stateCities.map((dataFormat, index) => (
+                <option value={dataFormat.city_name}>
+                  {dataFormat.city_name}
+                </option>
+              ))}
+            </select>
+            <small>{errors?.dataFormat?.message}</small>
 
-                      <div className="col-lg-9">
-                        <Controller
-                          name="featured_image"
-                          control={control}
-                          render={({ field: { value, onChange } }) => (
-                            <input
-                              className={`form-control  ${
-                                errors?.featured_image ? "error-input" : ""
-                              }`}
-                              type="text"
-                              value={value}
-                              onChange={onChange}
-                              autoComplete="false"
-                            />
-                          )}
-                          defaultValue=""
-                        />
-                        <small>{errors?.featured_image?.message}</small>
-                      </div>
-                    </div>
+            <select
+              {...register("category")}
+              className={`${errors?.category ? "error-select" : ""}`}
+            >
+              <option value="">Select category </option>
+              {categories.map((dataFormat, index) => (
+                <option value={dataFormat}>{dataFormat}</option>
+              ))}
+            </select>
+            <small>{errors?.dataFormat?.message}</small>
 
-                    <div className="form-group row">
-                      <label className="col-lg-3 col-form-label">
-                        duration
-                      </label>
+            <select
+              {...register("categoryType")}
+              className={`${errors?.categoryType ? "error-select" : ""}`}
+            >
+              <option value="">Select category type </option>
+              {categoriesType.map((dataFormat, index) => (
+                <option value={dataFormat}>{dataFormat}</option>
+              ))}
+            </select>
+            <small>{errors?.dataFormat?.message}</small>
 
-                      <div className="col-lg-9">
-                        <Controller
-                          name="duration"
-                          control={control}
-                          render={({ field: { value, onChange } }) => (
-                            <input
-                              className={`form-control  ${
-                                errors?.duration ? "error-input" : ""
-                              }`}
-                              type="text"
-                              value={value}
-                              onChange={onChange}
-                              autoComplete="false"
-                            />
-                          )}
-                          defaultValue=""
-                        />
-                        <small>{errors?.duration?.message}</small>
-                      </div>
-                    </div>
-
-                    <div className="form-group row">
-                      <label className="col-lg-3 col-form-label">
-                        Booking Period
-                      </label>
-
-                      <div className="col-lg-9">
-                        <Controller
-                          name="booking_period"
-                          control={control}
-                          render={({ field: { value, onChange } }) => (
-                            <input
-                              className={`form-control  ${
-                                errors?.booking_period ? "error-input" : ""
-                              }`}
-                              type="number"
-                              value={value}
-                              onChange={onChange}
-                              autoComplete="false"
-                            />
-                          )}
-                          defaultValue=""
-                        />
-                        <small>{errors?.booking_period?.message}</small>
-                      </div>
-                    </div>
-
-                    <div className="form-group row">
-                      <label className="col-lg-3 col-form-label">
-                        Activity Exclusion Enter comma seperated value
-                      </label>
-
-                      <div className="col-lg-9">
-                        <Controller
-                          name="activityExclusion"
-                          control={control}
-                          render={({ field: { value, onChange } }) => (
-                            <input
-                              className={`form-control  ${
-                                errors?.activityExclusion ? "error-input" : ""
-                              }`}
-                              type="text"
-                              value={value}
-                              onChange={onChange}
-                              autoComplete="false"
-                            />
-                          )}
-                          defaultValue=""
-                        />
-                        <small>{errors?.activityExclusion?.message}</small>
-                      </div>
-                    </div>
-                    <div className="form-group row">
-                      <label className="col-lg-3 col-form-label">
-                        Activity Inclusion Enter comma seperated value
-                      </label>
-
-                      <div className="col-lg-9">
-                        <Controller
-                          name="activityInclusion"
-                          control={control}
-                          render={({ field: { value, onChange } }) => (
-                            <input
-                              className={`form-control  ${
-                                errors?.activityInclusion ? "error-input" : ""
-                              }`}
-                              type="text"
-                              value={value}
-                              onChange={onChange}
-                              autoComplete="false"
-                            />
-                          )}
-                          defaultValue=""
-                        />
-                        <small>{errors?.activityInclusion?.message}</small>
-                      </div>
-                    </div>
-                    <div className="form-group row">
-                      <label className="col-lg-3 col-form-label">Deposit</label>
-                      <div className="col-lg-9 selectBox">
-                        <select
-                          {...register("deposit")}
-                          className={`${errors?.deposit ? "error-select" : ""}`}
-                        >
-                          <option value="">Select Deposit Type</option>
-                          {depositData.map((dataFormat, index) => (
-                            <option value={dataFormat}>{dataFormat}</option>
-                          ))}
-                        </select>
-                        <small>{errors?.dataFormat?.message}</small>
-                      </div>
-                    </div>
-
-                    <div className="form-group row">
-                      <label className="col-lg-3 col-form-label">
-                        Allow Cancel
-                      </label>
-                      <div className="col-lg-9 selectBox">
-                        <select
-                          {...register("allow_cancel")}
-                          className={`${
-                            errors?.allow_cancel ? "error-select" : ""
-                          }`}
-                        >
-                          <option value="">Select </option>
-                          {["YES", "NO"].map((dataFormat, index) => (
-                            <option value={dataFormat}>{dataFormat}</option>
-                          ))}
-                        </select>
-                        <small>{errors?.dataFormat?.message}</small>
-                      </div>
-                    </div>
-                    <div className="form-group row">
-                      <label className="col-lg-3 col-form-label">Country</label>
-                      <div className="col-lg-9 selectBox">
-                        <select
-                          {...register("country", {
-                            onChange: (e) => {
-                              handleCountryChange(
-                                encodeURIComponent(e.target.value)
-                              );
-                            },
-                          })}
-                          className={`${errors?.country ? "error-select" : ""}`}
-                        >
-                          <option value="">Select Country </option>
-                          {countries.map((dataFormat, index) => (
-                            <option value={dataFormat.country_name}>
-                              {dataFormat.country_name}
-                            </option>
-                          ))}
-                        </select>
-                        <small>{errors?.dataFormat?.message}</small>
-                      </div>
-                    </div>
-                    <div className="form-group row">
-                      <label className="col-lg-3 col-form-label">State</label>
-                      <div className="col-lg-9 selectBox">
-                        <select
-                          {...register("state", {
-                            onChange: (e) => {
-                              handleStateChange(
-                                encodeURIComponent(e.target.value)
-                              );
-                            },
-                          })}
-                          className={`${errors?.state ? "error-select" : ""}`}
-                        >
-                          <option value="">Select State </option>
-                          {countryStates.map((dataFormat, index) => (
-                            <option value={dataFormat.state_name}>
-                              {dataFormat.state_name}
-                            </option>
-                          ))}
-                        </select>
-                        <small>{errors?.dataFormat?.message}</small>
-                      </div>
-                    </div>
-                    <div className="form-group row">
-                      <label className="col-lg-3 col-form-label">City</label>
-                      <div className="col-lg-9 selectBox">
-                        <select
-                          {...register("city")}
-                          className={`${errors?.state ? "error-select" : ""}`}
-                        >
-                          <option value="">Select City </option>
-                          {stateCities.map((dataFormat, index) => (
-                            <option value={dataFormat.city_name}>
-                              {dataFormat.city_name}
-                            </option>
-                          ))}
-                        </select>
-                        <small>{errors?.dataFormat?.message}</small>
-                      </div>
-                    </div>
-                    <div className="form-group row">
-                      <label className="col-lg-3 col-form-label">
-                        Category
-                      </label>
-                      <div className="col-lg-9 selectBox">
-                        <select
-                          {...register("category")}
-                          className={`${
-                            errors?.category ? "error-select" : ""
-                          }`}
-                        >
-                          <option value="">Select category </option>
-                          {categories.map((dataFormat, index) => (
-                            <option value={dataFormat}>{dataFormat}</option>
-                          ))}
-                        </select>
-                        <small>{errors?.dataFormat?.message}</small>
-                      </div>
-                    </div>
-                    <div className="form-group row">
-                      <label className="col-lg-3 col-form-label">
-                        Category Type
-                      </label>
-                      <div className="col-lg-9 selectBox">
-                        <select
-                          {...register("categoryType")}
-                          className={`${
-                            errors?.categoryType ? "error-select" : ""
-                          }`}
-                        >
-                          <option value="">Select category type </option>
-                          {categoriesType.map((dataFormat, index) => (
-                            <option value={dataFormat}>{dataFormat}</option>
-                          ))}
-                        </select>
-                        <small>{errors?.dataFormat?.message}</small>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="d-grid gap-2 justify-content-md-center">
-                  <Button class="btn btn-primary me-md-2" type="submit">
-                    Submit
-                  </Button>
-                </div>
-              </form>
+            <div class="d-grid gap-2 justify-content-md-center">
+              <Button class="btn btn-primary me-md-2" type="submit">
+                Submit
+              </Button>
             </div>
-          </div>
-        </div>
-      </div>
-
+          </form>
+        </Grid>
+      </Box>
       <div className="spinner">
         {/* <Loader
           loaded={loaded}

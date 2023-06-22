@@ -1,24 +1,527 @@
 import React, { useRef } from "react";
-import { Box, Typography, useTheme, Button } from "@mui/material";
-import Header from "../components/Header";
+import {
+  Box,
+  Grid,
+  TextField,
+  MenuItem,
+  Typography,
+  Button,
+  useTheme,
+  Stack,
+} from "@mui/material";
+import Header from "components/Header";
+import { useForm, Controller } from "react-hook-form";
 import JoditEditor from "jodit-react";
-import FlexBetween from "components/FlexBetween";
 
 const AddProduct = () => {
   const theme = useTheme();
-  const editor1 = useRef();
-  const getSunEditor1Instance = (sunEditor) => {
-    editor1.current = sunEditor;
-    console.log(" editor.current ", editor1.current);
+  const editor = useRef();
+
+  const getSunEditorInstance = (sunEditor) => {
+    editor.current = sunEditor;
   };
 
+  const {
+    handleSubmit,
+    register,
+    control,
+    formState: { errors },
+  } = useForm({});
+
+  const category = [
+    "Activity",
+    "Tour",
+    "Drama Show",
+    "DJ Night",
+    "Dinner Cruise",
+    "Park Ticket",
+  ];
+
+  const categoryType = [
+    "Scuba Diving",
+    "Watersports",
+    "Bangee Jump",
+    "Sightseeing",
+  ];
   return (
-    <Box m="1.5rem 2.5rem">
-      <FlexBetween>
-        <Header title="Add Product" subtitle="Add a new activity or tour" />
+    <Box sx={{ flexGrow: 1, margin: "1.5rem 2.5rem" }}>
+      <Grid container spacing={2}>
+        <Grid item xs={12} md={12}>
+          <Typography variant="h4">Basic Information</Typography>
+          <Box>
+            <Controller
+              name="title"
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  id="title"
+                  label="Title"
+                  variant="filled"
+                  placeholder="Activity Or Tour Title"
+                  fullWidth
+                  margin="normal"
+                  {...field}
+                />
+              )}
+            />
+          </Box>
+        </Grid>
+        <Grid item xs={4}>
+          <Box>
+            <Controller
+              name="category"
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  select
+                  id="category"
+                  label="Category"
+                  variant="filled"
+                  fullWidth
+                  margin="normal"
+                  {...field}
+                >
+                  {category.map((option) => (
+                    <MenuItem key={option} value={option}>
+                      {option}
+                    </MenuItem>
+                  ))}
+                </TextField>
+              )}
+            />
+          </Box>
+        </Grid>
+        <Grid item xs={4}>
+          <Box>
+            <Controller
+              name="category-type"
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  select
+                  id="category-type"
+                  label="Category Type"
+                  variant="filled"
+                  fullWidth
+                  margin="normal"
+                  {...field}
+                >
+                  {categoryType.map((option) => (
+                    <MenuItem key={option} value={option}>
+                      {option}
+                    </MenuItem>
+                  ))}
+                </TextField>
+              )}
+            />
+          </Box>
+        </Grid>
+        <Grid item xs={4} md={4}>
+          <Box>
+            <Controller
+              name="duration"
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  id="duration"
+                  label="Duration"
+                  type="time"
+                  variant="filled"
+                  fullWidth
+                  margin="normal"
+                  {...field}
+                />
+              )}
+            />
+          </Box>
+        </Grid>
+        <Grid item xs={12} md={12}>
+          <Box>
+            <Controller
+              name="overview"
+              control={control}
+              render={({ field }) => (
+                <JoditEditor
+                  height={200}
+                  name="overview"
+                  getSunEditorInstance={getSunEditorInstance}
+                  {...field}
+                />
+              )}
+            />
+          </Box>
+        </Grid>
+        <Grid item xs={4} md={4}>
+          <Box>
+            <Controller
+              name="highlight"
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  id="highlight"
+                  label="Highlight"
+                  variant="filled"
+                  multiline
+                  rows={6}
+                  fullWidth
+                  margin="normal"
+                  {...field}
+                />
+              )}
+            />
+          </Box>
+        </Grid>
+        <Grid item xs={4} md={4}>
+          <Box>
+            <Controller
+              name="inclusion"
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  id="inclusion"
+                  label="Inclusion"
+                  variant="filled"
+                  multiline
+                  rows={6}
+                  fullWidth
+                  margin="normal"
+                  {...field}
+                />
+              )}
+            />
+          </Box>
+        </Grid>
+        <Grid item xs={4} md={4}>
+          <Box>
+            <Controller
+              name="exclusion"
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  id="exclusion"
+                  label="Exclusion"
+                  variant="filled"
+                  multiline
+                  rows={6}
+                  fullWidth
+                  margin="normal"
+                  {...field}
+                />
+              )}
+            />
+          </Box>
+        </Grid>
+        <Grid item xs={4} md={4}>
+          <Box>
+            <Controller
+              name="min_people"
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  id="min_people"
+                  label="Min People"
+                  variant="filled"
+                  type="number"
+                  fullWidth
+                  margin="normal"
+                  {...field}
+                />
+              )}
+            />
+          </Box>
+        </Grid>
+        <Grid item xs={4} md={4}>
+          <Box>
+            <Controller
+              name="max_people"
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  id="max_people"
+                  label="Max People"
+                  variant="filled"
+                  type="number"
+                  fullWidth
+                  margin="normal"
+                  {...field}
+                />
+              )}
+            />
+          </Box>
+        </Grid>
+        <Grid item xs={4} md={4}>
+          <Box>
+            <Controller
+              name="booking_period"
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  id="booking_period"
+                  label="Booking Period"
+                  variant="filled"
+                  type="number"
+                  fullWidth
+                  margin="normal"
+                  {...field}
+                />
+              )}
+            />
+          </Box>
+        </Grid>
+        <Grid item xs={4}>
+          <Box>
+            <Controller
+              name="allow-deposit"
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  select
+                  id="allow_deposit"
+                  label="Deposit"
+                  variant="filled"
+                  fullWidth
+                  margin="normal"
+                  {...field}
+                >
+                  <MenuItem value="allow-deposit">Allow Deposit</MenuItem>
+                  <MenuItem value="disallow-deposit">Disallow Deposit</MenuItem>
+                </TextField>
+              )}
+            />
+          </Box>
+        </Grid>
+        <Grid item xs={4} md={4}>
+          <Box>
+            <Controller
+              name="deposit_percent"
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  id="deposit_percent"
+                  label="Deposit Percent"
+                  variant="filled"
+                  type="number"
+                  fullWidth
+                  margin="normal"
+                  {...field}
+                />
+              )}
+            />
+          </Box>
+        </Grid>
+        <Grid item xs={4}>
+          <Box>
+            <Controller
+              name="cancellation"
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  select
+                  id="cancellation"
+                  label="Allow Cancel"
+                  variant="filled"
+                  fullWidth
+                  margin="normal"
+                  {...field}
+                >
+                  <MenuItem value="yes">Yes</MenuItem>
+                  <MenuItem value="no">No</MenuItem>
+                </TextField>
+              )}
+            />
+          </Box>
+        </Grid>
+      </Grid>
+      <Grid container spacing={2} sx={{ paddingTop: "1rem" }}>
+        <Grid item xs={12} md={12}>
+          <Typography variant="h4">Pricing & Location</Typography>
+        </Grid>
+        <Grid item xs={4} md={6}>
+          <Box>
+            <Controller
+              name="price"
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  id="price"
+                  label="Price"
+                  variant="filled"
+                  type="number"
+                  fullWidth
+                  margin="normal"
+                  {...field}
+                />
+              )}
+            />
+          </Box>
+        </Grid>
+        <Grid item xs={4} md={6}>
+          <Box>
+            <Controller
+              name="discount"
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  id="discount"
+                  label="Discount"
+                  variant="filled"
+                  type="number"
+                  fullWidth
+                  margin="normal"
+                  {...field}
+                />
+              )}
+            />
+          </Box>
+        </Grid>
+        <Grid item xs={4} md={4}>
+          <Box>
+            <Controller
+              name="country"
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  select
+                  id="country"
+                  label="Country"
+                  variant="filled"
+                  fullWidth
+                  margin="normal"
+                  {...field}
+                >
+                  <MenuItem value="india">India</MenuItem>
+                  <MenuItem value="usa">USA</MenuItem>
+                </TextField>
+              )}
+            />
+          </Box>
+        </Grid>
+        <Grid item xs={4} md={4}>
+          <Box>
+            <Controller
+              name="state"
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  select
+                  id="state"
+                  label="State"
+                  variant="filled"
+                  fullWidth
+                  margin="normal"
+                  {...field}
+                >
+                  <MenuItem value="india">Goa</MenuItem>
+                  <MenuItem value="usa">West Bengal</MenuItem>
+                </TextField>
+              )}
+            />
+          </Box>
+        </Grid>
+        <Grid item xs={4} md={4}>
+          <Box>
+            <Controller
+              name="city"
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  select
+                  id="city"
+                  label="City"
+                  variant="filled"
+                  fullWidth
+                  margin="normal"
+                  {...field}
+                >
+                  <MenuItem value="india">Kolkata</MenuItem>
+                  <MenuItem value="india">City Name</MenuItem>
+                </TextField>
+              )}
+            />
+          </Box>
+        </Grid>
+      </Grid>
+      <Grid container spacing={2} sx={{ paddingTop: "1rem" }}>
+        <Grid item xs={12} md={12}>
+          <Typography variant="h4">Photos & Video</Typography>
+        </Grid>
+        <Grid item xs={4} md={4}>
+          <Box>
+            <Controller
+              name="feature-img"
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  id="feature-img"
+                  label="Featured Image"
+                  variant="filled"
+                  fullWidth
+                  margin="normal"
+                  {...field}
+                />
+              )}
+            />
+          </Box>
+        </Grid>
+        <Grid item xs={4} md={4}>
+          <Box>
+            <Controller
+              name="gallery-img"
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  id="gallery-img"
+                  label="Gallery Image"
+                  variant="filled"
+                  fullWidth
+                  margin="normal"
+                  {...field}
+                />
+              )}
+            />
+          </Box>
+        </Grid>
+        <Grid item xs={4} md={4}>
+          <Box>
+            <Controller
+              name="video-url"
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  id="video-url"
+                  label="Video"
+                  variant="filled"
+                  fullWidth
+                  margin="normal"
+                  {...field}
+                />
+              )}
+            />
+          </Box>
+        </Grid>
+      </Grid>
+
+      <Stack
+        direction="row"
+        justifyContent="flex-end"
+        alignItems="center"
+        spacing={4}
+        sx={{ marginTop: "1rem" }}
+      >
         <Button
-          variant="contained"
           size="large"
+          variant="contained"
+          style={{
+            backgroundColor: theme.palette.secondary.main,
+            color: theme.palette.neutral[600],
+            fontWeight: "bold",
+          }}
+        >
+          Add Product
+        </Button>
+        <Button
+          size="large"
+          variant="contained"
           style={{
             backgroundColor: theme.palette.secondary.main,
             color: theme.palette.neutral[600],
@@ -26,135 +529,9 @@ const AddProduct = () => {
           }}
           href="/products"
         >
-          View Products
+          Cancel
         </Button>
-      </FlexBetween>
-      <Box mt="1.5rem">
-        <form className="flex flex-col gap-4">
-          <div className="flex flex-col items-start w-full">
-            <label htmlFor="title">Title</label>
-            <input
-              type="text"
-              placeholder="Enter your product title"
-              className="p-2 w-full"
-            />
-          </div>
-          <div className="flex flex-row gap-4">
-            <div className="flex flex-col items-start w-full">
-              <label htmlFor="category">Category</label>
-              <select
-                type="text"
-                className="w-full p-2 text-black text-base font-semibold"
-              >
-                <option value="activity">Activity</option>
-                <option value="tour">Tour</option>
-              </select>
-            </div>
-            <div className="flex flex-col items-start w-full">
-              <label htmlFor="category_type">Category Type</label>
-              <select
-                type="text"
-                className="w-full p-2 text-black text-base font-semibold"
-              >
-                <option value="scuba diving">Activity</option>
-                <option value="watersports">Watersports</option>
-                <option value="bangee-jumping">Bangee Jumping</option>
-              </select>
-            </div>
-            <div className="flex flex-col items-start w-full">
-              <label htmlFor="category_type">Duration</label>
-              <input
-                type="time"
-                className="w-full p-2 text-black text-base font-semibold"
-              />
-            </div>
-          </div>
-          <div>
-            <JoditEditor
-              height={100}
-              name="highlight"
-              getSunEditorInstance={getSunEditor1Instance}
-            />
-          </div>
-          <div className="flex flex-row gap-4">
-            <div className="flex flex-col items-start w-full">
-              <label htmlFor="highlight">Highlight</label>
-              <textarea rows={8} className="w-full text-black" />
-            </div>
-            <div className="flex flex-col items-start w-full">
-              <label htmlFor="inclusion">Inclusion</label>
-              <textarea rows={8} className="w-full" />
-            </div>
-            <div className="flex flex-col items-start w-full">
-              <label htmlFor="exclusion">Exclusion</label>
-              <textarea rows={8} className="w-full" />
-            </div>
-          </div>
-          <div className="flex flex-row gap-4">
-            <div className="flex flex-col items-start w-full">
-              <label htmlFor="category">Min People</label>
-              <input
-                type="number"
-                className="w-full p-2 text-black text-base font-semibold"
-              />
-            </div>
-            <div className="flex flex-col items-start w-full">
-              <label htmlFor="category">Max People</label>
-              <input
-                type="number"
-                className="w-full p-2 text-black text-base font-semibold"
-              />
-            </div>
-            <div className="flex flex-col items-start w-full">
-              <label htmlFor="category">Booking Period</label>
-              <input
-                type="number"
-                className="w-full p-2 text-black text-base font-semibold"
-              />
-            </div>
-          </div>
-          <div className="flex flex-row gap-4">
-            <div className="flex flex-col items-start w-full">
-              <label htmlFor="category_type">Partial Deposit</label>
-              <select
-                type="text"
-                className="w-full p-2 text-black text-base font-semibold"
-              >
-                <option value="yes">Allow</option>
-                <option value="no">Disallow</option>
-              </select>
-            </div>
-            <div className="flex flex-col items-start w-full">
-              <label htmlFor="category">Deposit Percent</label>
-              <input
-                type="number"
-                className="w-full p-2 text-black text-base font-semibold"
-              />
-            </div>
-            <div className="flex flex-col items-start w-full">
-              <label htmlFor="category">Discount Percent</label>
-              <input
-                type="number"
-                className="w-full p-2 text-black text-base font-semibold"
-              />
-            </div>
-          </div>
-          <div className="flex flex-row gap-4">
-            <div className="flex flex-col items-start w-full ">
-              <label htmlFor="feature-img">Featured Image</label>
-              <input type="file" className="w-full p-2" />
-            </div>
-            <div className="flex flex-col items-start w-full">
-              <label htmlFor="gallery-img">Gallery Image</label>
-              <input type="file" multiple className="w-full p-2" />
-            </div>
-            <div className="flex flex-col items-start w-full">
-              <label htmlFor="video">Video</label>
-              <input type="url" className="w-full p-2" />
-            </div>
-          </div>
-        </form>
-      </Box>
+      </Stack>
     </Box>
   );
 };
