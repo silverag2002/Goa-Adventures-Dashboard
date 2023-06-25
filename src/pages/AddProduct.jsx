@@ -153,10 +153,6 @@ const AddProduct = () => {
       });
   }
 
-  countries.map((con) => {
-    console.log("Countries ", con.country_name);
-  });
-
   const onSubmit = (data) => {
     //reset({});
     // setClientType(undefined);
@@ -176,16 +172,16 @@ const AddProduct = () => {
       data: data,
     };
 
-    // axios(config)
-    //   .then((response) => {
-    //     setLoaded(true);
-    //     console.log("Response after submitting form", response);
-    //     navigate("/products");
-    //   })
-    //   .catch((err) => {
-    //     setLoaded(true);
-    //     console.log(err);
-    //   });
+    axios(config)
+      .then((response) => {
+        setLoaded(true);
+        console.log("Response after submitting form", response);
+        navigate("/products");
+      })
+      .catch((err) => {
+        setLoaded(true);
+        console.log(err);
+      });
   };
 
   return (
@@ -539,8 +535,6 @@ const AddProduct = () => {
                         e.preventDefault();
                         handleCountryChange(encodeURIComponent(e.target.value));
                       }}
-                      // value={field.value}
-                      {...field}
                     >
                       {countries.map((con) => (
                         <MenuItem value={con.country_name}>
@@ -570,8 +564,6 @@ const AddProduct = () => {
                         handleStateChange(encodeURIComponent(e.target.value));
                         console.log("Field", e.target.value, field);
                       }}
-                      value={field.value}
-                      {...field}
                     >
                       {countryStates.map((con) => (
                         <MenuItem value={con.state_name}>
