@@ -67,20 +67,21 @@ const AddProduct = () => {
     "Sightseeing",
   ];
 
-  // useEffect(() => {
-  //   setLoaded(false);
-  //   axiosInstance
-  //     .get(URLConstants.getCountries())
-  //     .then((response) => {
-  //       setLoaded(true);
-  //       console.log("Response form countries", response);
-  //       setCountries(response);
-  //     })
-  //     .catch((err) => {
-  //       setLoaded(true);
-  //       console.log(err);
-  //     });
-  // }, []);
+  useEffect(() => {
+    setLoaded(false);
+    axiosInstance
+      .get(URLConstants.getCountries())
+      .then((response) => {
+        setLoaded(true);
+        console.log("Response form countries", response);
+        setCountries(response);
+      })
+      .catch((err) => {
+        setLoaded(true);
+        console.log(err);
+      });
+  }, []);
+  console.log("Countries", countries);
 
   function handleCountryChange(country) {
     console.log("COuntry selecrted", country);
@@ -91,7 +92,7 @@ const AddProduct = () => {
       .then((response) => {
         setLoaded(true);
         console.log("Response form states", response);
-        setCountryStates(response.states);
+        setCountryStates(response);
       })
       .catch((err) => {
         setLoaded(true);
@@ -151,6 +152,10 @@ const AddProduct = () => {
         console.log(err);
       });
   }
+
+  countries.map((con) => {
+    console.log("Countries ", con.country_name);
+  });
 
   const onSubmit = (data) => {
     //reset({});
@@ -529,10 +534,19 @@ const AddProduct = () => {
                       variant="filled"
                       fullWidth
                       margin="normal"
+                      onChange={(e) => {
+                        console.log("Field", e.target.value, field);
+                        e.preventDefault();
+                        handleCountryChange(encodeURIComponent(e.target.value));
+                      }}
+                      // value={field.value}
                       {...field}
                     >
-                      <MenuItem value="india">India</MenuItem>
-                      <MenuItem value="usa">USA</MenuItem>
+                      {countries.map((con) => (
+                        <MenuItem value={con.country_name}>
+                          {con.country_name}
+                        </MenuItem>
+                      ))}
                     </TextField>
                   )}
                 />
@@ -553,12 +567,17 @@ const AddProduct = () => {
                       margin="normal"
                       onChange={(e) => {
                         e.preventDefault();
+                        handleStateChange(encodeURIComponent(e.target.value));
                         console.log("Field", e.target.value, field);
                       }}
                       value={field.value}
+                      {...field}
                     >
-                      <MenuItem value="india">Goa</MenuItem>
-                      <MenuItem value="usa">West Bengal</MenuItem>
+                      {countryStates.map((con) => (
+                        <MenuItem value={con.state_name}>
+                          {con.state_name}
+                        </MenuItem>
+                      ))}
                     </TextField>
                   )}
                 />
@@ -579,8 +598,11 @@ const AddProduct = () => {
                       margin="normal"
                       {...field}
                     >
-                      <MenuItem value="india">Kolkata</MenuItem>
-                      <MenuItem value="india">City Name</MenuItem>
+                      {stateCities.map((con) => (
+                        <MenuItem value={con.city_name}>
+                          {con.city_name}
+                        </MenuItem>
+                      ))}
                     </TextField>
                   )}
                 />
