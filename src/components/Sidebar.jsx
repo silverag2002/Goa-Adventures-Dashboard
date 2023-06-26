@@ -39,7 +39,7 @@ const navItems = [
     icon: <HomeOutlined />,
   },
   {
-    text: "Manage Order",
+    text: "Bookings",
     icon: <ShoppingCartOutlined />,
   },
   {

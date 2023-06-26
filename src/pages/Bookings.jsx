@@ -5,7 +5,7 @@ import { useGetTransactionsQuery } from "state/api";
 import Header from "components/Header";
 import DataGridCustomToolbar from "components/DataGridCustomToolbar";
 
-const ManageOrder = () => {
+const Bookings = () => {
   const theme = useTheme();
 
   // values to be sent to the backend
@@ -98,7 +98,7 @@ const ManageOrder = () => {
 
   return (
     <Box m="1.5rem 2.5rem">
-      <Header title="Manage Orders" subtitle="Entire list of transactions" />
+      <Header title="Manage Booking" subtitle="Entire list of transactions" />
       <Box
         height="80vh"
         sx={{
@@ -150,4 +150,4 @@ const ManageOrder = () => {
   );
 };
 
-export default ManageOrder;
+export default Bookings;

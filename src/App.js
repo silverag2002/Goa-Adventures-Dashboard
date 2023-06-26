@@ -12,7 +12,7 @@ import Customers from "pages/Customers";
 import AddCustomer from "pages/AddCustomer";
 import ManageStaffs from "pages/ManageStaffs";
 import AddStaff from "pages/AddStaff";
-import ManageOrder from "pages/ManageOrder";
+import Bookings from "pages/Bookings";
 import CreateProduct from "pages/CreateProduct";
 import Category from "pages/Category";
 import AddCategory from "pages/AddCategory";
@@ -29,7 +29,7 @@ function App() {
             <Route element={<Layout />}>
               <Route path="/" element={<Navigate to="/dashboard" replace />} />
               <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/manage-order" element={<ManageOrder />} />
+              <Route path="/manage-booking" element={<Bookings />} />
               <Route path="/products" element={<Products />} />
               <Route path="/add-product" element={<AddProduct />} />
               <Route path="/customers" element={<Customers />} />
