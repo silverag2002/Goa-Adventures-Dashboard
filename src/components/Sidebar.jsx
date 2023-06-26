@@ -51,6 +51,10 @@ const navItems = [
     icon: <CategoryOutlined />,
   },
   {
+    text: "Sub Category",
+    icon: <CategoryOutlined />,
+  },
+  {
     text: "Customers",
     icon: <Groups2Outlined />,
   },

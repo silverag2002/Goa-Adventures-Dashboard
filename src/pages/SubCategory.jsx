@@ -1,10 +1,17 @@
 import React from "react";
 import Header from "../components/Header";
-import { Box, useTheme, Button, Grid, TextField } from "@mui/material";
+import {
+  Box,
+  useTheme,
+  Button,
+  Grid,
+  TextField,
+  MenuItem,
+} from "@mui/material";
 import { useForm, Controller } from "react-hook-form";
 import { DataGrid } from "@mui/x-data-grid";
 
-const Category = () => {
+const SubCategory = () => {
   const theme = useTheme();
   const {
     handleSubmit,
@@ -12,6 +19,15 @@ const Category = () => {
     control,
     formState: { errors },
   } = useForm();
+
+  const category = [
+    "Activity",
+    "Tour",
+    "Drama Show",
+    "DJ Night",
+    "Dinner Cruise",
+    "Park Ticket",
+  ];
 
   const renderDetailsButton = (params) => {
     return (
@@ -28,6 +44,7 @@ const Category = () => {
   const columns = [
     { field: "id", headerName: "ID", width: 100 },
     { field: "category", headerName: "Category", fullWidth: true },
+    { field: "subcategory", headerName: "Sub Category", width: 100 },
     { field: "image", headerName: "Image", width: 100 },
     {
       field: "action",
@@ -53,14 +70,37 @@ const Category = () => {
       <Header title="Category" subtitle="Entire list of category" />
       <Box>
         <Grid container spacing={2} alignItems="center">
-          <Grid item md={5} xs={12}>
+          <Grid item md={3} xs={12}>
             <Controller
               name="category"
               control={control}
               render={({ field }) => (
                 <TextField
+                  select
                   id="category"
                   label="Category"
+                  variant="filled"
+                  fullWidth
+                  margin="normal"
+                  {...field}
+                >
+                  {category.map((option) => (
+                    <MenuItem key={option} value={option}>
+                      {option}
+                    </MenuItem>
+                  ))}
+                </TextField>
+              )}
+            />
+          </Grid>
+          <Grid item md={3} xs={12}>
+            <Controller
+              name="sub-category"
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  id="sub-category"
+                  label="Sub Category"
                   variant="filled"
                   fullWidth
                   margin="normal"
@@ -69,7 +109,7 @@ const Category = () => {
               )}
             />
           </Grid>
-          <Grid item md={5} xs={12}>
+          <Grid item md={3} xs={12}>
             <Controller
               name="category-image"
               control={control}
@@ -85,7 +125,7 @@ const Category = () => {
               )}
             />
           </Grid>
-          <Grid item md={2} xs={12}>
+          <Grid item md={3} xs={12}>
             <Button
               variant="contained"
               size="large"
@@ -118,4 +158,4 @@ const Category = () => {
   );
 };
 
-export default Category;
+export default SubCategory;
