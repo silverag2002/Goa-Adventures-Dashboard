@@ -16,6 +16,7 @@ import { URLConstants } from "../base/api/url.constants";
 import JoditEditor from "jodit-react";
 import axios, * as others from "axios";
 import { useNavigate } from "react-router-dom";
+import Loader from "react-loader";
 
 const AddProduct = () => {
   const theme = useTheme();
