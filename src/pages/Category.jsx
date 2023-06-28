@@ -52,7 +52,11 @@ const Category = () => {
       field: "category_image",
       headerName: "Image",
       width: 100,
-      renderCell: (params) => <a href={params.row.category_image}>Image</a>,
+      renderCell: (params) => (
+        <a href={params.rows.category_image} target="_blank">
+          Image
+        </a>
+      ),
     },
     {
       field: "action",
