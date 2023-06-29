@@ -28,6 +28,8 @@ const AddProduct = () => {
   const [stateCities, setStateCities] = useState([]);
   const [highlight, setHighlight] = useState("");
   const [overview, setOverview] = useState("");
+  const [countrySelected, setCountry] = useState("");
+  const [stateSelected, setState] = useState("");
   const navigate = useNavigate();
 
   const getSunEditorInstance = (sunEditor) => {
@@ -81,10 +83,11 @@ const AddProduct = () => {
         console.log(err);
       });
   }, []);
-  console.log("Countries", countries);
 
+  console.log("Country ", countrySelected);
   function handleCountryChange(country) {
     console.log("COuntry selecrted", country);
+    setCountry(decodeURIComponent(country));
 
     setLoaded(false);
     axiosInstance
@@ -102,6 +105,7 @@ const AddProduct = () => {
 
   function handleStateChange(state) {
     console.log("COuntry selecrted", state);
+    setState(decodeURIComponent(state));
 
     setLoaded(false);
     axiosInstance
@@ -158,9 +162,13 @@ const AddProduct = () => {
     // setClientType(undefined);
     setLoaded(false);
     data.overview = overview;
-
-    // data.activityExclusion = data.activityExclusion.split(",");
-    // data.activityInclusion = data.activityInclusion.split(",");
+    data.highlight = data.highlight.split("\n");
+    data.activityExclusion = data.exclusion.split("\n");
+    data.activityInclusion = data.inclusion.split("\n");
+    delete data.exclusion;
+    delete data.inclusion;
+    data.country = countrySelected;
+    data.state = stateSelected;
     data.last_update_by = "SUPER_ADMIN";
     data.creator = "SUPER_ADMIN";
     console.log("Submitted Data,", data);
@@ -172,16 +180,16 @@ const AddProduct = () => {
       data: data,
     };
 
-    axios(config)
-      .then((response) => {
-        setLoaded(true);
-        console.log("Response after submitting form", response);
-        navigate("/products");
-      })
-      .catch((err) => {
-        setLoaded(true);
-        console.log(err);
-      });
+    // axios(config)
+    //   .then((response) => {
+    //     setLoaded(true);
+    //     console.log("Response after submitting form", response);
+    //     navigate("/products");
+    //   })
+    //   .catch((err) => {
+    //     setLoaded(true);
+    //     console.log(err);
+    //   });
   };
 
   return (

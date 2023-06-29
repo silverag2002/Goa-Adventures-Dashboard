@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Header from "../components/Header";
 import {
   Box,
@@ -10,9 +10,17 @@ import {
 } from "@mui/material";
 import { useForm, Controller } from "react-hook-form";
 import { DataGrid } from "@mui/x-data-grid";
+import Loader from "react-loader";
+import { axiosInstance } from "../base/api/axios.util";
+import { URLConstants } from "../base/api/url.constants";
+import axios, * as others from "axios";
+var FormData = require("form-data");
 
 const SubCategory = () => {
   const theme = useTheme();
+  const [loaded, setLoaded] = useState(true);
+  const [reloadPage, setReloadPage] = useState(false);
+  const [categories, setCategories] = useState([]);
   const {
     handleSubmit,
     register,
@@ -20,14 +28,30 @@ const SubCategory = () => {
     formState: { errors },
   } = useForm();
 
-  const category = [
-    "Activity",
-    "Tour",
-    "Drama Show",
-    "DJ Night",
-    "Dinner Cruise",
-    "Park Ticket",
-  ];
+  // const category = [
+  //   "Activity",
+  //   "Tour",
+  //   "Drama Show",
+  //   "DJ Night",
+  //   "Dinner Cruise",
+  //   "Park Ticket",
+  // ];
+
+  useEffect(() => {
+    setLoaded(false);
+    axiosInstance
+      .get(URLConstants.categories())
+      .then((res) => {
+        console.log("Response", res);
+        const cate = res.map((ca) => ca.category);
+        setCategories(cate);
+        setLoaded(true);
+      })
+      .catch((err) => {
+        console.log("Error", err);
+        setLoaded(true);
+      });
+  }, [reloadPage]);
 
   const renderDetailsButton = (params) => {
     return (
@@ -84,7 +108,7 @@ const SubCategory = () => {
                   margin="normal"
                   {...field}
                 >
-                  {category.map((option) => (
+                  {categories.map((option) => (
                     <MenuItem key={option} value={option}>
                       {option}
                     </MenuItem>
@@ -110,19 +134,10 @@ const SubCategory = () => {
             />
           </Grid>
           <Grid item md={3} xs={12}>
-            <Controller
-              name="category-image"
-              control={control}
-              render={({ field }) => (
-                <TextField
-                  id="category-image"
-                  type="file"
-                  variant="filled"
-                  fullWidth
-                  margin="normal"
-                  {...field}
-                />
-              )}
+            <input
+              type="file"
+              placeholder="Image URL"
+              {...register("subcategoryImage", { required: true })}
             />
           </Grid>
           <Grid item md={3} xs={12}>
@@ -154,6 +169,29 @@ const SubCategory = () => {
           checkboxSelection
         />
       </Box>
+      <div className="spinner">
+        <Loader
+          loaded={loaded}
+          lines={13}
+          length={20}
+          width={10}
+          radius={30}
+          corners={1}
+          rotate={0}
+          direction={1}
+          color="#000"
+          speed={1}
+          trail={60}
+          shadow={false}
+          hwaccel={false}
+          className="spinner"
+          zIndex={2e9}
+          top="50%"
+          left="50%"
+          scale={1.0}
+          loadedClassName="loadedContent"
+        />
+      </div>
     </Box>
   );
 };
