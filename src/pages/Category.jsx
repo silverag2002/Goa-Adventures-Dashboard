@@ -6,15 +6,18 @@ import { DataGrid } from "@mui/x-data-grid";
 import Loader from "react-loader";
 import { axiosInstance } from "../base/api/axios.util";
 import { URLConstants } from "../base/api/url.constants";
+import axios, * as others from "axios";
 var FormData = require("form-data");
 
 const Category = () => {
   const theme = useTheme();
   const [loaded, setLoaded] = useState(true);
   const [rows, setRows] = useState([]);
+  const [reloadPage, setReloadPage] = useState(false);
   const {
     handleSubmit,
     register,
+    reset,
     control,
     formState: { errors },
   } = useForm();
@@ -32,7 +35,7 @@ const Category = () => {
         console.log("Error", err);
         setLoaded(true);
       });
-  }, []);
+  }, [reloadPage]);
 
   const renderDetailsButton = (params) => {
     return (
@@ -54,7 +57,7 @@ const Category = () => {
       headerName: "Image",
       width: 100,
       renderCell: (params) => (
-        <a href={params.rows.category_image} target="_blank">
+        <a href={params.row.category_image} target="_blank">
           Image
         </a>
       ),
@@ -82,13 +85,39 @@ const Category = () => {
     //reset({});
     // setClientType(undefined);
     setLoaded(false);
-    console.log("Data captured", data);
+    console.log("Data captured", data.categoryImage[0]);
 
     var formData = new FormData();
     if (data.categoryImage[0]?.size) {
       formData.append("categoryImage", data.categoryImage[0]);
     }
-    formData.append("category", data.category);
+    formData.append("category", data.category.trim());
+
+    var config = {
+      method: "POST",
+      url: URLConstants.categories(),
+      headers: {
+        headers: { "content-type": "multipart/form-data" },
+      },
+      data: formData,
+    };
+
+    axios(config)
+      .then((response) => {
+        try {
+          console.log("Response", response);
+          setLoaded(true);
+          reset({});
+          setReloadPage(!reloadPage);
+        } catch (error) {
+          console.error(error);
+        }
+      })
+      .catch((err) => {
+        setLoaded(true);
+        console.log("Err", err);
+        // reject(errorMsg);
+      });
   };
 
   const onError = (errors) => console.log(errors);
@@ -116,20 +145,10 @@ const Category = () => {
               />
             </Grid>
             <Grid item md={5} xs={12}>
-              <Controller
-                name="categoryImage"
-                control={control}
-                render={({ field }) => (
-                  <TextField
-                    id="category-image"
-                    type="file"
-                    label="Image"
-                    variant="filled"
-                    fullWidth
-                    margin="normal"
-                    {...field}
-                  />
-                )}
+              <input
+                type="file"
+                placeholder="Image URL"
+                {...register("categoryImage", { required: true })}
               />
             </Grid>
             <Grid item md={2} xs={12}>
