@@ -6,6 +6,7 @@ import { DataGrid } from "@mui/x-data-grid";
 import Loader from "react-loader";
 import { axiosInstance } from "../base/api/axios.util";
 import { URLConstants } from "../base/api/url.constants";
+var FormData = require("form-data");
 
 const Category = () => {
   const theme = useTheme();
@@ -82,6 +83,12 @@ const Category = () => {
     // setClientType(undefined);
     setLoaded(false);
     console.log("Data captured", data);
+
+    var formData = new FormData();
+    if (data.categoryImage[0]?.size) {
+      formData.append("categoryImage", data.categoryImage[0]);
+    }
+    formData.append("category", data.category);
   };
 
   const onError = (errors) => console.log(errors);
@@ -110,11 +117,12 @@ const Category = () => {
             </Grid>
             <Grid item md={5} xs={12}>
               <Controller
-                name="category_image"
+                name="categoryImage"
                 control={control}
                 render={({ field }) => (
                   <TextField
                     id="category-image"
+                    type="file"
                     label="Image"
                     variant="filled"
                     fullWidth
