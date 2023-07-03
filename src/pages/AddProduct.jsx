@@ -28,7 +28,8 @@ const AddProduct = () => {
   const [stateCities, setStateCities] = useState([]);
   const [highlight, setHighlight] = useState("");
   const [overview, setOverview] = useState("");
-  const [countrySelected, setCountry] = useState("");
+  const [counSel, setCounSel] = useState("");
+  const [countrySelected, setCountry] = useState("Ankit");
   const [stateSelected, setState] = useState("");
   const navigate = useNavigate();
 
@@ -45,7 +46,7 @@ const AddProduct = () => {
     console.log("Testing acii code", content);
     setOverview(content);
   };
-
+  console.log("COUN Sel", counSel);
   const {
     handleSubmit,
     register,
@@ -85,46 +86,12 @@ const AddProduct = () => {
   }, []);
 
   console.log("Country ", countrySelected);
-  function handleCountryChange(country) {
-    console.log("COuntry selecrted", country);
-    setCountry(decodeURIComponent(country));
-
-    setLoaded(false);
-    axiosInstance
-      .get(URLConstants.getStates(country))
-      .then((response) => {
-        setLoaded(true);
-        console.log("Response form states", response);
-        setCountryStates(response);
-      })
-      .catch((err) => {
-        setLoaded(true);
-        console.log(err);
-      });
-  }
-
-  function handleStateChange(state) {
-    console.log("COuntry selecrted", state);
-    setState(decodeURIComponent(state));
-
-    setLoaded(false);
-    axiosInstance
-      .get(URLConstants.getCities(state))
-      .then((response) => {
-        setLoaded(true);
-        console.log("Response form cities", response);
-        setStateCities(response.city_info);
-      })
-      .catch((err) => {
-        setLoaded(true);
-        console.log(err);
-      });
-  }
 
   const onError = (errors) => console.log(errors);
 
   function handleCountryChange(country) {
     console.log("COuntry selecrted", country);
+    setCountry(decodeURIComponent(country));
 
     setLoaded(false);
     axiosInstance
@@ -141,8 +108,8 @@ const AddProduct = () => {
   }
 
   function handleStateChange(state) {
-    console.log("COuntry selecrted", state);
-
+    console.log("State selecrted", state);
+    setState(decodeURIComponent(state));
     setLoaded(false);
     axiosInstance
       .get(URLConstants.getCities(state))
