@@ -29,8 +29,12 @@ const AddProduct = () => {
   const [highlight, setHighlight] = useState("");
   const [overview, setOverview] = useState("");
   const [counSel, setCounSel] = useState("");
-  const [countrySelected, setCountry] = useState("Ankit");
+  const [countrySelected, setCountry] = useState("");
   const [stateSelected, setState] = useState("");
+  const [reloadPage, setReloadPage] = useState(false);
+  const [categories, setCategories] = useState([]);
+  const [subcategories, setSubCategories] = useState([]);
+
   const navigate = useNavigate();
 
   const getSunEditorInstance = (sunEditor) => {
@@ -84,6 +88,38 @@ const AddProduct = () => {
         console.log(err);
       });
   }, []);
+
+  useEffect(() => {
+    setLoaded(false);
+    axiosInstance
+      .get(URLConstants.categories())
+      .then((res) => {
+        console.log("Response", res);
+        const cate = res.map((ca) => ca.category);
+        setCategories(cate);
+        setLoaded(true);
+      })
+      .catch((err) => {
+        console.log("Error", err);
+        setLoaded(true);
+      });
+  }, [reloadPage]);
+
+  useEffect(() => {
+    setLoaded(false);
+    axiosInstance
+      .get(URLConstants.subcategories())
+      .then((res) => {
+        console.log("Response", res);
+        const cate = res.map((ca) => ca.subcategory);
+        setSubCategories(cate);
+        setLoaded(true);
+      })
+      .catch((err) => {
+        console.log("Error", err);
+        setLoaded(true);
+      });
+  }, [reloadPage]);
 
   console.log("Country ", countrySelected);
 
@@ -147,16 +183,16 @@ const AddProduct = () => {
       data: data,
     };
 
-    // axios(config)
-    //   .then((response) => {
-    //     setLoaded(true);
-    //     console.log("Response after submitting form", response);
-    //     navigate("/products");
-    //   })
-    //   .catch((err) => {
-    //     setLoaded(true);
-    //     console.log(err);
-    //   });
+    axios(config)
+      .then((response) => {
+        setLoaded(true);
+        console.log("Response after submitting form", response);
+        navigate("/products");
+      })
+      .catch((err) => {
+        setLoaded(true);
+        console.log(err);
+      });
   };
 
   return (
@@ -199,7 +235,7 @@ const AddProduct = () => {
                       margin="normal"
                       {...field}
                     >
-                      {category.map((option) => (
+                      {categories.map((option) => (
                         <MenuItem key={option} value={option}>
                           {option}
                         </MenuItem>
@@ -224,7 +260,7 @@ const AddProduct = () => {
                       margin="normal"
                       {...field}
                     >
-                      {categoryType.map((option) => (
+                      {subcategories.map((option) => (
                         <MenuItem key={option} value={option}>
                           {option}
                         </MenuItem>
@@ -409,7 +445,7 @@ const AddProduct = () => {
             <Grid item xs={4} md={4}>
               <Box>
                 <Controller
-                  name="deposit_percent"
+                  name="deposit_value"
                   control={control}
                   render={({ field }) => (
                     <TextField
@@ -428,7 +464,7 @@ const AddProduct = () => {
             <Grid item xs={4}>
               <Box>
                 <Controller
-                  name="cancellation"
+                  name="allow_cancel"
                   control={control}
                   render={({ field }) => (
                     <TextField
@@ -474,7 +510,7 @@ const AddProduct = () => {
             <Grid item xs={4} md={6}>
               <Box>
                 <Controller
-                  name="discount_value"
+                  name="discount_percent"
                   control={control}
                   render={({ field }) => (
                     <TextField
@@ -599,7 +635,7 @@ const AddProduct = () => {
             <Grid item xs={4} md={4}>
               <Box>
                 <Controller
-                  name="gallery-img"
+                  name="gallery"
                   control={control}
                   render={({ field }) => (
                     <TextField
