@@ -130,8 +130,8 @@ const AddProduct = () => {
     setLoaded(false);
     data.overview = overview;
     data.highlight = data.highlight.split("\n");
-    data.activityExclusion = data.exclusion.split("\n");
-    data.activityInclusion = data.inclusion.split("\n");
+    data.activity_exclusion = data.exclusion.split("\n");
+    data.activity_inclusion = data.inclusion.split("\n");
     delete data.exclusion;
     delete data.inclusion;
     data.country = countrySelected;
@@ -212,7 +212,7 @@ const AddProduct = () => {
             <Grid item xs={4}>
               <Box>
                 <Controller
-                  name="category-type"
+                  name="category_type"
                   control={control}
                   render={({ field }) => (
                     <TextField
@@ -387,7 +387,7 @@ const AddProduct = () => {
             <Grid item xs={4}>
               <Box>
                 <Controller
-                  name="allow-deposit"
+                  name="allow_deposit"
                   control={control}
                   render={({ field }) => (
                     <TextField
@@ -399,10 +399,8 @@ const AddProduct = () => {
                       margin="normal"
                       {...field}
                     >
-                      <MenuItem value="allow-deposit">Allow Deposit</MenuItem>
-                      <MenuItem value="disallow-deposit">
-                        Disallow Deposit
-                      </MenuItem>
+                      <MenuItem value={true}>Allow Deposit</MenuItem>
+                      <MenuItem value={false}>Disallow Deposit</MenuItem>
                     </TextField>
                   )}
                 />
@@ -435,15 +433,15 @@ const AddProduct = () => {
                   render={({ field }) => (
                     <TextField
                       select
-                      id="cancellation"
+                      id="allow_cancel"
                       label="Allow Cancel"
                       variant="filled"
                       fullWidth
                       margin="normal"
                       {...field}
                     >
-                      <MenuItem value="yes">Yes</MenuItem>
-                      <MenuItem value="no">No</MenuItem>
+                      <MenuItem value={true}>Yes</MenuItem>
+                      <MenuItem value={false}>No</MenuItem>
                     </TextField>
                   )}
                 />
@@ -476,7 +474,7 @@ const AddProduct = () => {
             <Grid item xs={4} md={6}>
               <Box>
                 <Controller
-                  name="discount"
+                  name="discount_value"
                   control={control}
                   render={({ field }) => (
                     <TextField
@@ -583,7 +581,7 @@ const AddProduct = () => {
             <Grid item xs={4} md={4}>
               <Box>
                 <Controller
-                  name="feature-img"
+                  name="featured_image"
                   control={control}
                   render={({ field }) => (
                     <TextField
@@ -619,7 +617,7 @@ const AddProduct = () => {
             <Grid item xs={4} md={4}>
               <Box>
                 <Controller
-                  name="video-url"
+                  name="video"
                   control={control}
                   render={({ field }) => (
                     <TextField

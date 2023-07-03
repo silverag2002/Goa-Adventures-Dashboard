@@ -10,3 +10,4 @@ URLConstants.getCities = (state) =>
   `${URLConstants.BASE_URL}/v1/cities/${state}`;
 URLConstants.product = () => `${URLConstants.BASE_URL}/v1/products/`;
 URLConstants.categories = () => `${URLConstants.BASE_URL}/v1/categories/`;
+URLConstants.subcategories = () => `${URLConstants.BASE_URL}/v1/subcategories/`;
