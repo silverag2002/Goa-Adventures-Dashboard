@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import React, { useState, useEffect, useRef } from "react";
 import {
   Box,
@@ -17,6 +18,7 @@ import JoditEditor from "jodit-react";
 import axios, * as others from "axios";
 import { useNavigate } from "react-router-dom";
 import Loader from "react-loader";
+var FormData = require("form-data");
 
 const AddProduct = () => {
   const theme = useTheme();
@@ -175,12 +177,62 @@ const AddProduct = () => {
     data.last_update_by = "SUPER_ADMIN";
     data.creator = "SUPER_ADMIN";
     console.log("Submitted Data,", data);
+    console.log("gallery", data.gallery[1]);
+    console.log("featured", data.featured_image);
+    var formData = new FormData();
+    if (data.featured_image[0]?.size) {
+      formData.append("featured_image", data.featured_image[0]);
+    }
+    if (data.gallery[0]?.size) {
+      for (let i = 0; i < data.gallery.length; i++) {
+        formData.append("gallery", data.gallery[i]);
+      }
+    }
+    formData.append("title", data.title.trim());
+    formData.append("video", data.video.trim());
+    formData.append("overview", data.overview.trim());
+    formData.append("duration", data.duration.trim());
+    formData.append("creator", data.creator.trim());
+
+    formData.append("state", data.state.trim());
+    formData.append("country", data.country.trim());
+    formData.append("category", data.category.trim());
+
+    formData.append("category_type", data.category_type.trim());
+    formData.append("city", data.city.trim());
+
+    formData.append("min_people", data.min_people.trim());
+    formData.append("max_people", data.max_people.trim());
+    formData.append("booking_period", data.booking_period.trim());
+
+    formData.append("price", data.price.trim());
+    formData.append("deposit_value", data.deposit_value.trim());
+
+    formData.append("discount_percent", data.discount_percent.trim());
+    formData.append("allow_cancel", data.allow_cancel);
+    formData.append("allow_deposit", data.allow_deposit);
+
+    formData.append("last_update_by", data.last_update_by.trim());
+
+    formData.append(
+      "activity_inclusion",
+      JSON.stringify(data.activity_inclusion)
+    );
+
+    formData.append(
+      "activity_exclusion",
+      JSON.stringify(data.activity_exclusion)
+    );
+    formData.append("highlight", JSON.stringify(data.highlight));
+    console.log("Fprm data", formData);
 
     var config = {
-      method: "post",
+      method: "POST",
       url: URLConstants.product(),
-
-      data: data,
+      headers: {
+        headers: { "content-type": "multipart/form-data" },
+      },
+      data: formData,
     };
 
     axios(config)
@@ -616,37 +668,20 @@ const AddProduct = () => {
             </Grid>
             <Grid item xs={4} md={4}>
               <Box>
-                <Controller
-                  name="featured_image"
-                  control={control}
-                  render={({ field }) => (
-                    <TextField
-                      id="feature-img"
-                      label="Featured Image"
-                      variant="filled"
-                      fullWidth
-                      margin="normal"
-                      {...field}
-                    />
-                  )}
+                <input
+                  type="file"
+                  placeholder="Image URL"
+                  {...register("featured_image", { required: true })}
                 />
               </Box>
             </Grid>
             <Grid item xs={4} md={4}>
               <Box>
-                <Controller
-                  name="gallery"
-                  control={control}
-                  render={({ field }) => (
-                    <TextField
-                      id="gallery-img"
-                      label="Gallery Image"
-                      variant="filled"
-                      fullWidth
-                      margin="normal"
-                      {...field}
-                    />
-                  )}
+                <input
+                  type="file"
+                  placeholder="Image URL"
+                  multiple
+                  {...register("gallery", { required: true })}
                 />
               </Box>
             </Grid>
