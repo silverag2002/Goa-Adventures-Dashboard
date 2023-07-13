@@ -111,7 +111,7 @@ const Bookings = () => {
           }}
           href="/create-booking"
         >
-          Add New
+          Create Booking
         </Button>
       </FlexBetween>
       <Box

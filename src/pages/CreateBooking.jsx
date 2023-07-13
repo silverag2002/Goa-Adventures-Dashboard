@@ -1,14 +1,14 @@
 import React from "react";
+import Header from "components/Header";
+import FlexBetween from "components/FlexBetween";
 import {
   Box,
   Grid,
   TextField,
   MenuItem,
-  Typography,
   Button,
   useTheme,
   Stack,
-  DatePicker,
 } from "@mui/material";
 import { useForm, Controller } from "react-hook-form";
 
@@ -23,6 +23,21 @@ const CreateBooking = () => {
 
   return (
     <Box sx={{ flexGrow: 1, margin: "1.5rem 2.5rem" }}>
+      <FlexBetween>
+        <Header title="Create Booking" subtitle="" />
+        <Button
+          variant="contained"
+          size="large"
+          style={{
+            backgroundColor: theme.palette.secondary.main,
+            color: theme.palette.neutral[600],
+            fontWeight: "bold",
+          }}
+          href="/bookings"
+        >
+          Go Back
+        </Button>
+      </FlexBetween>
       <form>
         <Grid container spacing={2}>
           <Grid item xs={12} md={3}>
@@ -129,7 +144,7 @@ const CreateBooking = () => {
               />
             </Box>
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={12} md={8}>
             <Box>
               <Controller
                 name="productName"
@@ -152,7 +167,7 @@ const CreateBooking = () => {
               />
             </Box>
           </Grid>
-          <Grid item xs={12} md={3}>
+          <Grid item xs={12} md={4}>
             <Box>
               <Controller
                 name="total_seat"
@@ -220,6 +235,30 @@ const CreateBooking = () => {
                     margin="normal"
                     {...field}
                   />
+                )}
+              />
+            </Box>
+          </Grid>
+          <Grid item xs={12} md={3}>
+            <Box>
+              <Controller
+                name="payment_mode"
+                control={control}
+                render={({ field }) => (
+                  <TextField
+                    select
+                    id="payment_mode"
+                    label="Payment Mode"
+                    variant="filled"
+                    fullWidth
+                    margin="normal"
+                    {...field}
+                  >
+                    <MenuItem value={"online-payment"}>Online Payment</MenuItem>
+                    <MenuItem value={"offline-payment"}>
+                      Offline Payment
+                    </MenuItem>
+                  </TextField>
                 )}
               />
             </Box>
@@ -328,7 +367,7 @@ const CreateBooking = () => {
               color: theme.palette.neutral[600],
               fontWeight: "bold",
             }}
-            href="/products"
+            href="/bookings"
           >
             Cancel
           </Button>
