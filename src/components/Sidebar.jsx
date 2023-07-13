@@ -147,12 +147,12 @@ const Sidebar = ({
                       sx={{
                         backgroundColor:
                           active === lcText
-                            ? theme.palette.secondary[300]
+                            ? theme.palette.neutral[50]
                             : "transparent",
                         color:
                           active === lcText
-                            ? theme.palette.primary[600]
-                            : theme.palette.secondary[100],
+                            ? theme.palette.primary[500]
+                            : theme.palette.neutral.main,
                       }}
                     >
                       <ListItemIcon
@@ -160,7 +160,7 @@ const Sidebar = ({
                           ml: "2rem",
                           color:
                             active === lcText
-                              ? theme.palette.primary[600]
+                              ? theme.palette.primary.main
                               : theme.palette.secondary[200],
                         }}
                       >

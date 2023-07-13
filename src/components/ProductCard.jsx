@@ -10,14 +10,21 @@ import {
   Stack,
   Button,
   IconButton,
+  Container,
 } from "@mui/material";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import EditIcon from "@mui/icons-material/Edit";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { Palette } from "@mui/icons-material";
+import PlaceOutlinedIcon from "@mui/icons-material/PlaceOutlined";
+import {
+  CurrencyRupee,
+  FmdGoodOutlined,
+  CategoryOutlined,
+} from "@mui/icons-material";
 
-const ProductCard = () => {
+const ProductCard = ({ item }) => {
   const [visible, setVisible] = useState(true);
 
   const productStatusHandler = () => {
@@ -27,68 +34,128 @@ const ProductCard = () => {
   return (
     <Card
       sx={{
-        display: "flex",
+        maxWidth: "320px",
         width: "100%",
-        backgroundColor: "white",
-        margin: "10px",
+        backgroundColor: theme.palette.background.alt,
+        boxShadow: 3,
+        borderRadius: "7%",
       }}
     >
       <CardMedia
-        component="img"
-        sx={{ width: 250 }}
+        sx={{ height: 200 }}
         image="https://goaadventure.in/wp-content/uploads/2020/12/Scuba-Diving-Malvan-300x300.jpg"
-        alt="Live from space album cover"
+        title="green iguana"
       />
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          width: "100%",
-          backgroundColor: "gray",
-        }}
-      >
-        <CardContent sx={{ flex: "1" }}>
-          <Typography variant="h5">Scuba Diving Grand Island</Typography>
-          <Box sx={{ display: "flex", flexDirection: "row" }}>
-            <Typography
-              variant="subtitle1"
-              color="text.secondary"
-              component="div"
-            ></Typography>
-            <Button href="#" variant="outlined" size="medium">
-              View Details
-            </Button>
-          </Box>
-        </CardContent>
-        <CardActions>
-          <Stack
-            direction={"column"}
+      <CardContent>
+        <Typography gutterBottom variant="h5" fontWeight={600}>
+          Scuba Diving Grand Island
+        </Typography>
+
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            gap: "4px",
+            alignItems: "start",
+            justifyContent: "space-between",
+            paddingTop: "0.8rem",
+          }}
+        >
+          <Typography
+            variant="body1"
+            color="text.secondary"
+            sx={{ fontWeight: "bold" }}
+          >
+            <FmdGoodOutlined />
+            Grand Island Goa
+          </Typography>
+          <Typography
+            variant="body1"
+            color="text.secondary"
+            sx={{ fontWeight: "bold" }}
+          >
+            <CategoryOutlined />
+            Activity
+          </Typography>
+        </Box>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "row",
+            gap: "4px",
+            alignItems: "center",
+            marginTop: "1rem",
+          }}
+        >
+          <Typography
+            variant="body1"
+            color="text.secondary"
             sx={{
-              display: "flex",
-              alignItems: "flex-end",
-              flexDirection: "column",
-              width: "100%",
+              textDecoration: "line-through",
+              fontSize: "1.1rem",
+              fontWeight: "500",
+              color: theme.palette.grey[500],
             }}
           >
-            <IconButton
-              onClick={productStatusHandler}
-              aria-label="visible"
-              sx={{
-                backgroundColor: theme.palette.secondary.main,
+            <CurrencyRupee fontSize="medium" />
+            2000
+          </Typography>
+          <Typography
+            variant="h4"
+            color="text.secondary"
+            sx={{ fontWeight: "bold" }}
+          >
+            <CurrencyRupee />
+            1500
+          </Typography>
+        </Box>
+      </CardContent>
+      <CardActions>
+        <Box
+          sx={{
+            width: "100%",
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "flex-end",
+            gap: "0.6rem",
+          }}
+        >
+          <IconButton
+            aria-label="edit"
+            sx={{
+              backgroundColor: theme.palette.primary.main,
+              color: theme.palette.neutral.main,
+            }}
+          >
+            <EditIcon />
+          </IconButton>
+          <IconButton
+            onClick={productStatusHandler}
+            aria-label="visible"
+            sx={{
+              backgroundColor: theme.palette.secondary.main,
+              color: theme.palette.neutral.main,
+            }}
+          >
+            {visible === true ? <VisibilityIcon /> : <VisibilityOffIcon />}
+          </IconButton>
+          <IconButton
+            aria-label="delete"
+            variant="contained"
+            sx={{
+              backgroundColor: theme.palette.background.alt,
+              color: theme.palette.neutral.main,
+              ":hover": {
+                bgcolor: "white",
                 color: theme.palette.neutral.main,
-              }}
-            >
-              {visible === true ? <VisibilityIcon /> : <VisibilityOffIcon />}
-            </IconButton>
-            <IconButton aria-label="edit">
-              <EditIcon />
-            </IconButton>
-            <IconButton aria-label="delete" variant="contained">
-              <DeleteForeverIcon />
-            </IconButton>
-          </Stack>
-        </CardActions>
-      </Box>
+              },
+            }}
+          >
+            <DeleteForeverIcon />
+          </IconButton>
+        </Box>
+      </CardActions>
     </Card>
   );
 };

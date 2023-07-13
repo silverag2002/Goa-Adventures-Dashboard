@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { Box, useTheme } from "@mui/material";
+import { Box, useTheme, Button } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { useGetTransactionsQuery } from "state/api";
 import Header from "components/Header";
 import DataGridCustomToolbar from "components/DataGridCustomToolbar";
+import FlexBetween from "../components/FlexBetween";
 
 const Bookings = () => {
   const theme = useTheme();
@@ -98,7 +99,21 @@ const Bookings = () => {
 
   return (
     <Box m="1.5rem 2.5rem">
-      <Header title="Manage Booking" subtitle="Entire list of transactions" />
+      <FlexBetween>
+        <Header title="Booking" subtitle="Entire list of bookings" />
+        <Button
+          variant="contained"
+          size="large"
+          style={{
+            backgroundColor: theme.palette.secondary.main,
+            color: theme.palette.neutral[600],
+            fontWeight: "bold",
+          }}
+          href="/create-booking"
+        >
+          Add New
+        </Button>
+      </FlexBetween>
       <Box
         height="80vh"
         sx={{

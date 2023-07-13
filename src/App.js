@@ -17,6 +17,7 @@ import CreateProduct from "pages/CreateProduct";
 import Category from "pages/Category";
 import AddCategory from "pages/AddCategory";
 import SubCategory from "pages/SubCategory";
+import CreateBooking from "pages/CreateBooking";
 
 function App() {
   const mode = useSelector((state) => state.global.mode);
@@ -31,6 +32,7 @@ function App() {
               <Route path="/" element={<Navigate to="/dashboard" replace />} />
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/bookings" element={<Bookings />} />
+              <Route path="/create-booking" element={<CreateBooking />} />
               <Route path="/products" element={<Products />} />
               <Route path="/add-product" element={<AddProduct />} />
               <Route path="/customers" element={<Customers />} />
