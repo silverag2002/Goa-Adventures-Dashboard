@@ -76,7 +76,7 @@ const Products = () => {
             category={item.category}
             city={item.city}
             price={item.price}
-            disocunt_percent={item.discount_percent}
+            discount_percent={item.discount_percent}
           />
         ))}
       </Box>
