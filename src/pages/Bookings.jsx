@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Box, useTheme, Button } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { useGetTransactionsQuery } from "state/api";
 import Header from "components/Header";
 import DataGridCustomToolbar from "components/DataGridCustomToolbar";
 import FlexBetween from "../components/FlexBetween";
+import { axiosInstance } from "../base/api/axios.util";
+import { URLConstants } from "../base/api/url.constants";
 
 const Bookings = () => {
   const theme = useTheme();
@@ -14,14 +16,30 @@ const Bookings = () => {
   const [pageSize, setPageSize] = useState(20);
   const [sort, setSort] = useState({});
   const [search, setSearch] = useState("");
-
+  const [loaded, setLoaded] = useState(true);
+  const [bookings, setBookings] = useState([]);
   const [searchInput, setSearchInput] = useState("");
+
   const { data, isLoading } = useGetTransactionsQuery({
     page,
     pageSize,
     sort: JSON.stringify(sort),
     search,
   });
+  useEffect(() => {
+    setLoaded(false);
+    axiosInstance
+      .get(URLConstants.bookings())
+      .then((response) => {
+        setLoaded(true);
+        console.log("Response form countries", response);
+        setBookings(response);
+      })
+      .catch((err) => {
+        setLoaded(true);
+        console.log(err);
+      });
+  }, []);
 
   const columns = [
     {
@@ -38,17 +56,17 @@ const Bookings = () => {
       flex: 1,
     },
     {
-      field: "startDate",
+      field: "start_date",
       headerName: "Booking Date",
       flex: 1,
     },
     {
-      field: "depositeAmount",
+      field: "deposit_amountt",
       headerName: "Deposite",
       flex: 0.5,
     },
     {
-      field: "totalAmount",
+      field: "total_amount",
       headerName: "Total Amount",
       flex: 1,
     },
@@ -143,7 +161,7 @@ const Bookings = () => {
       >
         <DataGrid
           getRowId={(rows) => rows.id}
-          rows={rows}
+          rows={bookings}
           columns={columns}
           rowCount={(data && data.total) || 0}
           rowsPerPageOptions={[20, 50, 100]}

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Header from "components/Header";
 import FlexBetween from "components/FlexBetween";
 import {
@@ -11,16 +11,122 @@ import {
   Stack,
 } from "@mui/material";
 import { useForm, Controller } from "react-hook-form";
+import { axiosInstance } from "../base/api/axios.util";
+import { URLConstants } from "../base/api/url.constants";
+import Loader from "react-loader";
+import { useNavigate } from "react-router-dom";
 
 const CreateBooking = () => {
+  const navigate = useNavigate();
   const theme = useTheme();
+  const [loaded, setLoaded] = useState(true);
+  const [customers, setCustomers] = useState([]);
+  const [reloadPage, setReloadPage] = useState(false);
+  const [categories, setCategories] = useState([]);
+  const [subcategories, setSubCategories] = useState([]);
+  const [product, setProduct] = useState([]);
+  const [pendingAmount, setPendingAmount] = useState("");
+  const [depositAmount, setDepositAmount] = useState("");
+  const [mobileNumber, setMobileNumber] = useState("");
+  const [customerId, setCustomerId] = useState("");
+
   const {
     handleSubmit,
     register,
     control,
+    getValues,
     formState: { errors },
   } = useForm({});
 
+  useEffect(() => {
+    setLoaded(false);
+    axiosInstance
+      .get(URLConstants.customers())
+      .then((response) => {
+        setLoaded(true);
+        console.log("Response form countries", response);
+        setCustomers(response);
+      })
+      .catch((err) => {
+        setLoaded(true);
+        console.log(err);
+      });
+  }, []);
+
+  useEffect(() => {
+    setLoaded(false);
+    axiosInstance
+      .get(URLConstants.categories())
+      .then((res) => {
+        console.log("Response", res);
+        const cate = res.map((ca) => ca.category);
+        setCategories(res);
+        setLoaded(true);
+      })
+      .catch((err) => {
+        console.log("Error", err);
+        setLoaded(true);
+      });
+  }, [reloadPage]);
+
+  useEffect(() => {
+    setLoaded(false);
+    axiosInstance
+      .get(URLConstants.subcategories())
+      .then((res) => {
+        console.log("Response", res);
+
+        setSubCategories(res);
+        setLoaded(true);
+      })
+      .catch((err) => {
+        console.log("Error", err);
+        setLoaded(true);
+      });
+  }, [reloadPage]);
+
+  useEffect(() => {
+    setLoaded(false);
+    axiosInstance
+      .get(URLConstants.product())
+      .then((res) => {
+        console.log("Response", res);
+
+        setProduct(res);
+        setLoaded(true);
+      })
+      .catch((err) => {
+        console.log("Error", err);
+        setLoaded(true);
+      });
+  }, [reloadPage]);
+
+  const onSubmit = (data) => {
+    setLoaded(false);
+    data.pending_amount = pendingAmount;
+    data.deposit_amount = depositAmount;
+    data.booking_date = new Date();
+    data.booked_by = "SUPER_ADMIN";
+    data.invoice = "Test url";
+    data.customer_mobile_number = mobileNumber;
+    data.customer_id = customerId;
+    data.booking_status = "CONFIRMED";
+    console.log("Data entered", data);
+
+    axiosInstance
+      .post(URLConstants.bookings(), data)
+      .then((res) => {
+        setLoaded(true);
+        console.log("Responsse form booking post method", res);
+        navigate("/bookings");
+      })
+      .catch((err) => {
+        setLoaded(true);
+        console.log("error", err);
+      });
+  };
+
+  const onError = (errors) => console.log(errors);
   return (
     <Box sx={{ flexGrow: 1, margin: "1.5rem 2.5rem" }}>
       <FlexBetween>
@@ -38,13 +144,14 @@ const CreateBooking = () => {
           Go Back
         </Button>
       </FlexBetween>
-      <form>
+      <form onSubmit={handleSubmit(onSubmit, onError)}>
         <Grid container spacing={2}>
           <Grid item xs={12} md={3}>
             <Box>
               <Controller
-                name="customer_name"
+                name="customer_id"
                 control={control}
+                onChange={(e) => console.log("Ankit", e.target.value)}
                 render={({ field }) => (
                   <TextField
                     select
@@ -53,14 +160,21 @@ const CreateBooking = () => {
                     variant="filled"
                     margin="normal"
                     fullWidth
-                    {...field}
+                    value={customerId}
+                    onChange={(e) => {
+                      setCustomerId(e.target.value);
+                      customers.map((cust) =>
+                        cust.id == e.target.value
+                          ? setMobileNumber(cust.mobile_number)
+                          : setMobileNumber("")
+                      );
+                    }}
                   >
-                    <MenuItem key="" value="Ajit Sharma">
-                      Ajit Sharma
-                    </MenuItem>
-                    <MenuItem key="" value="">
-                      Ankit Gupta
-                    </MenuItem>
+                    {customers.map((cust) => (
+                      <MenuItem key={cust.id} value={cust.id}>
+                        {cust.name}
+                      </MenuItem>
+                    ))}
                   </TextField>
                 )}
               />
@@ -81,10 +195,10 @@ const CreateBooking = () => {
                     fullWidth
                     {...field}
                   >
-                    <MenuItem key="" value="">
+                    <MenuItem key="" value="Goa">
                       Goa
                     </MenuItem>
-                    <MenuItem key="" value="">
+                    <MenuItem key="" value="Mumbai">
                       Mumbai
                     </MenuItem>
                   </TextField>
@@ -95,7 +209,7 @@ const CreateBooking = () => {
           <Grid item xs={12} md={3}>
             <Box>
               <Controller
-                name="category"
+                name="category_id"
                 control={control}
                 render={({ field }) => (
                   <TextField
@@ -107,12 +221,11 @@ const CreateBooking = () => {
                     fullWidth
                     {...field}
                   >
-                    <MenuItem key="" value="">
-                      Tour
-                    </MenuItem>
-                    <MenuItem key="" value="">
-                      Activity
-                    </MenuItem>
+                    {categories.map((option) => (
+                      <MenuItem key={option.id} value={option.id}>
+                        {option.category}
+                      </MenuItem>
+                    ))}
                   </TextField>
                 )}
               />
@@ -121,7 +234,7 @@ const CreateBooking = () => {
           <Grid item xs={12} md={3}>
             <Box>
               <Controller
-                name="sub-category"
+                name="sub_category_id"
                 control={control}
                 render={({ field }) => (
                   <TextField
@@ -133,12 +246,11 @@ const CreateBooking = () => {
                     margin="normal"
                     {...field}
                   >
-                    <MenuItem key="" value="">
-                      Scuba Diving
-                    </MenuItem>
-                    <MenuItem key="" value="">
-                      Honeymoon Tour
-                    </MenuItem>
+                    {subcategories.map((option) => (
+                      <MenuItem key={option.id} value={option.id}>
+                        {option.subcategory}
+                      </MenuItem>
+                    ))}
                   </TextField>
                 )}
               />
@@ -147,7 +259,7 @@ const CreateBooking = () => {
           <Grid item xs={12} md={8}>
             <Box>
               <Controller
-                name="productName"
+                name="product_id"
                 control={control}
                 render={({ field }) => (
                   <TextField
@@ -159,9 +271,11 @@ const CreateBooking = () => {
                     margin="normal"
                     {...field}
                   >
-                    <MenuItem key="" value="">
-                      Scuba Diving
-                    </MenuItem>
+                    {product.map((option) => (
+                      <MenuItem key={option.id} value={option.id}>
+                        {option.title}
+                      </MenuItem>
+                    ))}
                   </TextField>
                 )}
               />
@@ -177,6 +291,7 @@ const CreateBooking = () => {
                     id="total_seat"
                     label="Total Seat"
                     variant="filled"
+                    type="number"
                     fullWidth
                     margin="normal"
                     {...field}
@@ -195,6 +310,7 @@ const CreateBooking = () => {
                     id="total_amount"
                     label="Total Amount"
                     variant="filled"
+                    type="number"
                     fullWidth
                     margin="normal"
                     {...field}
@@ -213,9 +329,26 @@ const CreateBooking = () => {
                     id="deposit_amount"
                     label="Deposit Amount"
                     variant="filled"
+                    type="number"
                     fullWidth
                     margin="normal"
-                    {...field}
+                    value={depositAmount}
+                    onChange={(e) => {
+                      console.log("Testing getValues", field);
+                      setDepositAmount(e.target.value);
+                      if (
+                        Number(getValues("total_amount")) >
+                        Number(e.target.value)
+                      ) {
+                        let amount =
+                          Number(getValues("total_amount")) -
+                          Number(e.target.value);
+                        setPendingAmount(amount);
+                      } else {
+                        setPendingAmount(0);
+                      }
+                    }}
+                    // {...field}
                   />
                 )}
               />
@@ -226,14 +359,14 @@ const CreateBooking = () => {
               <Controller
                 name="pending_amount"
                 control={control}
-                render={({ field }) => (
+                render={({ field, value }) => (
                   <TextField
                     id="pending_amount"
                     label="Pending Amount"
                     variant="filled"
                     fullWidth
                     margin="normal"
-                    {...field}
+                    value={pendingAmount}
                   />
                 )}
               />
@@ -254,10 +387,8 @@ const CreateBooking = () => {
                     margin="normal"
                     {...field}
                   >
-                    <MenuItem value={"online-payment"}>Online Payment</MenuItem>
-                    <MenuItem value={"offline-payment"}>
-                      Offline Payment
-                    </MenuItem>
+                    <MenuItem value="Online">Online Payment</MenuItem>
+                    <MenuItem value="Offline">Offline Payment</MenuItem>
                   </TextField>
                 )}
               />
@@ -338,6 +469,24 @@ const CreateBooking = () => {
               />
             </Box>
           </Grid>
+          <Grid item xs={12} md={3}>
+            <Box>
+              <Controller
+                name="customer_mobile_number"
+                control={control}
+                render={({ field }) => (
+                  <TextField
+                    id="customer_mobile_number"
+                    label="Customer Mobile Number"
+                    variant="filled"
+                    value={mobileNumber}
+                    fullWidth
+                    margin="normal"
+                  />
+                )}
+              />
+            </Box>
+          </Grid>
         </Grid>
 
         <Stack
@@ -372,6 +521,30 @@ const CreateBooking = () => {
             Cancel
           </Button>
         </Stack>
+
+        <div className="spinner">
+          <Loader
+            loaded={loaded}
+            lines={13}
+            length={20}
+            width={10}
+            radius={30}
+            corners={1}
+            rotate={0}
+            direction={1}
+            color="#000"
+            speed={1}
+            trail={60}
+            shadow={false}
+            hwaccel={false}
+            className="spinner"
+            zIndex={2e9}
+            top="50%"
+            left="50%"
+            scale={1.0}
+            loadedClassName="loadedContent"
+          />
+        </div>
       </form>
     </Box>
   );
