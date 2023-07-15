@@ -24,7 +24,14 @@ import {
   CategoryOutlined,
 } from "@mui/icons-material";
 
-const ProductCard = ({ item }) => {
+const ProductCard = ({
+  title,
+  category,
+  featured_image,
+  city,
+  price,
+  discount_percent,
+}) => {
   const [visible, setVisible] = useState(true);
 
   const productStatusHandler = () => {
@@ -43,12 +50,12 @@ const ProductCard = ({ item }) => {
     >
       <CardMedia
         sx={{ height: 200 }}
-        image="https://goaadventure.in/wp-content/uploads/2020/12/Scuba-Diving-Malvan-300x300.jpg"
+        image={featured_image}
         title="green iguana"
       />
       <CardContent>
         <Typography gutterBottom variant="h5" fontWeight={600}>
-          Scuba Diving Grand Island
+          {title}
         </Typography>
 
         <Box
@@ -67,7 +74,7 @@ const ProductCard = ({ item }) => {
             sx={{ fontWeight: "bold" }}
           >
             <FmdGoodOutlined />
-            Grand Island Goa
+            {city}
           </Typography>
           <Typography
             variant="body1"
@@ -75,7 +82,7 @@ const ProductCard = ({ item }) => {
             sx={{ fontWeight: "bold" }}
           >
             <CategoryOutlined />
-            Activity
+            {category}
           </Typography>
         </Box>
         <Box
@@ -98,7 +105,7 @@ const ProductCard = ({ item }) => {
             }}
           >
             <CurrencyRupee fontSize="medium" />
-            2000
+            {price}
           </Typography>
           <Typography
             variant="h4"
@@ -106,7 +113,7 @@ const ProductCard = ({ item }) => {
             sx={{ fontWeight: "bold" }}
           >
             <CurrencyRupee />
-            1500
+            {((100 - Number(discount_percent)) * Number(price)) / 100}
           </Typography>
         </Box>
       </CardContent>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Header from "components/Header";
 import {
   Box,
@@ -14,9 +14,30 @@ import FlexBetween from "components/FlexBetween";
 import ProductCard from "components/ProductCard";
 import { Link } from "react-router-dom";
 import ProductFilter from "components/Product/ProductFilter";
+import Loader from "react-loader";
+import { axiosInstance } from "../base/api/axios.util";
+import { URLConstants } from "../base/api/url.constants";
 
 const Products = () => {
   const theme = useTheme();
+  const [reloadPage, setReloadPage] = useState(false);
+  const [loaded, setLoaded] = useState(true);
+  const [products, setProduct] = useState([]);
+  useEffect(() => {
+    setLoaded(false);
+    axiosInstance
+      .get(URLConstants.product())
+      .then((res) => {
+        console.log("Response", res);
+
+        setProduct(res);
+        setLoaded(true);
+      })
+      .catch((err) => {
+        console.log("Error", err);
+        setLoaded(true);
+      });
+  }, [reloadPage]);
   return (
     <Box m="1.5rem 2.5rem">
       <FlexBetween>
@@ -48,8 +69,15 @@ const Products = () => {
         }}
         spacing={4}
       >
-        {[0, 1, 2, 3, 4, 5, 6, 7, 8].map((item, index) => (
-          <ProductCard />
+        {products.map((item, index) => (
+          <ProductCard
+            title={item.title}
+            featured_image={item.featured_image}
+            category={item.category}
+            city={item.city}
+            price={item.price}
+            disocunt_percent={item.discount_percent}
+          />
         ))}
       </Box>
     </Box>
