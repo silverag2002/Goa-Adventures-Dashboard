@@ -70,14 +70,7 @@ const Products = () => {
         spacing={4}
       >
         {products.map((item, index) => (
-          <ProductCard
-            title={item.title}
-            featured_image={item.featured_image}
-            category={item.category}
-            city={item.city}
-            price={item.price}
-            discount_percent={item.discount_percent}
-          />
+          <ProductCard product={item} key={item.id} />
         ))}
       </Box>
     </Box>

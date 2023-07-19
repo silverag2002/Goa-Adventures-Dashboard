@@ -18,26 +18,24 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { Palette } from "@mui/icons-material";
 import PlaceOutlinedIcon from "@mui/icons-material/PlaceOutlined";
+import { Link } from "react-router-dom";
 import {
   CurrencyRupee,
   FmdGoodOutlined,
   CategoryOutlined,
 } from "@mui/icons-material";
 
-const ProductCard = ({
-  title,
-  category,
-  featured_image,
-  city,
-  price,
-  discount_percent,
-}) => {
+const ProductCard = ({ product }) => {
   const [visible, setVisible] = useState(true);
+  const [finalProduct, setFinalProduct] = useState(product);
 
   const productStatusHandler = () => {
     setVisible(!visible);
   };
   const theme = useTheme();
+  console.log("PRoiduct", product);
+
+  function editProduct(choosenId) {}
   return (
     <Card
       sx={{
@@ -50,12 +48,12 @@ const ProductCard = ({
     >
       <CardMedia
         sx={{ height: 200 }}
-        image={featured_image}
+        image={product.featured_image}
         title="green iguana"
       />
       <CardContent>
         <Typography gutterBottom variant="h5" fontWeight={600}>
-          {title}
+          {product.title}
         </Typography>
 
         <Box
@@ -74,7 +72,7 @@ const ProductCard = ({
             sx={{ fontWeight: "bold" }}
           >
             <FmdGoodOutlined />
-            {city}
+            {product.city}
           </Typography>
           <Typography
             variant="body1"
@@ -82,7 +80,7 @@ const ProductCard = ({
             sx={{ fontWeight: "bold" }}
           >
             <CategoryOutlined />
-            {category}
+            {product.category}
           </Typography>
         </Box>
         <Box
@@ -105,7 +103,7 @@ const ProductCard = ({
             }}
           >
             <CurrencyRupee fontSize="medium" />
-            {price}
+            {product.price}
           </Typography>
           <Typography
             variant="h4"
@@ -113,7 +111,9 @@ const ProductCard = ({
             sx={{ fontWeight: "bold" }}
           >
             <CurrencyRupee />
-            {((100 - Number(discount_percent)) * Number(price)) / 100}
+            {((100 - Number(product.discount_percent)) *
+              Number(product.price)) /
+              100}
           </Typography>
         </Box>
       </CardContent>
@@ -128,15 +128,21 @@ const ProductCard = ({
             gap: "0.6rem",
           }}
         >
+          {console.log("Proudct info in card", product)}
+
           <IconButton
             aria-label="edit"
             sx={{
               backgroundColor: theme.palette.primary.main,
               color: theme.palette.neutral.main,
             }}
+            // onClick={() => editProduct(product.id)}
           >
-            <EditIcon />
+            <Link to="/add-product" state={{ product: product }}>
+              <EditIcon />
+            </Link>
           </IconButton>
+
           <IconButton
             onClick={productStatusHandler}
             aria-label="visible"

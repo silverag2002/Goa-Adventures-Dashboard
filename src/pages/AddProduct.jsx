@@ -11,6 +11,7 @@ import {
   Stack,
 } from "@mui/material";
 import Header from "components/Header";
+import { Link, useLocation } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
 import { axiosInstance } from "../base/api/axios.util";
 import { URLConstants } from "../base/api/url.constants";
@@ -23,7 +24,7 @@ var FormData = require("form-data");
 const AddProduct = () => {
   const theme = useTheme();
   const editor = useRef();
-
+  const location = useLocation();
   const [loaded, setLoaded] = useState(true);
   const [countries, setCountries] = useState([]);
   const [countryStates, setCountryStates] = useState([]);
@@ -57,6 +58,7 @@ const AddProduct = () => {
     handleSubmit,
     register,
     control,
+    setValue,
     formState: { errors },
   } = useForm({});
 
@@ -76,6 +78,14 @@ const AddProduct = () => {
     "Sightseeing",
   ];
 
+  var clientDataAssignment = {};
+
+  console.log("LOcaltion", location);
+  if (location.state) {
+    clientDataAssignment = location.state.product;
+  }
+  console.log("ASsingment issue", clientDataAssignment);
+
   useEffect(() => {
     setLoaded(false);
     axiosInstance
@@ -89,6 +99,7 @@ const AddProduct = () => {
         setLoaded(true);
         console.log(err);
       });
+    console.log("Clietn asssignment value", clientDataAssignment);
   }, []);
 
   useEffect(() => {
@@ -143,6 +154,26 @@ const AddProduct = () => {
         setLoaded(true);
         console.log(err);
       });
+
+    setValue("title", clientDataAssignment.title);
+    setValue("country", clientDataAssignment.country);
+    setValue("video", clientDataAssignment.video);
+    setOverview(clientDataAssignment.overview);
+    setValue("duration", clientDataAssignment.duration);
+    setValue("creator", clientDataAssignment.creator);
+    setValue("allow_cancel", clientDataAssignment.allow_cancel);
+    setValue("allow_deposit", clientDataAssignment.allow_deposit);
+    setValue("state", clientDataAssignment.state);
+    setValue("country", clientDataAssignment.country);
+    setValue("category", clientDataAssignment.category);
+    setValue("category_type", clientDataAssignment.category_type);
+    setValue("booking_period", clientDataAssignment.booking_period);
+    setValue("city", clientDataAssignment.city);
+    setValue("deposit_value", clientDataAssignment.deposit_value);
+    setValue("min_people", clientDataAssignment.min_people);
+    setValue("max_people", clientDataAssignment.max_people);
+    setValue("price", clientDataAssignment.price);
+    setValue("discount_percent", clientDataAssignment.discount_percent);
   }
 
   function handleStateChange(state) {
@@ -235,16 +266,16 @@ const AddProduct = () => {
       data: formData,
     };
 
-    axios(config)
-      .then((response) => {
-        setLoaded(true);
-        console.log("Response after submitting form", response);
-        navigate("/products");
-      })
-      .catch((err) => {
-        setLoaded(true);
-        console.log(err);
-      });
+    // axios(config)
+    //   .then((response) => {
+    //     setLoaded(true);
+    //     console.log("Response after submitting form", response);
+    //     navigate("/products");
+    //   })
+    //   .catch((err) => {
+    //     setLoaded(true);
+    //     console.log(err);
+    //   });
   };
 
   return (
@@ -277,7 +308,7 @@ const AddProduct = () => {
                 <Controller
                   name="category"
                   control={control}
-                  render={({ field }) => (
+                  render={({ field, value }) => (
                     <TextField
                       select
                       id="category"
