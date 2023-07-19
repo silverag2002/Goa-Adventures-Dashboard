@@ -127,7 +127,7 @@ const Customers = () => {
             color: theme.palette.neutral[600],
             fontWeight: "bold",
           }}
-          href="/create-customer"
+          href="/add-customer"
         >
           Create Customer
         </Button>
