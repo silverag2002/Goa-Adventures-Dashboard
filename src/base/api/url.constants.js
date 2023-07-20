@@ -13,4 +13,6 @@ URLConstants.categories = () => `${URLConstants.BASE_URL}/v1/categories/`;
 URLConstants.subcategories = () => `${URLConstants.BASE_URL}/v1/subcategories/`;
 URLConstants.customers = () => `${URLConstants.BASE_URL}/v1/customer/`;
 URLConstants.bookings = () => `${URLConstants.BASE_URL}/v1/booking/`;
+URLConstants.modifyBookings = (bookingId) =>
+  `${URLConstants.BASE_URL}/v1/booking/${bookingId}`;
 URLConstants.staff = () => `${URLConstants.BASE_URL}/v1/staff/`;

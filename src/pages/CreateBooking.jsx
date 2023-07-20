@@ -163,11 +163,18 @@ const CreateBooking = () => {
                     value={customerId}
                     onChange={(e) => {
                       setCustomerId(e.target.value);
-                      customers.map((cust) =>
-                        cust.id == e.target.value
-                          ? setMobileNumber(cust.mobile_number)
-                          : setMobileNumber("")
-                      );
+                      console.log("Customer id selected", e.target.value);
+                      let mobNum;
+                      for (let i = 0; i < customers.length; i++) {
+                        let cust = customers[i];
+                        if (cust.id == e.target.value) {
+                          mobNum = cust.mobile_number;
+                          setMobileNumber(cust.mobile_number);
+                          break;
+                        }
+                      }
+
+                      console.log("MOb num", mobNum);
                     }}
                   >
                     {customers.map((cust) => (

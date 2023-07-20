@@ -7,6 +7,7 @@ import DataGridCustomToolbar from "components/DataGridCustomToolbar";
 import FlexBetween from "../components/FlexBetween";
 import { axiosInstance } from "../base/api/axios.util";
 import { URLConstants } from "../base/api/url.constants";
+import Loader from "react-loader";
 
 const Bookings = () => {
   const theme = useTheme();
@@ -19,27 +20,61 @@ const Bookings = () => {
   const [loaded, setLoaded] = useState(true);
   const [bookings, setBookings] = useState([]);
   const [searchInput, setSearchInput] = useState("");
+  const [reloadPage, setReloadPage] = useState(false);
 
-  const { data, isLoading } = useGetTransactionsQuery({
-    page,
-    pageSize,
-    sort: JSON.stringify(sort),
-    search,
-  });
+  // const { data, isLoading } = useGetTransactionsQuery({
+  //   page,
+  //   pageSize,
+  //   sort: JSON.stringify(sort),
+  //   search,
+  // });
   useEffect(() => {
     setLoaded(false);
     axiosInstance
       .get(URLConstants.bookings())
       .then((response) => {
         setLoaded(true);
-        console.log("Response form countries", response);
+        console.log("Response form bookings", response);
         setBookings(response);
       })
       .catch((err) => {
         setLoaded(true);
         console.log(err);
       });
-  }, []);
+  }, [reloadPage]);
+
+  function deleteBooking(bookingId) {
+    setLoaded(false);
+    axiosInstance
+      .delete(URLConstants.modifyBookings(bookingId))
+      .then((response) => {
+        setLoaded(true);
+        console.log("Response form bookings", response);
+        setReloadPage(!reloadPage);
+      })
+      .catch((err) => {
+        setLoaded(true);
+        console.log(err);
+      });
+  }
+
+  const renderDetailsButton = (params) => {
+    return (
+      <Box sx={{ display: "flex", gap: "0.8rem" }}>
+        <Button
+          variant="contained"
+          color="secondary"
+          size="small"
+          onClick={(e) => deleteBooking(params.row.id)}
+        >
+          Delete
+        </Button>
+        <Button variant="contained" color="secondary" size="small">
+          Edit
+        </Button>
+      </Box>
+    );
+  };
 
   const columns = [
     {
@@ -79,6 +114,12 @@ const Bookings = () => {
       field: "invoice",
       headerName: "Invoice",
       flex: 1,
+    },
+    {
+      field: "action",
+      headerName: "Action",
+      width: 175,
+      renderCell: renderDetailsButton,
     },
   ];
 
@@ -163,7 +204,7 @@ const Bookings = () => {
           getRowId={(rows) => rows.id}
           rows={bookings}
           columns={columns}
-          rowCount={(data && data.total) || 0}
+          // rowCount={(data && data.total) || 0}
           rowsPerPageOptions={[20, 50, 100]}
           pagination
           page={page}
@@ -179,6 +220,29 @@ const Bookings = () => {
           }}
         />
       </Box>
+      <div className="spinner">
+        <Loader
+          loaded={loaded}
+          lines={13}
+          length={20}
+          width={10}
+          radius={30}
+          corners={1}
+          rotate={0}
+          direction={1}
+          color="#000"
+          speed={1}
+          trail={60}
+          shadow={false}
+          hwaccel={false}
+          className="spinner"
+          zIndex={2e9}
+          top="50%"
+          left="50%"
+          scale={1.0}
+          loadedClassName="loadedContent"
+        />
+      </div>
     </Box>
   );
 };
