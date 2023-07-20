@@ -131,27 +131,43 @@ const CreateBooking = () => {
 
   const onSubmit = (data) => {
     setLoaded(false);
+
     data.pending_amount = pendingAmount;
     data.deposit_amount = depositAmount;
-    data.booking_date = new Date();
+    if (!clientDataAssignment.booking_date) {
+      data.booking_date = new Date();
+    }
     data.booked_by = "SUPER_ADMIN";
     data.invoice = "Test url";
     data.customer_mobile_number = mobileNumber;
     data.customer_id = customerId;
     data.booking_status = "CONFIRMED";
     console.log("Data entered", data);
-
-    axiosInstance
-      .post(URLConstants.bookings(), data)
-      .then((res) => {
-        setLoaded(true);
-        console.log("Responsse form booking post method", res);
-        navigate("/bookings");
-      })
-      .catch((err) => {
-        setLoaded(true);
-        console.log("error", err);
-      });
+    if (clientDataAssignment.id) {
+      axiosInstance
+        .put(URLConstants.modifyBookings(clientDataAssignment.id), data)
+        .then((res) => {
+          setLoaded(true);
+          console.log("Responsse form booking post method", res);
+          navigate("/bookings");
+        })
+        .catch((err) => {
+          setLoaded(true);
+          console.log("error", err);
+        });
+    } else {
+      axiosInstance
+        .post(URLConstants.bookings(), data)
+        .then((res) => {
+          setLoaded(true);
+          console.log("Responsse form booking post method", res);
+          navigate("/bookings");
+        })
+        .catch((err) => {
+          setLoaded(true);
+          console.log("error", err);
+        });
+    }
   };
 
   const onError = (errors) => console.log(errors);
