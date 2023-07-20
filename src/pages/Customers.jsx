@@ -51,7 +51,7 @@ const Customers = () => {
       headerName: "Customer Name",
     },
     {
-      field: "mobileNumber",
+      field: "mobile_number",
       headerName: "Mobile Number",
       flex: 1,
     },
@@ -79,6 +79,11 @@ const Customers = () => {
       field: "profile_image",
       headerName: "Profile Image",
       flex: 1,
+      renderCell: (params) => (
+        <a href={params.row.profile_image} target="_blank">
+          Image
+        </a>
+      ),
     },
   ];
 

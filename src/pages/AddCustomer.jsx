@@ -16,6 +16,8 @@ import { axiosInstance } from "../base/api/axios.util";
 import { URLConstants } from "../base/api/url.constants";
 import Loader from "react-loader";
 import { useNavigate } from "react-router-dom";
+import axios, * as others from "axios";
+var FormData = require("form-data");
 
 const AddCustomer = () => {
   const navigate = useNavigate();
@@ -45,7 +47,7 @@ const AddCustomer = () => {
       .get(URLConstants.customers())
       .then((response) => {
         setLoaded(true);
-        console.log("Response form countries", response);
+        console.log("Response form custoemrs", response);
         setCustomers(response);
       })
       .catch((err) => {
@@ -54,72 +56,37 @@ const AddCustomer = () => {
       });
   }, []);
 
-  useEffect(() => {
-    setLoaded(false);
-    axiosInstance
-      .get(URLConstants.categories())
-      .then((res) => {
-        console.log("Response", res);
-        const cate = res.map((ca) => ca.category);
-        setCategories(res);
-        setLoaded(true);
-      })
-      .catch((err) => {
-        console.log("Error", err);
-        setLoaded(true);
-      });
-  }, [reloadPage]);
-
-  useEffect(() => {
-    setLoaded(false);
-    axiosInstance
-      .get(URLConstants.subcategories())
-      .then((res) => {
-        console.log("Response", res);
-
-        setSubCategories(res);
-        setLoaded(true);
-      })
-      .catch((err) => {
-        console.log("Error", err);
-        setLoaded(true);
-      });
-  }, [reloadPage]);
-
-  useEffect(() => {
-    setLoaded(false);
-    axiosInstance
-      .get(URLConstants.product())
-      .then((res) => {
-        console.log("Response", res);
-
-        setProduct(res);
-        setLoaded(true);
-      })
-      .catch((err) => {
-        console.log("Error", err);
-        setLoaded(true);
-      });
-  }, [reloadPage]);
-
   const onSubmit = (data) => {
     setLoaded(false);
-    data.pending_amount = pendingAmount;
-    data.deposit_amount = depositAmount;
-    data.booking_date = new Date();
-    data.booked_by = "SUPER_ADMIN";
-    data.invoice = "Test url";
-    data.customer_mobile_number = mobileNumber;
-    data.customer_id = customerId;
-    data.booking_status = "CONFIRMED";
-    console.log("Data entered", data);
+    data.status = true;
+    console.log("Data", data);
+    var formData = new FormData();
+    if (data.profile_image[0]?.size) {
+      formData.append("profile_image", data.profile_image[0]);
+    }
 
-    axiosInstance
-      .post(URLConstants.bookings(), data)
+    formData.append("name", data.name.trim());
+    formData.append("mobile_number", data.mobile_number.trim());
+    formData.append("email", data.email.trim());
+    formData.append("state", data.state.trim());
+    formData.append("city", data.city.trim());
+    formData.append("country", data.country.trim());
+    formData.append("status", data.status);
+
+    var config = {
+      method: "POST",
+      url: URLConstants.customers(),
+      headers: {
+        headers: { "content-type": "multipart/form-data" },
+      },
+      data: formData,
+    };
+
+    axios(config)
       .then((res) => {
         setLoaded(true);
-        console.log("Responsse form booking post method", res);
-        navigate("/bookings");
+        console.log("Responsse form customer post method", res);
+        navigate("/customers");
       })
       .catch((err) => {
         setLoaded(true);
@@ -258,202 +225,15 @@ const AddCustomer = () => {
             </Box>
           </Grid>
 
-          <Grid item xs={12} md={3}>
-            <Box>
-              <Controller
-                name="status"
-                control={control}
-                render={({ field }) => (
-                  <TextField
-                    id="status"
-                    label="Status"
-                    variant="filled"
-                    fullWidth
-                    margin="normal"
-                    {...field}
-                  />
-                )}
-              />
-            </Box>
-          </Grid>
-
           <Grid item xs={12} md={12}>
-            <Typography variant="h4">Photos & Video</Typography>
+            <Typography variant="h4">Profile Picture</Typography>
           </Grid>
           <Grid item xs={4} md={4}>
             <Box>
               <input
                 type="file"
                 placeholder="Image URL"
-                {...register("featured_image", { required: true })}
-              />
-            </Box>
-          </Grid>
-          <Grid item xs={12} md={3}>
-            <Box>
-              <Controller
-                name="deposit_amount"
-                control={control}
-                render={({ field }) => (
-                  <TextField
-                    id="deposit_amount"
-                    label="Deposit Amount"
-                    variant="filled"
-                    type="number"
-                    fullWidth
-                    margin="normal"
-                    value={depositAmount}
-                    onChange={(e) => {
-                      console.log("Testing getValues", field);
-                      setDepositAmount(e.target.value);
-                      if (
-                        Number(getValues("total_amount")) >
-                        Number(e.target.value)
-                      ) {
-                        let amount =
-                          Number(getValues("total_amount")) -
-                          Number(e.target.value);
-                        setPendingAmount(amount);
-                      } else {
-                        setPendingAmount(0);
-                      }
-                    }}
-                    // {...field}
-                  />
-                )}
-              />
-            </Box>
-          </Grid>
-          <Grid item xs={12} md={3}>
-            <Box>
-              <Controller
-                name="pending_amount"
-                control={control}
-                render={({ field, value }) => (
-                  <TextField
-                    id="pending_amount"
-                    label="Pending Amount"
-                    variant="filled"
-                    fullWidth
-                    margin="normal"
-                    value={pendingAmount}
-                  />
-                )}
-              />
-            </Box>
-          </Grid>
-          <Grid item xs={12} md={3}>
-            <Box>
-              <Controller
-                name="payment_mode"
-                control={control}
-                render={({ field }) => (
-                  <TextField
-                    select
-                    id="payment_mode"
-                    label="Payment Mode"
-                    variant="filled"
-                    fullWidth
-                    margin="normal"
-                    {...field}
-                  >
-                    <MenuItem value="Online">Online Payment</MenuItem>
-                    <MenuItem value="Offline">Offline Payment</MenuItem>
-                  </TextField>
-                )}
-              />
-            </Box>
-          </Grid>
-          <Grid item xs={12} md={3}>
-            <Box>
-              <Controller
-                name="start_date"
-                control={control}
-                render={({ field }) => (
-                  <TextField
-                    id="start_date"
-                    label="Start Date"
-                    type="date"
-                    variant="filled"
-                    fullWidth
-                    margin="normal"
-                    {...field}
-                  />
-                )}
-              />
-            </Box>
-          </Grid>
-          <Grid item xs={12} md={3}>
-            <Box>
-              <Controller
-                name="end_date"
-                control={control}
-                render={({ field }) => (
-                  <TextField
-                    id="end_date"
-                    label="End Date"
-                    type="date"
-                    variant="filled"
-                    fullWidth
-                    margin="normal"
-                    {...field}
-                  />
-                )}
-              />
-            </Box>
-          </Grid>
-          <Grid item xs={12} md={3}>
-            <Box>
-              <Controller
-                name="reporting_time"
-                control={control}
-                render={({ field }) => (
-                  <TextField
-                    id="reporting_time"
-                    label="Reporting Time"
-                    variant="filled"
-                    type="time"
-                    fullWidth
-                    margin="normal"
-                    {...field}
-                  />
-                )}
-              />
-            </Box>
-          </Grid>
-          <Grid item xs={12} md={3}>
-            <Box>
-              <Controller
-                name="meeting_point"
-                control={control}
-                render={({ field }) => (
-                  <TextField
-                    id="meeting_point"
-                    label="Meeting Point"
-                    variant="filled"
-                    fullWidth
-                    margin="normal"
-                    {...field}
-                  />
-                )}
-              />
-            </Box>
-          </Grid>
-          <Grid item xs={12} md={3}>
-            <Box>
-              <Controller
-                name="customer_mobile_number"
-                control={control}
-                render={({ field }) => (
-                  <TextField
-                    id="customer_mobile_number"
-                    label="Customer Mobile Number"
-                    variant="filled"
-                    value={mobileNumber}
-                    fullWidth
-                    margin="normal"
-                  />
-                )}
+                {...register("profile_image", { required: true })}
               />
             </Box>
           </Grid>
