@@ -14,7 +14,7 @@ import { useForm, Controller } from "react-hook-form";
 import { axiosInstance } from "../base/api/axios.util";
 import { URLConstants } from "../base/api/url.constants";
 import Loader from "react-loader";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const CreateBooking = () => {
   const navigate = useNavigate();
@@ -29,12 +29,22 @@ const CreateBooking = () => {
   const [depositAmount, setDepositAmount] = useState("");
   const [mobileNumber, setMobileNumber] = useState("");
   const [customerId, setCustomerId] = useState("");
+  const location = useLocation();
+
+  var clientDataAssignment = {};
+
+  console.log("LOcaltion", location);
+  if (location.state) {
+    clientDataAssignment = location.state.booking;
+  }
+  console.log("ASsingment issue", clientDataAssignment);
 
   const {
     handleSubmit,
     register,
     control,
     getValues,
+    setValue,
     formState: { errors },
   } = useForm({});
 
@@ -99,6 +109,24 @@ const CreateBooking = () => {
         console.log("Error", err);
         setLoaded(true);
       });
+
+    setValue("product_id", clientDataAssignment.product_id);
+    setValue("destination_location", clientDataAssignment.destination_location);
+    setValue("category_id", clientDataAssignment.category_id);
+    setValue("sub_category_id", clientDataAssignment.sub_category_id);
+
+    setValue("booking_status", clientDataAssignment.booking_status);
+    setValue("total_seat", clientDataAssignment.total_seat);
+    setValue("total_amount", clientDataAssignment.total_amount);
+    setDepositAmount(clientDataAssignment.deposit_amount);
+    setPendingAmount(clientDataAssignment.pending_amount);
+    setMobileNumber(clientDataAssignment.customer_mobile_number);
+    setCustomerId(clientDataAssignment.customer_id);
+    setValue("start_date", clientDataAssignment.start_date);
+    setValue("end_date", clientDataAssignment.end_date);
+    setValue("payment_mode", clientDataAssignment.payment_mode);
+    setValue("reporting_time", clientDataAssignment.reporting_time);
+    setValue("meeting_point", clientDataAssignment.meeting_point);
   }, [reloadPage]);
 
   const onSubmit = (data) => {
@@ -200,6 +228,11 @@ const CreateBooking = () => {
                     variant="filled"
                     margin="normal"
                     fullWidth
+                    defaultValue={
+                      clientDataAssignment.destination_location
+                        ? clientDataAssignment.destination_location
+                        : ""
+                    }
                     {...field}
                   >
                     <MenuItem key="" value="Goa">
@@ -225,6 +258,11 @@ const CreateBooking = () => {
                     label="Category"
                     variant="filled"
                     margin="normal"
+                    defaultValue={
+                      clientDataAssignment.category_id
+                        ? clientDataAssignment.category_id
+                        : ""
+                    }
                     fullWidth
                     {...field}
                   >
@@ -251,6 +289,11 @@ const CreateBooking = () => {
                     variant="filled"
                     fullWidth
                     margin="normal"
+                    defaultValue={
+                      clientDataAssignment.sub_category_id
+                        ? clientDataAssignment.sub_category_id
+                        : ""
+                    }
                     {...field}
                   >
                     {subcategories.map((option) => (
@@ -276,6 +319,11 @@ const CreateBooking = () => {
                     variant="filled"
                     fullWidth
                     margin="normal"
+                    defaultValue={
+                      clientDataAssignment.product_id
+                        ? clientDataAssignment.product_id
+                        : ""
+                    }
                     {...field}
                   >
                     {product.map((option) => (
@@ -392,6 +440,11 @@ const CreateBooking = () => {
                     variant="filled"
                     fullWidth
                     margin="normal"
+                    defaultValue={
+                      clientDataAssignment.payment_mode
+                        ? clientDataAssignment.payment_mode
+                        : ""
+                    }
                     {...field}
                   >
                     <MenuItem value="Online">Online Payment</MenuItem>

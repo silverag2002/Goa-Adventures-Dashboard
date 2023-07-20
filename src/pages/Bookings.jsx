@@ -8,6 +8,7 @@ import FlexBetween from "../components/FlexBetween";
 import { axiosInstance } from "../base/api/axios.util";
 import { URLConstants } from "../base/api/url.constants";
 import Loader from "react-loader";
+import { Link } from "react-router-dom";
 
 const Bookings = () => {
   const theme = useTheme();
@@ -29,10 +30,12 @@ const Bookings = () => {
   //   search,
   // });
   useEffect(() => {
+    console.log("Start", new Date());
     setLoaded(false);
     axiosInstance
       .get(URLConstants.bookings())
       .then((response) => {
+        console.log("End", new Date());
         setLoaded(true);
         console.log("Response form bookings", response);
         setBookings(response);
@@ -59,6 +62,8 @@ const Bookings = () => {
   }
 
   const renderDetailsButton = (params) => {
+    let bookingInfo = bookings.filter((book) => (book.id = params.id));
+
     return (
       <Box sx={{ display: "flex", gap: "0.8rem" }}>
         <Button
@@ -69,9 +74,11 @@ const Bookings = () => {
         >
           Delete
         </Button>
-        <Button variant="contained" color="secondary" size="small">
-          Edit
-        </Button>
+        <Link to="/create-booking" state={{ booking: bookingInfo[0] }}>
+          <Button variant="contained" color="secondary" size="small">
+            Edit
+          </Button>
+        </Link>
       </Box>
     );
   };
