@@ -49,7 +49,7 @@ const ManageStaffs = () => {
     },
     {
       field: "name",
-      headerName: "Customer Name",
+      headerName: "Staff Name",
     },
     {
       field: "mobile_number",
@@ -58,7 +58,7 @@ const ManageStaffs = () => {
     },
     {
       field: "email",
-      headerName: "Booking Email",
+      headerName: " Email",
       flex: 1,
     },
     {
