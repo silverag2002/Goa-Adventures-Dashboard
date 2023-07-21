@@ -55,10 +55,30 @@ const SubCategory = () => {
       });
   }, [reloadPage]);
 
+  function deleteSubCategory(bookingId) {
+    setLoaded(false);
+    axiosInstance
+      .get(URLConstants.deactivateCategory(bookingId))
+      .then((response) => {
+        setLoaded(true);
+        console.log("Response form category", response);
+        setReloadPage(!reloadPage);
+      })
+      .catch((err) => {
+        setLoaded(true);
+        console.log(err);
+      });
+  }
+
   const renderDetailsButton = (params) => {
     return (
       <Box sx={{ display: "flex", gap: "0.8rem" }}>
-        <Button variant="contained" color="secondary" size="small">
+        <Button
+          variant="contained"
+          color="secondary"
+          size="small"
+          onClick={(e) => deleteSubCategory(params.row.id)}
+        >
           Delete
         </Button>
         <Button variant="contained" color="secondary" size="small">
@@ -171,7 +191,7 @@ const SubCategory = () => {
 
   return (
     <Box m="1.5rem 2.5rem">
-      <Header title="Category" subtitle="Entire list of category" />
+      <Header title="Sub Category" subtitle="Entire list of sub category" />
       <Box>
         <form onSubmit={handleSubmit(onSubmit, onError)}>
           <Grid container spacing={2} alignItems="center">

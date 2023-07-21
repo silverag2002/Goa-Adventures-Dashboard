@@ -7,6 +7,7 @@ import Loader from "react-loader";
 import { axiosInstance } from "../base/api/axios.util";
 import { URLConstants } from "../base/api/url.constants";
 import axios, * as others from "axios";
+import { Link } from "react-router-dom";
 var FormData = require("form-data");
 
 const Category = () => {
@@ -14,6 +15,8 @@ const Category = () => {
   const [loaded, setLoaded] = useState(true);
   const [rows, setRows] = useState([]);
   const [reloadPage, setReloadPage] = useState(false);
+  const [category, setCategory] = useState("");
+  const [editInfo, setEditInfo] = useState(0);
   const {
     handleSubmit,
     register,
@@ -27,7 +30,7 @@ const Category = () => {
     axiosInstance
       .get(URLConstants.categories())
       .then((res) => {
-        console.log("Response", res);
+        console.log("Response for get category", res);
         setRows(res);
         setLoaded(true);
       })
@@ -51,6 +54,15 @@ const Category = () => {
         console.log(err);
       });
   }
+
+  function handleEdit(categoryId) {
+    console.log("Category id", categoryId);
+    let categoryInfo = rows.filter((row) => row.id == categoryId);
+    console.log("Category Info ", categoryInfo[0]);
+    setCategory(categoryInfo[0].category);
+    setEditInfo(categoryInfo[0].id);
+  }
+
   const renderDetailsButton = (params) => {
     return (
       <Box sx={{ display: "flex", gap: "0.8rem" }}>
@@ -58,13 +70,20 @@ const Category = () => {
           variant="contained"
           color="secondary"
           size="small"
-          onClick={(e) => deleteCategory(params.row.id)}
+          onClick={(e) => deleteCategory(params.id)}
         >
           Delete
         </Button>
-        <Button variant="contained" color="secondary" size="small">
+        {/* <Link to="/add-category" state={{ category: categoryInfo[0] }}> */}
+        <Button
+          variant="contained"
+          color="secondary"
+          size="small"
+          onClick={() => handleEdit(params.id)}
+        >
           Edit
         </Button>
+        {/* </Link> */}
       </Box>
     );
   };
@@ -103,6 +122,8 @@ const Category = () => {
   const onSubmit = (data) => {
     //reset({});
     // setClientType(undefined);
+    data.category = category;
+    console.log("Data", data);
     setLoaded(false);
     console.log("Data captured", data.categoryImage[0]);
 
@@ -111,39 +132,67 @@ const Category = () => {
       formData.append("categoryImage", data.categoryImage[0]);
     }
     formData.append("category", data.category.trim());
+    console.log("Check", editInfo);
+    if (editInfo > 0) {
+      var config = {
+        method: "PUT",
+        url: URLConstants.modifyCategory(editInfo),
+        headers: {
+          headers: { "content-type": "multipart/form-data" },
+        },
+        data: formData,
+      };
 
-    var config = {
-      method: "POST",
-      url: URLConstants.categories(),
-      headers: {
-        headers: { "content-type": "multipart/form-data" },
-      },
-      data: formData,
-    };
-
-    axios(config)
-      .then((response) => {
-        try {
-          console.log("Response", response);
+      axios(config)
+        .then((response) => {
+          try {
+            console.log("Response", response);
+            setLoaded(true);
+            reset({});
+            setReloadPage(!reloadPage);
+          } catch (error) {
+            console.error(error);
+          }
+        })
+        .catch((err) => {
           setLoaded(true);
-          reset({});
-          setReloadPage(!reloadPage);
-        } catch (error) {
-          console.error(error);
-        }
-      })
-      .catch((err) => {
-        setLoaded(true);
-        console.log("Err", err);
-        // reject(errorMsg);
-      });
+          console.log("Err", err);
+          // reject(errorMsg);
+        });
+    } else {
+      var config = {
+        method: "POST",
+        url: URLConstants.categories(),
+        headers: {
+          headers: { "content-type": "multipart/form-data" },
+        },
+        data: formData,
+      };
+
+      axios(config)
+        .then((response) => {
+          try {
+            console.log("Response", response);
+            setLoaded(true);
+
+            setReloadPage(!reloadPage);
+          } catch (error) {
+            console.error(error);
+          }
+        })
+        .catch((err) => {
+          setLoaded(true);
+          console.log("Err", err);
+          // reject(errorMsg);
+        });
+    }
   };
 
   const onError = (errors) => console.log(errors);
 
   return (
     <Box m="1.5rem 2.5rem">
-      <Header title="Category" subtitle="Entire list of category" />
+      <Header title="Category Check" subtitle="Entire list of category" />
       <Box>
         <form onSubmit={handleSubmit(onSubmit, onError)}>
           <Grid container spacing={2} alignItems="center">
@@ -156,9 +205,10 @@ const Category = () => {
                     id="category"
                     label="Category"
                     variant="filled"
+                    value={category}
                     fullWidth
                     margin="normal"
-                    {...field}
+                    onChange={(e) => setCategory(e.target.value)}
                   />
                 )}
               />
@@ -167,7 +217,7 @@ const Category = () => {
               <input
                 type="file"
                 placeholder="Image URL"
-                {...register("categoryImage", { required: true })}
+                {...register("categoryImage")}
               />
             </Grid>
             <Grid item md={2} xs={12}>

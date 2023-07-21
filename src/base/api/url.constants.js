@@ -20,6 +20,10 @@ URLConstants.modifyBookings = (bookingId) =>
 URLConstants.modifyCategory = (categoryId) =>
   `${URLConstants.BASE_URL}/v1/categories/${categoryId}`;
 URLConstants.activateCategory = (categoryId) =>
-  `${URLConstants.BASE_URL}/v1/categories/activate-category/${categoryId}`;
+  `${URLConstants.BASE_URL}/v1/categories/activate/${categoryId}`;
 URLConstants.deactivateCategory = (categoryId) =>
-  `${URLConstants.BASE_URL}/v1/categories/deactivate-category/${categoryId}`;
+  `${URLConstants.BASE_URL}/v1/categories/deactivate/${categoryId}`;
+URLConstants.activateSubCategory = (subCategoryId) =>
+  `${URLConstants.BASE_URL}/v1/categories/activate/${subCategoryId}`;
+URLConstants.deactivateSubCategory = (subCategoryId) =>
+  `${URLConstants.BASE_URL}/v1/categories/deactivate/${subCategoryId}`;
