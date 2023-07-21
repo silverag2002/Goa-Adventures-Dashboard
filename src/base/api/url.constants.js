@@ -23,7 +23,9 @@ URLConstants.activateCategory = (categoryId) =>
   `${URLConstants.BASE_URL}/v1/categories/activate/${categoryId}`;
 URLConstants.deactivateCategory = (categoryId) =>
   `${URLConstants.BASE_URL}/v1/categories/deactivate/${categoryId}`;
+URLConstants.modifySubCategory = (categoryId) =>
+  `${URLConstants.BASE_URL}/v1/subcategories/${categoryId}`;
 URLConstants.activateSubCategory = (subCategoryId) =>
-  `${URLConstants.BASE_URL}/v1/categories/activate/${subCategoryId}`;
+  `${URLConstants.BASE_URL}/v1/subcategories/activate/${subCategoryId}`;
 URLConstants.deactivateSubCategory = (subCategoryId) =>
-  `${URLConstants.BASE_URL}/v1/categories/deactivate/${subCategoryId}`;
+  `${URLConstants.BASE_URL}/v1/subcategories/deactivate/${subCategoryId}`;

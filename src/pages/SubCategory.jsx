@@ -22,6 +22,9 @@ const SubCategory = () => {
   const [reloadPage, setReloadPage] = useState(false);
   const [rows, setRows] = useState([]);
   const [categories, setCategories] = useState([]);
+  const [category, setCategory] = useState("");
+  const [subCategory, setSubCategory] = useState("");
+  const [editInfo, setEditInfo] = useState(0);
   const {
     handleSubmit,
     register,
@@ -56,12 +59,13 @@ const SubCategory = () => {
   }, [reloadPage]);
 
   function deleteSubCategory(bookingId) {
+    console.log("Categoru selected", bookingId);
     setLoaded(false);
     axiosInstance
-      .get(URLConstants.deactivateCategory(bookingId))
+      .get(URLConstants.deactivateSubCategory(bookingId))
       .then((response) => {
         setLoaded(true);
-        console.log("Response form category", response);
+        console.log("Response form subcategory", response);
         setReloadPage(!reloadPage);
       })
       .catch((err) => {
@@ -77,11 +81,16 @@ const SubCategory = () => {
           variant="contained"
           color="secondary"
           size="small"
-          onClick={(e) => deleteSubCategory(params.row.id)}
+          onClick={(e) => deleteSubCategory(params.id)}
         >
           Delete
         </Button>
-        <Button variant="contained" color="secondary" size="small">
+        <Button
+          variant="contained"
+          color="secondary"
+          size="small"
+          onClick={() => handleEdit(params.id)}
+        >
           Edit
         </Button>
       </Box>
@@ -148,11 +157,21 @@ const SubCategory = () => {
       });
   }, [reloadPage]);
 
+  function handleEdit(subCategoryId) {
+    console.log("Category id", subCategoryId);
+    let subcategoryInfo = rows.filter((row) => row.id == subCategoryId);
+    console.log("Category Info ", subcategoryInfo[0]);
+    setCategory(subcategoryInfo[0].category);
+    setSubCategory(subcategoryInfo[0].subcategory);
+    setEditInfo(subcategoryInfo[0].id);
+  }
+
   const onSubmit = (data) => {
     //reset({});
     // setClientType(undefined);
     setLoaded(false);
-
+    data.category = category;
+    data.subcategory = subCategory;
     console.log("Data captured", data);
 
     var formData = new FormData();
@@ -161,32 +180,59 @@ const SubCategory = () => {
     }
     formData.append("category", data.category.trim());
     formData.append("subcategory", data.subcategory.trim());
+    if (editInfo > 0) {
+      var config = {
+        method: "PUT",
+        url: URLConstants.modifySubCategory(editInfo),
+        headers: {
+          headers: { "content-type": "multipart/form-data" },
+        },
+        data: formData,
+      };
 
-    var config = {
-      method: "POST",
-      url: URLConstants.subcategories(),
-      headers: {
-        headers: { "content-type": "multipart/form-data" },
-      },
-      data: formData,
-    };
+      axios(config)
+        .then((response) => {
+          try {
+            console.log("Response", response);
+            setLoaded(true);
 
-    axios(config)
-      .then((response) => {
-        try {
-          console.log("Response", response);
+            setReloadPage(!reloadPage);
+          } catch (error) {
+            console.error(error);
+          }
+        })
+        .catch((err) => {
           setLoaded(true);
+          console.log("Err", err);
+          // reject(errorMsg);
+        });
+    } else {
+      var config = {
+        method: "POST",
+        url: URLConstants.subcategories(),
+        headers: {
+          headers: { "content-type": "multipart/form-data" },
+        },
+        data: formData,
+      };
 
-          setReloadPage(!reloadPage);
-        } catch (error) {
-          console.error(error);
-        }
-      })
-      .catch((err) => {
-        setLoaded(true);
-        console.log("Err", err);
-        // reject(errorMsg);
-      });
+      axios(config)
+        .then((response) => {
+          try {
+            console.log("Response", response);
+            setLoaded(true);
+
+            setReloadPage(!reloadPage);
+          } catch (error) {
+            console.error(error);
+          }
+        })
+        .catch((err) => {
+          setLoaded(true);
+          console.log("Err", err);
+          // reject(errorMsg);
+        });
+    }
   };
 
   return (
@@ -207,7 +253,8 @@ const SubCategory = () => {
                     variant="filled"
                     fullWidth
                     margin="normal"
-                    {...field}
+                    value={category}
+                    onChange={(e) => setCategory(e.target.value)}
                   >
                     {categories.map((option) => (
                       <MenuItem key={option} value={option}>
@@ -229,7 +276,8 @@ const SubCategory = () => {
                     variant="filled"
                     fullWidth
                     margin="normal"
-                    {...field}
+                    value={subCategory}
+                    onChange={(e) => setSubCategory(e.target.value)}
                   />
                 )}
               />
@@ -238,7 +286,7 @@ const SubCategory = () => {
               <input
                 type="file"
                 placeholder="Image URL"
-                {...register("subCategoryImage", { required: true })}
+                {...register("subCategoryImage")}
               />
             </Grid>
             <Grid item md={3} xs={12}>
