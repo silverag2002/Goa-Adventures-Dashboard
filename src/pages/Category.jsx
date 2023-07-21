@@ -37,10 +37,29 @@ const Category = () => {
       });
   }, [reloadPage]);
 
+  function deleteCategory(bookingId) {
+    setLoaded(false);
+    axiosInstance
+      .get(URLConstants.deactivateCategory(bookingId))
+      .then((response) => {
+        setLoaded(true);
+        console.log("Response form category", response);
+        setReloadPage(!reloadPage);
+      })
+      .catch((err) => {
+        setLoaded(true);
+        console.log(err);
+      });
+  }
   const renderDetailsButton = (params) => {
     return (
       <Box sx={{ display: "flex", gap: "0.8rem" }}>
-        <Button variant="contained" color="secondary" size="small">
+        <Button
+          variant="contained"
+          color="secondary"
+          size="small"
+          onClick={(e) => deleteCategory(params.row.id)}
+        >
           Delete
         </Button>
         <Button variant="contained" color="secondary" size="small">

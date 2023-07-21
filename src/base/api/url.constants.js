@@ -13,6 +13,13 @@ URLConstants.categories = () => `${URLConstants.BASE_URL}/v1/categories/`;
 URLConstants.subcategories = () => `${URLConstants.BASE_URL}/v1/subcategories/`;
 URLConstants.customers = () => `${URLConstants.BASE_URL}/v1/customer/`;
 URLConstants.bookings = () => `${URLConstants.BASE_URL}/v1/booking/`;
+URLConstants.staff = () => `${URLConstants.BASE_URL}/v1/staff/`;
+
 URLConstants.modifyBookings = (bookingId) =>
   `${URLConstants.BASE_URL}/v1/booking/${bookingId}`;
-URLConstants.staff = () => `${URLConstants.BASE_URL}/v1/staff/`;
+URLConstants.modifyCategory = (categoryId) =>
+  `${URLConstants.BASE_URL}/v1/categories/${categoryId}`;
+URLConstants.activateCategory = (categoryId) =>
+  `${URLConstants.BASE_URL}/v1/categories/activate-category/${categoryId}`;
+URLConstants.deactivateCategory = (categoryId) =>
+  `${URLConstants.BASE_URL}/v1/categories/deactivate-category/${categoryId}`;
