@@ -8,6 +8,7 @@ import FlexBetween from "../components/FlexBetween";
 import { axiosInstance } from "../base/api/axios.util";
 import { URLConstants } from "../base/api/url.constants";
 import Loader from "react-loader";
+import { Link } from "react-router-dom";
 
 const ManageStaffs = () => {
   const theme = useTheme();
@@ -20,6 +21,7 @@ const ManageStaffs = () => {
   const [loaded, setLoaded] = useState(true);
   const [staff, setStaff] = useState([]);
   const [searchInput, setSearchInput] = useState("");
+  const [reloadPage, setReloadPage] = useState(false);
 
   const { data, isLoading } = useGetTransactionsQuery({
     page,
@@ -40,7 +42,46 @@ const ManageStaffs = () => {
         setLoaded(true);
         console.log(err);
       });
-  }, []);
+  }, [reloadPage]);
+
+  function deleteStaff(staffId) {
+    setLoaded(false);
+    axiosInstance
+      .get(URLConstants.disableStaff(staffId))
+      .then((response) => {
+        setLoaded(true);
+        console.log("Response form bookings", response);
+        setReloadPage(!reloadPage);
+      })
+      .catch((err) => {
+        setLoaded(true);
+        console.log(err);
+      });
+    console.log("Customer Id selected", staffId);
+  }
+
+  const renderDetailsButton = (params) => {
+    let staffInfo = staff.filter((book) => book.id == params.id);
+
+    return (
+      <Box sx={{ display: "flex", gap: "0.8rem" }}>
+        <Button
+          variant="contained"
+          color="secondary"
+          size="small"
+          onClick={(e) => deleteStaff(params.id)}
+        >
+          Delete
+        </Button>
+
+        <Link to="/add-staff" state={{ staff: staffInfo[0] }}>
+          <Button variant="contained" color="secondary" size="small">
+            Edit
+          </Button>
+        </Link>
+      </Box>
+    );
+  };
 
   const columns = [
     {
@@ -81,6 +122,12 @@ const ManageStaffs = () => {
           Image
         </a>
       ),
+    },
+    {
+      field: "action",
+      headerName: "Action",
+      width: 175,
+      renderCell: renderDetailsButton,
     },
   ];
 

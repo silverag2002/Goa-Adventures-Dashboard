@@ -39,3 +39,9 @@ URLConstants.modifyCustomers = (customerId) =>
   `${URLConstants.BASE_URL}/v1/customer/${customerId}`;
 URLConstants.disableCustomer = (customerId) =>
   `${URLConstants.BASE_URL}/v1/customer/deactivate/${customerId}`;
+
+//staff routes
+URLConstants.modifyStaff = (staffId) =>
+  `${URLConstants.BASE_URL}/v1/staff/${staffId}`;
+URLConstants.disableStaff = (staffId) =>
+  `${URLConstants.BASE_URL}/v1/staff/deactivate/${staffId}`;

@@ -15,26 +15,48 @@ import { useForm, Controller } from "react-hook-form";
 import { axiosInstance } from "../base/api/axios.util";
 import { URLConstants } from "../base/api/url.constants";
 import Loader from "react-loader";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import axios, * as others from "axios";
+
 var FormData = require("form-data");
 
 const AddStaff = () => {
   const navigate = useNavigate();
   const theme = useTheme();
   const [loaded, setLoaded] = useState(true);
+  const [reloadPage, setReloadPage] = useState(false);
+  const [active, setActive] = useState(false);
+  const location = useLocation();
 
   const {
     handleSubmit,
     register,
     control,
     getValues,
+    setValue,
     formState: { errors },
   } = useForm({});
 
+  var clientDataAssignment = {};
+
+  console.log("LOcaltion", location);
+  if (location.state) {
+    clientDataAssignment = location.state.staff;
+  }
+  console.log("ASsingment issue", clientDataAssignment);
+
+  useEffect(() => {
+    setValue("name", clientDataAssignment.name);
+    setValue("email", clientDataAssignment.email);
+    setValue("mobile_number", clientDataAssignment.mobile_number);
+    setValue("aadhar_number", clientDataAssignment.aadhar_number);
+
+    setActive(clientDataAssignment.active);
+  }, [reloadPage]);
+
   const onSubmit = (data) => {
     setLoaded(false);
-    data.status = true;
+    data.active = active;
     console.log("Data", data);
     var formData = new FormData();
     if (data.profile_image[0]?.size) {
@@ -48,25 +70,47 @@ const AddStaff = () => {
     formData.append("aadhar_number", data.aadhar_number.trim());
     formData.append("active", data.active);
 
-    var config = {
-      method: "POST",
-      url: URLConstants.staff(),
-      headers: {
-        headers: { "content-type": "multipart/form-data" },
-      },
-      data: formData,
-    };
+    if (clientDataAssignment.id) {
+      var config = {
+        method: "PUT",
+        url: URLConstants.modifyStaff(clientDataAssignment.id),
+        headers: {
+          headers: { "content-type": "multipart/form-data" },
+        },
+        data: formData,
+      };
 
-    axios(config)
-      .then((res) => {
-        setLoaded(true);
-        console.log("Responsse form staff post method", res);
-        navigate("/manage-staff");
-      })
-      .catch((err) => {
-        setLoaded(true);
-        console.log("error", err);
-      });
+      axios(config)
+        .then((res) => {
+          setLoaded(true);
+          console.log("Responsse form staff post method", res);
+          navigate("/manage-staff");
+        })
+        .catch((err) => {
+          setLoaded(true);
+          console.log("error", err);
+        });
+    } else {
+      var config = {
+        method: "POST",
+        url: URLConstants.staff(),
+        headers: {
+          headers: { "content-type": "multipart/form-data" },
+        },
+        data: formData,
+      };
+
+      axios(config)
+        .then((res) => {
+          setLoaded(true);
+          console.log("Responsse form staff post method", res);
+          navigate("/manage-staff");
+        })
+        .catch((err) => {
+          setLoaded(true);
+          console.log("error", err);
+        });
+    }
   };
 
   const onError = (errors) => console.log(errors);
@@ -175,7 +219,8 @@ const AddStaff = () => {
                     variant="filled"
                     fullWidth
                     margin="normal"
-                    {...field}
+                    value={active}
+                    onChange={(e) => setActive(e.target.value)}
                   >
                     <MenuItem value={true}>Yes</MenuItem>
                     <MenuItem value={false}>No</MenuItem>
@@ -193,7 +238,7 @@ const AddStaff = () => {
               <input
                 type="file"
                 placeholder="Image URL"
-                {...register("profile_image", { required: true })}
+                {...register("profile_image")}
               />
             </Box>
           </Grid>
