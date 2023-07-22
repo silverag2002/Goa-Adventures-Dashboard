@@ -23,6 +23,7 @@ const Products = () => {
   const [reloadPage, setReloadPage] = useState(false);
   const [loaded, setLoaded] = useState(true);
   const [products, setProduct] = useState([]);
+
   useEffect(() => {
     setLoaded(false);
     axiosInstance
@@ -70,9 +71,37 @@ const Products = () => {
         spacing={4}
       >
         {products.map((item, index) => (
-          <ProductCard product={item} key={item.id} />
+          <ProductCard
+            product={item}
+            key={item.id}
+            setLoaded={setLoaded}
+            setReloadPage={setReloadPage}
+          />
         ))}
       </Box>
+      <div className="spinner">
+        <Loader
+          loaded={loaded}
+          lines={13}
+          length={20}
+          width={10}
+          radius={30}
+          corners={1}
+          rotate={0}
+          direction={1}
+          color="#000"
+          speed={1}
+          trail={60}
+          shadow={false}
+          hwaccel={false}
+          className="spinner"
+          zIndex={2e9}
+          top="50%"
+          left="50%"
+          scale={1.0}
+          loadedClassName="loadedContent"
+        />
+      </div>
     </Box>
   );
 };

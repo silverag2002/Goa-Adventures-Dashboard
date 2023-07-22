@@ -16,16 +16,19 @@ URLConstants.bookings = () => `${URLConstants.BASE_URL}/v1/booking/`;
 URLConstants.staff = () => `${URLConstants.BASE_URL}/v1/staff/`;
 
 //booking routes
+
 URLConstants.modifyBookings = (bookingId) =>
   `${URLConstants.BASE_URL}/v1/booking/${bookingId}`;
 
 //category routes
+
 URLConstants.modifyCategory = (categoryId) =>
   `${URLConstants.BASE_URL}/v1/categories/${categoryId}`;
 URLConstants.activateCategory = (categoryId) =>
   `${URLConstants.BASE_URL}/v1/categories/activate/${categoryId}`;
 URLConstants.deactivateCategory = (categoryId) =>
   //subcategory routes
+
   `${URLConstants.BASE_URL}/v1/categories/deactivate/${categoryId}`;
 URLConstants.modifySubCategory = (categoryId) =>
   `${URLConstants.BASE_URL}/v1/subcategories/${categoryId}`;
@@ -35,13 +38,22 @@ URLConstants.deactivateSubCategory = (subCategoryId) =>
   `${URLConstants.BASE_URL}/v1/subcategories/deactivate/${subCategoryId}`;
 
 //customer routes
+
 URLConstants.modifyCustomers = (customerId) =>
   `${URLConstants.BASE_URL}/v1/customer/${customerId}`;
 URLConstants.disableCustomer = (customerId) =>
   `${URLConstants.BASE_URL}/v1/customer/deactivate/${customerId}`;
 
 //staff routes
+
 URLConstants.modifyStaff = (staffId) =>
   `${URLConstants.BASE_URL}/v1/staff/${staffId}`;
 URLConstants.disableStaff = (staffId) =>
   `${URLConstants.BASE_URL}/v1/staff/deactivate/${staffId}`;
+
+//prouduct routes
+
+URLConstants.modifyProduct = (productId) =>
+  `${URLConstants.BASE_URL}/v1/products/${productId}`;
+URLConstants.disableProduct = (productId) =>
+  `${URLConstants.BASE_URL}/v1/products/deactivate/${productId}`;

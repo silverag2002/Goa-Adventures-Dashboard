@@ -27,6 +27,7 @@ const AddProduct = () => {
   const location = useLocation();
   const [loaded, setLoaded] = useState(true);
   const [countries, setCountries] = useState([]);
+
   const [countryStates, setCountryStates] = useState([]);
   const [stateCities, setStateCities] = useState([]);
   const [highlight, setHighlight] = useState("");
@@ -132,31 +133,10 @@ const AddProduct = () => {
         console.log("Error", err);
         setLoaded(true);
       });
-  }, [reloadPage]);
-
-  console.log("Country ", countrySelected);
-
-  const onError = (errors) => console.log(errors);
-
-  function handleCountryChange(country) {
-    console.log("COuntry selecrted", country);
-    setCountry(decodeURIComponent(country));
-
-    setLoaded(false);
-    axiosInstance
-      .get(URLConstants.getStates(country))
-      .then((response) => {
-        setLoaded(true);
-        console.log("Response form states", response);
-        setCountryStates(response.states);
-      })
-      .catch((err) => {
-        setLoaded(true);
-        console.log(err);
-      });
 
     setValue("title", clientDataAssignment.title);
     setValue("country", clientDataAssignment.country);
+    setCountry(clientDataAssignment.country);
     setValue("video", clientDataAssignment.video);
     setOverview(clientDataAssignment.overview);
     setValue("duration", clientDataAssignment.duration);
@@ -174,6 +154,61 @@ const AddProduct = () => {
     setValue("max_people", clientDataAssignment.max_people);
     setValue("price", clientDataAssignment.price);
     setValue("discount_percent", clientDataAssignment.discount_percent);
+    if (clientDataAssignment.activity_exclusion.length > 0) {
+      let newString = "";
+      for (let i = 0; i < clientDataAssignment.activity_exclusion.length; i++) {
+        newString =
+          newString + clientDataAssignment.activity_exclusion[i] + "\n";
+      }
+      console.log("ACtivity_Exclusion", newString);
+      setValue("exclusion", newString);
+    }
+    if (clientDataAssignment.activity_inclusion.length > 0) {
+      let newString = "";
+      for (let i = 0; i < clientDataAssignment.activity_inclusion.length; i++) {
+        newString =
+          newString + clientDataAssignment.activity_inclusion[i] + "\n";
+      }
+      console.log("ACtivity_Inclusion", newString);
+      setValue("inclusion", newString);
+    }
+    if (clientDataAssignment.highlight.length > 0) {
+      let newString = "";
+      for (let i = 0; i < clientDataAssignment.highlight.length; i++) {
+        newString = newString + clientDataAssignment.highlight[i] + "\n";
+      }
+      console.log("ACtivity_Inclusion", newString);
+      setValue("highlight", newString);
+    }
+
+    if (clientDataAssignment.country) {
+      handleCountryChange(clientDataAssignment.country);
+    }
+  }, [reloadPage]);
+
+  console.log("Country ", countrySelected);
+
+  const onError = (errors) => console.log(errors);
+
+  function handleCountryChange(country) {
+    console.log("COuntry selecrted", country);
+    setCountry(decodeURIComponent(country));
+
+    setLoaded(false);
+    axiosInstance
+      .get(URLConstants.getStates(country))
+      .then((response) => {
+        setLoaded(true);
+        console.log("Response form states", response);
+        setCountryStates(response.states);
+        if (clientDataAssignment.state) {
+          handleStateChange(clientDataAssignment.state);
+        }
+      })
+      .catch((err) => {
+        setLoaded(true);
+        console.log(err);
+      });
   }
 
   function handleStateChange(state) {
@@ -210,6 +245,7 @@ const AddProduct = () => {
     console.log("Submitted Data,", data);
     console.log("gallery", data.gallery[1]);
     console.log("featured", data.featured_image);
+    console.log("Data check", data);
     var formData = new FormData();
     if (data.featured_image[0]?.size) {
       formData.append("featured_image", data.featured_image[0]);
@@ -256,26 +292,47 @@ const AddProduct = () => {
     );
     formData.append("highlight", JSON.stringify(data.highlight));
     console.log("Fprm data", formData);
+    if (clientDataAssignment.id) {
+      var config = {
+        method: "PUT",
+        url: URLConstants.modifyProduct(clientDataAssignment.id),
+        headers: {
+          headers: { "content-type": "multipart/form-data" },
+        },
+        data: formData,
+      };
 
-    var config = {
-      method: "POST",
-      url: URLConstants.product(),
-      headers: {
-        headers: { "content-type": "multipart/form-data" },
-      },
-      data: formData,
-    };
+      axios(config)
+        .then((response) => {
+          setLoaded(true);
+          console.log("Response after submitting form", response);
+          navigate("/products");
+        })
+        .catch((err) => {
+          setLoaded(true);
+          console.log(err);
+        });
+    } else {
+      var config = {
+        method: "POST",
+        url: URLConstants.product(),
+        headers: {
+          headers: { "content-type": "multipart/form-data" },
+        },
+        data: formData,
+      };
 
-    // axios(config)
-    //   .then((response) => {
-    //     setLoaded(true);
-    //     console.log("Response after submitting form", response);
-    //     navigate("/products");
-    //   })
-    //   .catch((err) => {
-    //     setLoaded(true);
-    //     console.log(err);
-    //   });
+      axios(config)
+        .then((response) => {
+          setLoaded(true);
+          console.log("Response after submitting form", response);
+          navigate("/products");
+        })
+        .catch((err) => {
+          setLoaded(true);
+          console.log(err);
+        });
+    }
   };
 
   return (
@@ -316,6 +373,11 @@ const AddProduct = () => {
                       variant="filled"
                       fullWidth
                       margin="normal"
+                      defaultValue={
+                        clientDataAssignment.category
+                          ? clientDataAssignment.category
+                          : ""
+                      }
                       {...field}
                     >
                       {categories.map((option) => (
@@ -341,6 +403,11 @@ const AddProduct = () => {
                       variant="filled"
                       fullWidth
                       margin="normal"
+                      defaultValue={
+                        clientDataAssignment.category_type
+                          ? clientDataAssignment.category_type
+                          : ""
+                      }
                       {...field}
                     >
                       {subcategories.map((option) => (
@@ -516,6 +583,11 @@ const AddProduct = () => {
                       variant="filled"
                       fullWidth
                       margin="normal"
+                      defaultValue={
+                        clientDataAssignment.allow_deposit
+                          ? clientDataAssignment.allow_deposit
+                          : ""
+                      }
                       {...field}
                     >
                       <MenuItem value={true}>Allow Deposit</MenuItem>
@@ -557,6 +629,11 @@ const AddProduct = () => {
                       variant="filled"
                       fullWidth
                       margin="normal"
+                      defaultValue={
+                        clientDataAssignment.allow_cancel
+                          ? clientDataAssignment.allow_cancel
+                          : ""
+                      }
                       {...field}
                     >
                       <MenuItem value={true}>Yes</MenuItem>
@@ -622,6 +699,11 @@ const AddProduct = () => {
                       variant="filled"
                       fullWidth
                       margin="normal"
+                      defaultValue={
+                        clientDataAssignment.country
+                          ? clientDataAssignment.country
+                          : ""
+                      }
                       onChange={(e) => {
                         console.log("Field", e.target.value, field);
                         e.preventDefault();
@@ -651,6 +733,11 @@ const AddProduct = () => {
                       variant="filled"
                       fullWidth
                       margin="normal"
+                      defaultValue={
+                        clientDataAssignment.state
+                          ? clientDataAssignment.state
+                          : ""
+                      }
                       onChange={(e) => {
                         e.preventDefault();
                         handleStateChange(encodeURIComponent(e.target.value));
@@ -680,6 +767,11 @@ const AddProduct = () => {
                       variant="filled"
                       fullWidth
                       margin="normal"
+                      defaultValue={
+                        clientDataAssignment.city
+                          ? clientDataAssignment.city
+                          : ""
+                      }
                       {...field}
                     >
                       {stateCities.map((con) => (
@@ -702,7 +794,7 @@ const AddProduct = () => {
                 <input
                   type="file"
                   placeholder="Image URL"
-                  {...register("featured_image", { required: true })}
+                  {...register("featured_image")}
                 />
               </Box>
             </Grid>
@@ -712,7 +804,7 @@ const AddProduct = () => {
                   type="file"
                   placeholder="Image URL"
                   multiple
-                  {...register("gallery", { required: true })}
+                  {...register("gallery")}
                 />
               </Box>
             </Grid>
@@ -768,6 +860,29 @@ const AddProduct = () => {
               Cancel
             </Button>
           </Stack>
+          <div className="spinner">
+            <Loader
+              loaded={loaded}
+              lines={13}
+              length={20}
+              width={10}
+              radius={30}
+              corners={1}
+              rotate={0}
+              direction={1}
+              color="#000"
+              speed={1}
+              trail={60}
+              shadow={false}
+              hwaccel={false}
+              className="spinner"
+              zIndex={2e9}
+              top="50%"
+              left="50%"
+              scale={1.0}
+              loadedClassName="loadedContent"
+            />
+          </div>
         </form>
       </Box>
     </>

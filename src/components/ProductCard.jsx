@@ -24,10 +24,14 @@ import {
   FmdGoodOutlined,
   CategoryOutlined,
 } from "@mui/icons-material";
+import { axiosInstance } from "base/api/axios.util";
 
-const ProductCard = ({ product }) => {
+import { URLConstants } from "../base/api/url.constants";
+
+const ProductCard = ({ product, setLoaded, setReloadPage }) => {
   const [visible, setVisible] = useState(true);
   const [finalProduct, setFinalProduct] = useState(product);
+  console.log("PRoduct received", product);
 
   const productStatusHandler = () => {
     setVisible(!visible);
@@ -35,7 +39,21 @@ const ProductCard = ({ product }) => {
   const theme = useTheme();
   console.log("PRoiduct", product);
 
-  function editProduct(choosenId) {}
+  function deleteProduct(productId) {
+    setLoaded(false);
+    console.log("PRoduct id ", productId);
+    axiosInstance
+      .get(URLConstants.disableProduct(productId))
+      .then((response) => {
+        setLoaded(true);
+        console.log("Response from products", response);
+        setReloadPage((prev) => !prev);
+      })
+      .catch((err) => {
+        setLoaded(true);
+        console.log(err);
+      });
+  }
   return (
     <Card
       sx={{
@@ -164,6 +182,7 @@ const ProductCard = ({ product }) => {
                 color: theme.palette.neutral.main,
               },
             }}
+            onClick={() => deleteProduct(product.id)}
           >
             <DeleteForeverIcon />
           </IconButton>
