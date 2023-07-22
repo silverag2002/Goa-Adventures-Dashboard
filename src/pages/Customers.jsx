@@ -7,18 +7,22 @@ import DataGridCustomToolbar from "components/DataGridCustomToolbar";
 import FlexBetween from "../components/FlexBetween";
 import { axiosInstance } from "../base/api/axios.util";
 import { URLConstants } from "../base/api/url.constants";
+import Loader from "react-loader";
+import { Link } from "react-router-dom";
 
 const Customers = () => {
   const theme = useTheme();
 
   // values to be sent to the backend
   const [page, setPage] = useState(0);
+
   const [pageSize, setPageSize] = useState(20);
   const [sort, setSort] = useState({});
   const [search, setSearch] = useState("");
   const [loaded, setLoaded] = useState(true);
   const [customer, setCustomer] = useState([]);
   const [searchInput, setSearchInput] = useState("");
+  const [reloadPage, setReloadPage] = useState(false);
 
   const { data, isLoading } = useGetTransactionsQuery({
     page,
@@ -40,6 +44,44 @@ const Customers = () => {
         console.log(err);
       });
   }, []);
+
+  function deleteCustomer(customerId) {
+    setLoaded(false);
+    axiosInstance
+      .get(URLConstants.modifyCustomers(customerId))
+      .then((response) => {
+        setLoaded(true);
+        console.log("Response form bookings", response);
+        setReloadPage(!reloadPage);
+      })
+      .catch((err) => {
+        setLoaded(true);
+        console.log(err);
+      });
+    console.log("Customer Id selected", customerId);
+  }
+
+  const renderDetailsButton = (params) => {
+    let customerInfo = customer.filter((book) => book.id == params.id);
+
+    return (
+      <Box sx={{ display: "flex", gap: "0.8rem" }}>
+        <Button
+          variant="contained"
+          color="secondary"
+          size="small"
+          onClick={(e) => deleteCustomer(params.id)}
+        >
+          Delete
+        </Button>
+        <Link to="/add-customer" state={{ customer: customerInfo[0] }}>
+          <Button variant="contained" color="secondary" size="small">
+            Edit
+          </Button>
+        </Link>
+      </Box>
+    );
+  };
 
   const columns = [
     {
@@ -84,6 +126,12 @@ const Customers = () => {
           Image
         </a>
       ),
+    },
+    {
+      field: "action",
+      headerName: "Action",
+      width: 175,
+      renderCell: renderDetailsButton,
     },
   ];
 
@@ -184,6 +232,30 @@ const Customers = () => {
           }}
         />
       </Box>
+
+      <div className="spinner">
+        <Loader
+          loaded={loaded}
+          lines={13}
+          length={20}
+          width={10}
+          radius={30}
+          corners={1}
+          rotate={0}
+          direction={1}
+          color="#000"
+          speed={1}
+          trail={60}
+          shadow={false}
+          hwaccel={false}
+          className="spinner"
+          zIndex={2e9}
+          top="50%"
+          left="50%"
+          scale={1.0}
+          loadedClassName="loadedContent"
+        />
+      </div>
     </Box>
   );
 };

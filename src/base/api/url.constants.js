@@ -15,13 +15,17 @@ URLConstants.customers = () => `${URLConstants.BASE_URL}/v1/customer/`;
 URLConstants.bookings = () => `${URLConstants.BASE_URL}/v1/booking/`;
 URLConstants.staff = () => `${URLConstants.BASE_URL}/v1/staff/`;
 
+//booking routes
 URLConstants.modifyBookings = (bookingId) =>
   `${URLConstants.BASE_URL}/v1/booking/${bookingId}`;
+
+//category routes
 URLConstants.modifyCategory = (categoryId) =>
   `${URLConstants.BASE_URL}/v1/categories/${categoryId}`;
 URLConstants.activateCategory = (categoryId) =>
   `${URLConstants.BASE_URL}/v1/categories/activate/${categoryId}`;
 URLConstants.deactivateCategory = (categoryId) =>
+  //subcategory routes
   `${URLConstants.BASE_URL}/v1/categories/deactivate/${categoryId}`;
 URLConstants.modifySubCategory = (categoryId) =>
   `${URLConstants.BASE_URL}/v1/subcategories/${categoryId}`;
@@ -29,3 +33,7 @@ URLConstants.activateSubCategory = (subCategoryId) =>
   `${URLConstants.BASE_URL}/v1/subcategories/activate/${subCategoryId}`;
 URLConstants.deactivateSubCategory = (subCategoryId) =>
   `${URLConstants.BASE_URL}/v1/subcategories/deactivate/${subCategoryId}`;
+
+//customer routes
+URLConstants.modifyCustomers = (customerId) =>
+  `${URLConstants.BASE_URL}/v1/customer/${customerId}`;

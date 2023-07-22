@@ -15,7 +15,7 @@ import { useForm, Controller } from "react-hook-form";
 import { axiosInstance } from "../base/api/axios.util";
 import { URLConstants } from "../base/api/url.constants";
 import Loader from "react-loader";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import axios, * as others from "axios";
 var FormData = require("form-data");
 
@@ -32,29 +32,47 @@ const AddCustomer = () => {
   const [depositAmount, setDepositAmount] = useState("");
   const [mobileNumber, setMobileNumber] = useState("");
   const [customerId, setCustomerId] = useState("");
+  const location = useLocation();
 
   const {
     handleSubmit,
     register,
     control,
     getValues,
+    setValue,
     formState: { errors },
   } = useForm({});
 
+  var clientDataAssignment = {};
+
+  console.log("LOcaltion", location);
+  if (location.state) {
+    clientDataAssignment = location.state.customer;
+  }
+  console.log("ASsingment issue", clientDataAssignment);
+
   useEffect(() => {
-    setLoaded(false);
-    axiosInstance
-      .get(URLConstants.customers())
-      .then((response) => {
-        setLoaded(true);
-        console.log("Response form custoemrs", response);
-        setCustomers(response);
-      })
-      .catch((err) => {
-        setLoaded(true);
-        console.log(err);
-      });
-  }, []);
+    // setLoaded(false);
+    // axiosInstance
+    //   .get(URLConstants.customers())
+    //   .then((response) => {
+    //     setLoaded(true);
+    //     console.log("Response form custoemrs", response);
+    //     setCustomers(response);
+    //   })
+    //   .catch((err) => {
+    //     setLoaded(true);
+    //     console.log(err);
+    //   });
+
+    setValue("name", clientDataAssignment.name);
+    setValue("email", clientDataAssignment.email);
+    setValue("mobile_number", clientDataAssignment.mobile_number);
+    setValue("city", clientDataAssignment.city);
+
+    setValue("state", clientDataAssignment.state);
+    setValue("country", clientDataAssignment.country);
+  }, [reloadPage]);
 
   const onSubmit = (data) => {
     setLoaded(false);
@@ -73,25 +91,48 @@ const AddCustomer = () => {
     formData.append("country", data.country.trim());
     formData.append("status", data.status);
 
-    var config = {
-      method: "POST",
-      url: URLConstants.customers(),
-      headers: {
-        headers: { "content-type": "multipart/form-data" },
-      },
-      data: formData,
-    };
+    console.log("FInal data accepted", data);
+    if (clientDataAssignment.id) {
+      var config = {
+        method: "PUT",
+        url: URLConstants.modifyCustomers(clientDataAssignment.id),
+        headers: {
+          headers: { "content-type": "multipart/form-data" },
+        },
+        data: formData,
+      };
 
-    axios(config)
-      .then((res) => {
-        setLoaded(true);
-        console.log("Responsse form customer post method", res);
-        navigate("/customers");
-      })
-      .catch((err) => {
-        setLoaded(true);
-        console.log("error", err);
-      });
+      axios(config)
+        .then((res) => {
+          setLoaded(true);
+          console.log("Responsse form customer post method", res);
+          navigate("/customers");
+        })
+        .catch((err) => {
+          setLoaded(true);
+          console.log("error", err);
+        });
+    } else {
+      var config = {
+        method: "POST",
+        url: URLConstants.customers(),
+        headers: {
+          headers: { "content-type": "multipart/form-data" },
+        },
+        data: formData,
+      };
+
+      axios(config)
+        .then((res) => {
+          setLoaded(true);
+          console.log("Responsse form customer post method", res);
+          navigate("/customers");
+        })
+        .catch((err) => {
+          setLoaded(true);
+          console.log("error", err);
+        });
+    }
   };
 
   const onError = (errors) => console.log(errors);
@@ -233,7 +274,7 @@ const AddCustomer = () => {
               <input
                 type="file"
                 placeholder="Image URL"
-                {...register("profile_image", { required: true })}
+                {...register("profile_image")}
               />
             </Box>
           </Grid>
