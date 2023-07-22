@@ -48,7 +48,7 @@ const Customers = () => {
   function deleteCustomer(customerId) {
     setLoaded(false);
     axiosInstance
-      .get(URLConstants.modifyCustomers(customerId))
+      .get(URLConstants.disableCustomer(customerId))
       .then((response) => {
         setLoaded(true);
         console.log("Response form bookings", response);

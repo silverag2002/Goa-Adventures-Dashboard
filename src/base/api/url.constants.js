@@ -37,3 +37,5 @@ URLConstants.deactivateSubCategory = (subCategoryId) =>
 //customer routes
 URLConstants.modifyCustomers = (customerId) =>
   `${URLConstants.BASE_URL}/v1/customer/${customerId}`;
+URLConstants.disableCustomer = (customerId) =>
+  `${URLConstants.BASE_URL}/v1/customer/deactivate/${customerId}`;
