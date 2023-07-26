@@ -154,7 +154,7 @@ const AddProduct = () => {
     setValue("max_people", clientDataAssignment.max_people);
     setValue("price", clientDataAssignment.price);
     setValue("discount_percent", clientDataAssignment.discount_percent);
-    if (clientDataAssignment.activity_exclusion.length > 0) {
+    if (clientDataAssignment?.activity_exclusion?.length > 0) {
       let newString = "";
       for (let i = 0; i < clientDataAssignment.activity_exclusion.length; i++) {
         newString =
@@ -163,7 +163,7 @@ const AddProduct = () => {
       console.log("ACtivity_Exclusion", newString);
       setValue("exclusion", newString);
     }
-    if (clientDataAssignment.activity_inclusion.length > 0) {
+    if (clientDataAssignment?.activity_inclusion?.length > 0) {
       let newString = "";
       for (let i = 0; i < clientDataAssignment.activity_inclusion.length; i++) {
         newString =
@@ -172,7 +172,7 @@ const AddProduct = () => {
       console.log("ACtivity_Inclusion", newString);
       setValue("inclusion", newString);
     }
-    if (clientDataAssignment.highlight.length > 0) {
+    if (clientDataAssignment?.highlight?.length > 0) {
       let newString = "";
       for (let i = 0; i < clientDataAssignment.highlight.length; i++) {
         newString = newString + clientDataAssignment.highlight[i] + "\n";
