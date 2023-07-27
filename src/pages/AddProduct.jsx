@@ -38,6 +38,16 @@ const AddProduct = () => {
   const [reloadPage, setReloadPage] = useState(false);
   const [categories, setCategories] = useState([]);
   const [subcategories, setSubCategories] = useState([]);
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [imageUrl, setImageUrl] = useState(null);
+
+  console.log(imageUrl);
+
+  useEffect(() => {
+    if (selectedImage) {
+      setImageUrl(URL.createObjectURL(selectedImage));
+    }
+  }, [selectedImage]);
 
   const navigate = useNavigate();
 
@@ -429,7 +439,7 @@ const AddProduct = () => {
                     <TextField
                       id="duration"
                       label="Duration"
-                      type="time"
+                      type="text"
                       variant="filled"
                       fullWidth
                       margin="normal"
@@ -791,6 +801,7 @@ const AddProduct = () => {
             </Grid>
             <Grid item xs={4} md={4}>
               <Box>
+                <label>Featured Image</label>
                 <input
                   type="file"
                   placeholder="Image URL"
@@ -800,6 +811,7 @@ const AddProduct = () => {
             </Grid>
             <Grid item xs={4} md={4}>
               <Box>
+                <label>Gallery Image</label>
                 <input
                   type="file"
                   placeholder="Image URL"

@@ -108,17 +108,6 @@ const Category = () => {
     },
   ];
 
-  // const rows = [
-  //   {
-  //     id: 1,
-  //     category: "Activity",
-  //     image: "Image",
-  //   },
-  //   { id: 2, category: "Tour", image: "Image" },
-  //   { id: 3, category: "Park Ticket", image: "Image" },
-  //   { id: 4, category: "Cruise", image: "Image" },
-  // ];
-
   const onSubmit = (data) => {
     //reset({});
     // setClientType(undefined);
