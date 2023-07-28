@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import KitesurfingIcon from "@mui/icons-material/Kitesurfing";
+import TourIcon from "@mui/icons-material/Tour";
 import {
   Box,
   useTheme,
@@ -11,6 +13,7 @@ import {
   Button,
   IconButton,
   Container,
+  ButtonGroup,
 } from "@mui/material";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import EditIcon from "@mui/icons-material/Edit";
@@ -57,37 +60,37 @@ const ProductCard = ({ product, setLoaded, setReloadPage }) => {
   return (
     <Card
       sx={{
-        maxWidth: "320px",
-        width: "100%",
-        backgroundColor: theme.palette.background.alt,
+        maxHeight: "375px",
+        height: "100%",
+        backgroundColor: theme.palette.background.default,
         boxShadow: 3,
         borderRadius: "7%",
       }}
     >
       <CardMedia
-        sx={{ height: 200 }}
+        sx={{ height: 175 }}
         image={product.featured_image}
         title="green iguana"
       />
-      <CardContent>
-        <Typography gutterBottom variant="h5" fontWeight={600}>
+      <CardContent sx={{ padding: "6px" }}>
+        <Typography gutterBottom variant="h5" fontSize={14} fontWeight={500}>
           {product.title}
         </Typography>
 
         <Box
           sx={{
             display: "flex",
-            flexDirection: "column",
+            flexDirection: "row",
             gap: "4px",
             alignItems: "start",
             justifyContent: "space-between",
-            paddingTop: "0.8rem",
+            paddingTop: "0.5rem",
           }}
         >
           <Typography
             variant="body1"
             color="text.secondary"
-            sx={{ fontWeight: "bold" }}
+            sx={{ fontWeight: "500", fontSize: "0.9rem" }}
           >
             <FmdGoodOutlined />
             {product.city}
@@ -95,47 +98,60 @@ const ProductCard = ({ product, setLoaded, setReloadPage }) => {
           <Typography
             variant="body1"
             color="text.secondary"
-            sx={{ fontWeight: "bold" }}
+            sx={{ fontWeight: "500", fontSize: "0.9rem" }}
           >
-            <CategoryOutlined />
+            {product.category === "Activity" ? (
+              <KitesurfingIcon />
+            ) : (
+              <TourIcon />
+            )}
+
             {product.category}
           </Typography>
         </Box>
+      </CardContent>
+      <CardActions
+        disableSpacing
+        sx={{
+          display: "flex",
+          alignItems: "flex-end",
+          justifyContent: "space-between",
+        }}
+      >
         <Box
           sx={{
             display: "flex",
             flexDirection: "row",
             gap: "4px",
             alignItems: "center",
-            marginTop: "1rem",
+            justifyContent: "center",
+            marginTop: "1.2rem",
           }}
         >
           <Typography
-            variant="body1"
+            variant="h5"
             color="text.secondary"
-            sx={{
-              textDecoration: "line-through",
-              fontSize: "1.1rem",
-              fontWeight: "500",
-              color: theme.palette.grey[500],
-            }}
-          >
-            <CurrencyRupee fontSize="medium" />
-            {product.price}
-          </Typography>
-          <Typography
-            variant="h4"
-            color="text.secondary"
-            sx={{ fontWeight: "bold" }}
+            sx={{ display: "flex", alignItems: "center", fontWeight: "bold" }}
           >
             <CurrencyRupee />
             {((100 - Number(product.discount_percent)) *
               Number(product.price)) /
               100}
           </Typography>
+          <Typography
+            variant="body1"
+            color="text.secondary"
+            sx={{
+              display: "flex",
+              textDecoration: "line-through",
+              fontSize: "0.9rem",
+              fontWeight: "500",
+              color: theme.palette.grey[500],
+            }}
+          >
+            {product.price}
+          </Typography>
         </Box>
-      </CardContent>
-      <CardActions>
         <Box
           sx={{
             width: "100%",
@@ -143,7 +159,7 @@ const ProductCard = ({ product, setLoaded, setReloadPage }) => {
             flexDirection: "row",
             alignItems: "center",
             justifyContent: "flex-end",
-            gap: "0.6rem",
+            gap: "6px",
           }}
         >
           {console.log("Proudct info in card", product)}
@@ -151,8 +167,13 @@ const ProductCard = ({ product, setLoaded, setReloadPage }) => {
           <IconButton
             aria-label="edit"
             sx={{
-              backgroundColor: theme.palette.primary.main,
+              backgroundColor: theme.palette.background.alt,
               color: theme.palette.neutral.main,
+              fontSize: "inherit",
+              ":hover": {
+                bgcolor: "white",
+                color: theme.palette.neutral.main,
+              },
             }}
             // onClick={() => editProduct(product.id)}
           >
@@ -165,8 +186,12 @@ const ProductCard = ({ product, setLoaded, setReloadPage }) => {
             onClick={productStatusHandler}
             aria-label="visible"
             sx={{
-              backgroundColor: theme.palette.secondary.main,
+              backgroundColor: theme.palette.background.alt,
               color: theme.palette.neutral.main,
+              ":hover": {
+                bgcolor: "white",
+                color: theme.palette.neutral.main,
+              },
             }}
           >
             {visible === true ? <VisibilityIcon /> : <VisibilityOffIcon />}

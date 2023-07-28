@@ -364,13 +364,16 @@ const AddProduct = () => {
                       placeholder="Activity Or Tour Title"
                       fullWidth
                       margin="normal"
+                      size="small"
+                      inputProps={{ style: { fontSize: 16 } }}
+                      InputLabelProps={{ style: { fontSize: 16 } }}
                       {...field}
                     />
                   )}
                 />
               </Box>
             </Grid>
-            <Grid item xs={4}>
+            <Grid item xs={12} md={4}>
               <Box>
                 <Controller
                   name="category"
@@ -383,6 +386,8 @@ const AddProduct = () => {
                       variant="filled"
                       fullWidth
                       margin="normal"
+                      inputProps={{ style: { fontSize: 16 } }}
+                      InputLabelProps={{ style: { fontSize: 16 } }}
                       defaultValue={
                         clientDataAssignment.category
                           ? clientDataAssignment.category
@@ -400,7 +405,7 @@ const AddProduct = () => {
                 />
               </Box>
             </Grid>
-            <Grid item xs={4}>
+            <Grid item xs={12} md={4}>
               <Box>
                 <Controller
                   name="category_type"
@@ -413,6 +418,8 @@ const AddProduct = () => {
                       variant="filled"
                       fullWidth
                       margin="normal"
+                      inputProps={{ style: { fontSize: 16 } }}
+                      InputLabelProps={{ style: { fontSize: 16 } }}
                       defaultValue={
                         clientDataAssignment.category_type
                           ? clientDataAssignment.category_type
@@ -430,7 +437,7 @@ const AddProduct = () => {
                 />
               </Box>
             </Grid>
-            <Grid item xs={4} md={4}>
+            <Grid item xs={12} md={4}>
               <Box>
                 <Controller
                   name="duration"
@@ -443,6 +450,8 @@ const AddProduct = () => {
                       variant="filled"
                       fullWidth
                       margin="normal"
+                      inputProps={{ style: { fontSize: 16 } }}
+                      InputLabelProps={{ style: { fontSize: 16 } }}
                       {...field}
                     />
                   )}
@@ -452,7 +461,7 @@ const AddProduct = () => {
             <Grid item xs={12} md={12}>
               <Box>
                 <JoditEditor
-                  height={200}
+                  height={160}
                   name="overview"
                   className="text-black"
                   // config={{ theme: "dark" }}
@@ -463,7 +472,7 @@ const AddProduct = () => {
                 />
               </Box>
             </Grid>
-            <Grid item xs={4} md={4}>
+            <Grid item xs={12} md={4}>
               <Box>
                 <Controller
                   name="highlight"
@@ -477,13 +486,15 @@ const AddProduct = () => {
                       rows={6}
                       fullWidth
                       margin="normal"
+                      inputProps={{ style: { fontSize: 16 } }}
+                      InputLabelProps={{ style: { fontSize: 16 } }}
                       {...field}
                     />
                   )}
                 />
               </Box>
             </Grid>
-            <Grid item xs={4} md={4}>
+            <Grid item xs={12} md={4}>
               <Box>
                 <Controller
                   name="inclusion"
@@ -497,13 +508,15 @@ const AddProduct = () => {
                       rows={6}
                       fullWidth
                       margin="normal"
+                      inputProps={{ style: { fontSize: 16 } }}
+                      InputLabelProps={{ style: { fontSize: 16 } }}
                       {...field}
                     />
                   )}
                 />
               </Box>
             </Grid>
-            <Grid item xs={4} md={4}>
+            <Grid item xs={12} md={4}>
               <Box>
                 <Controller
                   name="exclusion"
@@ -517,13 +530,15 @@ const AddProduct = () => {
                       rows={6}
                       fullWidth
                       margin="normal"
+                      inputProps={{ style: { fontSize: 16 } }}
+                      InputLabelProps={{ style: { fontSize: 16 } }}
                       {...field}
                     />
                   )}
                 />
               </Box>
             </Grid>
-            <Grid item xs={4} md={4}>
+            <Grid item xs={12} md={4}>
               <Box>
                 <Controller
                   name="min_people"
@@ -536,13 +551,15 @@ const AddProduct = () => {
                       type="number"
                       fullWidth
                       margin="normal"
+                      inputProps={{ style: { fontSize: 16 } }}
+                      InputLabelProps={{ style: { fontSize: 16 } }}
                       {...field}
                     />
                   )}
                 />
               </Box>
             </Grid>
-            <Grid item xs={4} md={4}>
+            <Grid item xs={12} md={4}>
               <Box>
                 <Controller
                   name="max_people"
@@ -555,13 +572,15 @@ const AddProduct = () => {
                       type="number"
                       fullWidth
                       margin="normal"
+                      inputProps={{ style: { fontSize: 16 } }}
+                      InputLabelProps={{ style: { fontSize: 16 } }}
                       {...field}
                     />
                   )}
                 />
               </Box>
             </Grid>
-            <Grid item xs={4} md={4}>
+            <Grid item xs={12} md={4}>
               <Box>
                 <Controller
                   name="booking_period"
@@ -574,13 +593,15 @@ const AddProduct = () => {
                       type="number"
                       fullWidth
                       margin="normal"
+                      inputProps={{ style: { fontSize: 16 } }}
+                      InputLabelProps={{ style: { fontSize: 16 } }}
                       {...field}
                     />
                   )}
                 />
               </Box>
             </Grid>
-            <Grid item xs={4}>
+            <Grid item xs={12} md={4}>
               <Box>
                 <Controller
                   name="allow_deposit"
@@ -593,6 +614,8 @@ const AddProduct = () => {
                       variant="filled"
                       fullWidth
                       margin="normal"
+                      inputProps={{ style: { fontSize: 16 } }}
+                      InputLabelProps={{ style: { fontSize: 16 } }}
                       defaultValue={
                         clientDataAssignment.allow_deposit
                           ? clientDataAssignment.allow_deposit
@@ -607,7 +630,7 @@ const AddProduct = () => {
                 />
               </Box>
             </Grid>
-            <Grid item xs={4} md={4}>
+            <Grid item xs={12} md={4}>
               <Box>
                 <Controller
                   name="deposit_value"
@@ -620,13 +643,15 @@ const AddProduct = () => {
                       type="number"
                       fullWidth
                       margin="normal"
+                      inputProps={{ style: { fontSize: 16 } }}
+                      InputLabelProps={{ style: { fontSize: 16 } }}
                       {...field}
                     />
                   )}
                 />
               </Box>
             </Grid>
-            <Grid item xs={4}>
+            <Grid item xs={12} md={4}>
               <Box>
                 <Controller
                   name="allow_cancel"
@@ -639,6 +664,8 @@ const AddProduct = () => {
                       variant="filled"
                       fullWidth
                       margin="normal"
+                      inputProps={{ style: { fontSize: 16 } }}
+                      InputLabelProps={{ style: { fontSize: 16 } }}
                       defaultValue={
                         clientDataAssignment.allow_cancel
                           ? clientDataAssignment.allow_cancel
@@ -658,7 +685,7 @@ const AddProduct = () => {
             <Grid item xs={12} md={12}>
               <Typography variant="h4">Pricing & Location</Typography>
             </Grid>
-            <Grid item xs={4} md={6}>
+            <Grid item xs={12} md={4}>
               <Box>
                 <Controller
                   name="price"
@@ -671,13 +698,15 @@ const AddProduct = () => {
                       type="number"
                       fullWidth
                       margin="normal"
+                      inputProps={{ style: { fontSize: 16 } }}
+                      InputLabelProps={{ style: { fontSize: 16 } }}
                       {...field}
                     />
                   )}
                 />
               </Box>
             </Grid>
-            <Grid item xs={4} md={6}>
+            <Grid item xs={12} md={4}>
               <Box>
                 <Controller
                   name="discount_percent"
@@ -690,13 +719,15 @@ const AddProduct = () => {
                       type="number"
                       fullWidth
                       margin="normal"
+                      inputProps={{ style: { fontSize: 16 } }}
+                      InputLabelProps={{ style: { fontSize: 16 } }}
                       {...field}
                     />
                   )}
                 />
               </Box>
             </Grid>
-            <Grid item xs={4} md={4}>
+            <Grid item xs={12} md={4}>
               <Box>
                 <Controller
                   name="country"
@@ -709,6 +740,8 @@ const AddProduct = () => {
                       variant="filled"
                       fullWidth
                       margin="normal"
+                      inputProps={{ style: { fontSize: 16 } }}
+                      InputLabelProps={{ style: { fontSize: 16 } }}
                       defaultValue={
                         clientDataAssignment.country
                           ? clientDataAssignment.country
@@ -730,7 +763,7 @@ const AddProduct = () => {
                 />
               </Box>
             </Grid>
-            <Grid item xs={4} md={4}>
+            <Grid item xs={12} md={4}>
               <Box>
                 <Controller
                   name="state"
@@ -743,6 +776,8 @@ const AddProduct = () => {
                       variant="filled"
                       fullWidth
                       margin="normal"
+                      inputProps={{ style: { fontSize: 16 } }}
+                      InputLabelProps={{ style: { fontSize: 16 } }}
                       defaultValue={
                         clientDataAssignment.state
                           ? clientDataAssignment.state
@@ -764,7 +799,7 @@ const AddProduct = () => {
                 />
               </Box>
             </Grid>
-            <Grid item xs={4} md={4}>
+            <Grid item xs={12} md={4}>
               <Box>
                 <Controller
                   name="city"
@@ -777,6 +812,8 @@ const AddProduct = () => {
                       variant="filled"
                       fullWidth
                       margin="normal"
+                      inputProps={{ style: { fontSize: 16 } }}
+                      InputLabelProps={{ style: { fontSize: 16 } }}
                       defaultValue={
                         clientDataAssignment.city
                           ? clientDataAssignment.city
@@ -799,7 +836,7 @@ const AddProduct = () => {
             <Grid item xs={12} md={12}>
               <Typography variant="h4">Photos & Video</Typography>
             </Grid>
-            <Grid item xs={4} md={4}>
+            <Grid item xs={12} md={4}>
               <Box>
                 <label>Featured Image</label>
                 <input
@@ -809,7 +846,7 @@ const AddProduct = () => {
                 />
               </Box>
             </Grid>
-            <Grid item xs={4} md={4}>
+            <Grid item xs={12} md={4}>
               <Box>
                 <label>Gallery Image</label>
                 <input
@@ -820,7 +857,7 @@ const AddProduct = () => {
                 />
               </Box>
             </Grid>
-            <Grid item xs={4} md={4}>
+            <Grid item xs={12} md={4}>
               <Box>
                 <Controller
                   name="video"
@@ -832,6 +869,8 @@ const AddProduct = () => {
                       variant="filled"
                       fullWidth
                       margin="normal"
+                      inputProps={{ style: { fontSize: 16 } }}
+                      InputLabelProps={{ style: { fontSize: 16 } }}
                       {...field}
                     />
                   )}

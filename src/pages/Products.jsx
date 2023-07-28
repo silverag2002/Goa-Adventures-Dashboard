@@ -57,28 +57,21 @@ const Products = () => {
         </Button>
       </FlexBetween>
       <ProductFilter />
-      <Box
-        mt="1.5rem"
-        sx={{
-          display: "flex",
-          flexDirection: "row",
-          alignContent: "center",
-          justifyContent: "start",
-          gap: "1rem",
-          flexWrap: "wrap",
-          width: "100%",
-        }}
-        spacing={4}
-      >
+      {/* List of Card Start */}
+      <Grid container spacing={2} rowSpacing={4} width="100%" marginTop="40px">
         {products.map((item, index) => (
-          <ProductCard
-            product={item}
-            key={item.id}
-            setLoaded={setLoaded}
-            setReloadPage={setReloadPage}
-          />
+          <Grid item xs={6} md={4} lg={3}>
+            <ProductCard
+              product={item}
+              key={item.id}
+              setLoaded={setLoaded}
+              setReloadPage={setReloadPage}
+            />
+          </Grid>
         ))}
-      </Box>
+      </Grid>
+
+      {/* List of Card End */}
       <div className="spinner">
         <Loader
           loaded={loaded}
