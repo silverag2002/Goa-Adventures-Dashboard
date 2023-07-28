@@ -876,8 +876,8 @@ const AddProduct = () => {
             <Loader
               loaded={loaded}
               lines={13}
-              length={20}
-              width={10}
+              length={10}
+              width={5}
               radius={30}
               corners={1}
               rotate={0}

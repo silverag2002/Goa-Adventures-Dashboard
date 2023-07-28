@@ -17,7 +17,6 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { borders, borderBottomColor } from "@mui/system";
 import FlexBetween from "components/FlexBetween";
-import "../styles/Login.css";
 
 const Login = () => {
   const theme = useTheme();
