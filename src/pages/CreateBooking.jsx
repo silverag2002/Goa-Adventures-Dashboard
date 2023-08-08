@@ -548,6 +548,25 @@ const CreateBooking = () => {
           <Grid item xs={12} md={3}>
             <Box>
               <Controller
+                name="quantity"
+                control={control}
+                render={({ field }) => (
+                  <TextField
+                    id="quantity"
+                    type="number"
+                    label="Quantity"
+                    variant="filled"
+                    fullWidth
+                    margin="normal"
+                    {...field}
+                  />
+                )}
+              />
+            </Box>
+          </Grid>
+          <Grid item xs={12} md={3}>
+            <Box>
+              <Controller
                 name="customer_mobile_number"
                 control={control}
                 render={({ field }) => (
