@@ -27,11 +27,15 @@ import {
   ScubaDivingOutlined,
   CategoryOutlined,
   ManageAccountsOutlined,
+  VerifiedUserOutlined,
+  ArticleOutlined,
 } from "@mui/icons-material";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import FlexBetween from "./FlexBetween";
 import profileImage from "assets/profile.jpeg";
+import goaAdventureLogo from "assets/goaadventure_color_logo.svg";
+import goaAdventureWhite from "assets/goaadventure_white_logo.svg";
 
 const navItems = [
   {
@@ -61,6 +65,14 @@ const navItems = [
   {
     text: "Manage Staff",
     icon: <ManageAccountsOutlined />,
+  },
+  {
+    text: "Privacy Policy",
+    icon: <VerifiedUserOutlined />,
+  },
+  {
+    text: "Terms Conditions",
+    icon: <ArticleOutlined />,
   },
   {
     text: "Business Analytics",
@@ -115,9 +127,26 @@ const Sidebar = ({
             <Box m="1.5rem 2rem 2rem 3rem">
               <FlexBetween color={theme.palette.secondary.main}>
                 <Box display="flex" alignItems="center" gap="0.5rem">
-                  <Typography variant="h5" fontWeight="semibold">
+                  {/* <Typography variant="h5" fontWeight="semibold">
                     GOA ADVENTURE
-                  </Typography>
+                  </Typography> */}
+                  {theme.palette.mode === "light" ? (
+                    <img
+                      src={goaAdventureLogo}
+                      alt=""
+                      loading="lazy"
+                      width="200px"
+                      height="auto"
+                    />
+                  ) : (
+                    <img
+                      src={goaAdventureWhite}
+                      alt=""
+                      loading="lazy"
+                      width="200px"
+                      height="auto"
+                    />
+                  )}
                 </Box>
                 {!isNonMobile && (
                   <IconButton onClick={() => setIsSidebarOpen(!isSidebarOpen)}>

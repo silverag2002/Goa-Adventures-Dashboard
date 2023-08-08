@@ -13,6 +13,10 @@ import { DataGrid } from "@mui/x-data-grid";
 import Loader from "react-loader";
 import { axiosInstance } from "../base/api/axios.util";
 import { URLConstants } from "../base/api/url.constants";
+import {
+  DeleteOutlineOutlined,
+  ModeEditOutlineOutlined,
+} from "@mui/icons-material/";
 import axios, * as others from "axios";
 var FormData = require("form-data");
 
@@ -83,7 +87,7 @@ const SubCategory = () => {
           size="small"
           onClick={(e) => deleteSubCategory(params.id)}
         >
-          Delete
+          <DeleteOutlineOutlined />
         </Button>
         <Button
           variant="contained"
@@ -91,7 +95,7 @@ const SubCategory = () => {
           size="small"
           onClick={() => handleEdit(params.id)}
         >
-          Edit
+          <ModeEditOutlineOutlined />
         </Button>
       </Box>
     );
@@ -110,23 +114,25 @@ const SubCategory = () => {
   // ];
 
   const columns = [
-    { field: "id", headerName: "ID", width: 100 },
-    { field: "category", headerName: "Category", fullWidth: true },
     { field: "subcategory", headerName: "Sub Category", fullWidth: true },
+    { field: "category", headerName: "Category", fullWidth: true },
     {
       field: "subcategory_image",
       headerName: "Image",
-      width: 100,
+      fullWidth: true,
       renderCell: (params) => (
-        <a href={params.row.subcategory_image} target="_blank">
-          Image
-        </a>
+        <img
+          src={params.row.subcategory_image}
+          alt=""
+          width="64px"
+          height="64px"
+        />
       ),
     },
     {
       field: "action",
       headerName: "Action",
-      width: 175,
+      fullWidth: true,
       renderCell: renderDetailsButton,
     },
   ];
@@ -243,6 +249,27 @@ const SubCategory = () => {
           <Grid container spacing={2} alignItems="center">
             <Grid item md={3} xs={12}>
               <Controller
+                name="subcategory"
+                control={control}
+                render={({ field }) => (
+                  <TextField
+                    id="sub-category"
+                    label="Sub Category"
+                    variant="filled"
+                    fullWidth
+                    margin="normal"
+                    value={subCategory}
+                    onChange={(e) => setSubCategory(e.target.value)}
+                    inputProps={{ style: { fontSize: 16, fontWeight: 500 } }}
+                    InputLabelProps={{
+                      style: { fontSize: 16, fontWeight: 500 },
+                    }}
+                  />
+                )}
+              />
+            </Grid>
+            <Grid item md={3} xs={12}>
+              <Controller
                 name="category"
                 control={control}
                 render={({ field }) => (
@@ -255,6 +282,10 @@ const SubCategory = () => {
                     margin="normal"
                     value={category}
                     onChange={(e) => setCategory(e.target.value)}
+                    inputProps={{ style: { fontSize: 16, fontWeight: 500 } }}
+                    InputLabelProps={{
+                      style: { fontSize: 16, fontWeight: 500 },
+                    }}
                   >
                     {categories.map((option) => (
                       <MenuItem key={option} value={option}>
@@ -262,23 +293,6 @@ const SubCategory = () => {
                       </MenuItem>
                     ))}
                   </TextField>
-                )}
-              />
-            </Grid>
-            <Grid item md={3} xs={12}>
-              <Controller
-                name="subcategory"
-                control={control}
-                render={({ field }) => (
-                  <TextField
-                    id="sub-category"
-                    label="Sub Category"
-                    variant="filled"
-                    fullWidth
-                    margin="normal"
-                    value={subCategory}
-                    onChange={(e) => setSubCategory(e.target.value)}
-                  />
                 )}
               />
             </Grid>
@@ -317,6 +331,7 @@ const SubCategory = () => {
           }}
           pageSizeOptions={[5, 10]}
           checkboxSelection
+          getRowHeight={() => "auto"}
         />
       </Box>
       <div className="spinner">

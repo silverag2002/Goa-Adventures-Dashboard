@@ -19,6 +19,8 @@ import AddCategory from "pages/AddCategory";
 import SubCategory from "pages/SubCategory";
 import CreateBooking from "pages/CreateBooking";
 import Login from "./pages/Login";
+import PrivacyPolicry from "./pages/privacy-policy";
+import TermsConditions from "./pages/terms-conditions";
 
 function App() {
   const mode = useSelector((state) => state.global.mode);
@@ -43,6 +45,8 @@ function App() {
               <Route path="/sub-category" element={<SubCategory />} />
               <Route path="/add-category" element={<AddCategory />} />
               <Route path="/create-product" element={<CreateProduct />} />
+              <Route path="/privacy-policy" element={<PrivacyPolicry />} />
+              <Route path="/terms-conditions" element={<TermsConditions />} />
             </Route>
             <Route path="/login" element={<Login />} />
             <Route path="/*" element={<Login />} />

@@ -8,6 +8,11 @@ import { axiosInstance } from "../base/api/axios.util";
 import { URLConstants } from "../base/api/url.constants";
 import axios, * as others from "axios";
 import { Link } from "react-router-dom";
+import {
+  DeleteOutlineOutlined,
+  ModeEditOutlineOutlined,
+} from "@mui/icons-material/";
+
 var FormData = require("form-data");
 
 const Category = () => {
@@ -17,6 +22,7 @@ const Category = () => {
   const [reloadPage, setReloadPage] = useState(false);
   const [category, setCategory] = useState("");
   const [editInfo, setEditInfo] = useState(0);
+
   const {
     handleSubmit,
     register,
@@ -39,6 +45,8 @@ const Category = () => {
         setLoaded(true);
       });
   }, [reloadPage]);
+
+  console.log(rows);
 
   function deleteCategory(bookingId) {
     setLoaded(false);
@@ -72,7 +80,7 @@ const Category = () => {
           size="small"
           onClick={(e) => deleteCategory(params.id)}
         >
-          Delete
+          <DeleteOutlineOutlined />
         </Button>
         {/* <Link to="/add-category" state={{ category: categoryInfo[0] }}> */}
         <Button
@@ -81,7 +89,7 @@ const Category = () => {
           size="small"
           onClick={() => handleEdit(params.id)}
         >
-          Edit
+          <ModeEditOutlineOutlined />
         </Button>
         {/* </Link> */}
       </Box>
@@ -93,17 +101,28 @@ const Category = () => {
     {
       field: "category_image",
       headerName: "Image",
-      width: 100,
-      renderCell: (params) => (
-        <a href={params.row.category_image} target="_blank">
-          Image
-        </a>
-      ),
+      fullWidth: true,
+      renderCell: (params) => <img src={params.row.category_image} alt="" />,
+    },
+    {
+      field: "activation_status",
+      headerName: "Status",
+      fullWidth: true,
+    },
+    {
+      field: "updatedAt",
+      headerName: "Updated At",
+      fullWidth: true,
+    },
+    {
+      field: "createdAt",
+      headerName: "Created At",
+      fullWidth: true,
     },
     {
       field: "action",
       headerName: "Action",
-      width: 175,
+      width: 200,
       renderCell: renderDetailsButton,
     },
   ];
@@ -181,7 +200,7 @@ const Category = () => {
 
   return (
     <Box m="1.5rem 2.5rem">
-      <Header title="Category Check" subtitle="Entire list of category" />
+      <Header title="Category" subtitle="Entire list of category" />
       <Box>
         <form onSubmit={handleSubmit(onSubmit, onError)}>
           <Grid container spacing={2} alignItems="center">

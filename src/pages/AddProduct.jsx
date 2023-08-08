@@ -9,6 +9,7 @@ import {
   Button,
   useTheme,
   Stack,
+  Divider,
 } from "@mui/material";
 import Header from "components/Header";
 import { Link, useLocation } from "react-router-dom";
@@ -461,7 +462,7 @@ const AddProduct = () => {
             <Grid item xs={12} md={12}>
               <Box>
                 <JoditEditor
-                  height={160}
+                  height={200}
                   name="overview"
                   className="text-black"
                   // config={{ theme: "dark" }}
@@ -681,6 +682,11 @@ const AddProduct = () => {
               </Box>
             </Grid>
           </Grid>
+          <Divider
+            sx={{ borderWidth: "2px", marginTop: "1rem" }}
+            variant="fullWidth"
+            color={theme.palette.neutral.main}
+          />
           <Grid container spacing={2} sx={{ paddingTop: "1rem" }}>
             <Grid item xs={12} md={12}>
               <Typography variant="h4">Pricing & Location</Typography>
@@ -832,6 +838,11 @@ const AddProduct = () => {
               </Box>
             </Grid>
           </Grid>
+          <Divider
+            sx={{ borderWidth: "2px", marginTop: "1rem" }}
+            variant="fullWidth"
+            color={theme.palette.neutral.main}
+          />
           <Grid container spacing={2} sx={{ paddingTop: "1rem" }}>
             <Grid item xs={12} md={12}>
               <Typography variant="h4">Photos & Video</Typography>
