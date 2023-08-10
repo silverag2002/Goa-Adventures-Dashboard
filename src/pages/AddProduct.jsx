@@ -121,7 +121,7 @@ const AddProduct = () => {
       .then((res) => {
         console.log("Response", res);
         const cate = res.map((ca) => ca.category);
-        setCategories(cate);
+        setCategories(res);
         setLoaded(true);
       })
       .catch((err) => {
@@ -137,7 +137,7 @@ const AddProduct = () => {
       .then((res) => {
         console.log("Response", res);
         const cate = res.map((ca) => ca.subcategory);
-        setSubCategories(cate);
+        setSubCategories(res);
         setLoaded(true);
       })
       .catch((err) => {
@@ -156,8 +156,8 @@ const AddProduct = () => {
     setValue("allow_deposit", clientDataAssignment.allow_deposit);
     setValue("state", clientDataAssignment.state);
     setValue("country", clientDataAssignment.country);
-    setValue("category", clientDataAssignment.category);
-    setValue("category_type", clientDataAssignment.category_type);
+    setValue("category_id", clientDataAssignment.category_id);
+    setValue("subcategory_id", clientDataAssignment.subcategory_id);
     setValue("booking_period", clientDataAssignment.booking_period);
     setValue("city", clientDataAssignment.city);
     setValue("deposit_value", clientDataAssignment.deposit_value);
@@ -274,9 +274,9 @@ const AddProduct = () => {
 
     formData.append("state", data.state.trim());
     formData.append("country", data.country.trim());
-    formData.append("category", data.category.trim());
+    formData.append("category_id", data.category_id);
 
-    formData.append("category_type", data.category_type.trim());
+    formData.append("subcategory_id", data.subcategory_id);
     formData.append("city", data.city.trim());
 
     formData.append("min_people", data.min_people.trim());
@@ -377,12 +377,12 @@ const AddProduct = () => {
             <Grid item xs={12} md={4}>
               <Box>
                 <Controller
-                  name="category"
+                  name="category_id"
                   control={control}
                   render={({ field, value }) => (
                     <TextField
                       select
-                      id="category"
+                      id="category_id"
                       label="Category"
                       variant="filled"
                       fullWidth
@@ -390,15 +390,15 @@ const AddProduct = () => {
                       inputProps={{ style: { fontSize: 16 } }}
                       InputLabelProps={{ style: { fontSize: 16 } }}
                       defaultValue={
-                        clientDataAssignment.category
-                          ? clientDataAssignment.category
+                        clientDataAssignment.category_id
+                          ? clientDataAssignment.category_id
                           : ""
                       }
                       {...field}
                     >
                       {categories.map((option) => (
-                        <MenuItem key={option} value={option}>
-                          {option}
+                        <MenuItem key={option.id} value={option.id}>
+                          {option.category}
                         </MenuItem>
                       ))}
                     </TextField>
@@ -409,12 +409,12 @@ const AddProduct = () => {
             <Grid item xs={12} md={4}>
               <Box>
                 <Controller
-                  name="category_type"
+                  name="subcategory_id"
                   control={control}
                   render={({ field }) => (
                     <TextField
                       select
-                      id="category-type"
+                      id="subcategory_id"
                       label="Category Type"
                       variant="filled"
                       fullWidth
@@ -422,15 +422,15 @@ const AddProduct = () => {
                       inputProps={{ style: { fontSize: 16 } }}
                       InputLabelProps={{ style: { fontSize: 16 } }}
                       defaultValue={
-                        clientDataAssignment.category_type
-                          ? clientDataAssignment.category_type
+                        clientDataAssignment.subcategory_id
+                          ? clientDataAssignment.subcategory_id
                           : ""
                       }
                       {...field}
                     >
                       {subcategories.map((option) => (
-                        <MenuItem key={option} value={option}>
-                          {option}
+                        <MenuItem key={option.id} value={option.id}>
+                          {option.subcategory}
                         </MenuItem>
                       ))}
                     </TextField>
