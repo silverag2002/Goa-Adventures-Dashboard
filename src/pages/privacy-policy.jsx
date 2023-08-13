@@ -6,6 +6,8 @@ import Loader from "react-loader";
 
 const PrivacyPolicry = () => {
   const [privacyPolicy, setPrivacyPolicy] = useState("");
+  const theme = useTheme();
+  const [loaded, setLoaded] = useState(true);
   const editor = useRef();
 
   const getSunEditorInstance = (sunEditor) => {
@@ -58,7 +60,7 @@ const PrivacyPolicry = () => {
           }}
           onClick={handleSubmit}
         >
-          Add Terms & Conditions
+          Add Privacy Policy
         </Button>
         <Button
           size="large"
