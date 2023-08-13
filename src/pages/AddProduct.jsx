@@ -28,6 +28,8 @@ const AddProduct = () => {
   const location = useLocation();
   const [loaded, setLoaded] = useState(true);
   const [countries, setCountries] = useState([]);
+  const [featuredImage, setFeaturedImage] = useState();
+  const [galleryImage, setGalleryImage] = useState([]);
 
   const [countryStates, setCountryStates] = useState([]);
   const [stateCities, setStateCities] = useState([]);
@@ -49,7 +51,7 @@ const AddProduct = () => {
       setImageUrl(URL.createObjectURL(selectedImage));
     }
   }, [selectedImage]);
-
+  console.log("Featured images selected", featuredImage);
   const navigate = useNavigate();
 
   const getSunEditorInstance = (sunEditor) => {
@@ -853,7 +855,12 @@ const AddProduct = () => {
                 <input
                   type="file"
                   placeholder="Image URL"
-                  {...register("featured_image")}
+                  {...register("featured_image", {
+                    onChange: (e) => {
+                      setFeaturedImage(URL.createObjectURL(e.target.files[0]));
+                      console.log("Ankit");
+                    },
+                  })}
                 />
               </Box>
             </Grid>
@@ -864,7 +871,16 @@ const AddProduct = () => {
                   type="file"
                   placeholder="Image URL"
                   multiple
-                  {...register("gallery")}
+                  {...register("gallery", {
+                    onChange: (e) => {
+                      let arr = [];
+                      for (let i = 0; i < e.target.files.length; i++) {
+                        arr.push(URL.createObjectURL(e.target.files[i]));
+                      }
+                      setGalleryImage(arr);
+                      console.log("Gupta");
+                    },
+                  })}
                 />
               </Box>
             </Grid>
@@ -889,6 +905,14 @@ const AddProduct = () => {
               </Box>
             </Grid>
           </Grid>
+
+          <div>
+            <img src={featuredImage} />
+
+            {galleryImage.length > 0
+              ? galleryImage.map((element) => <img src={element} />)
+              : null}
+          </div>
 
           <Stack
             direction="row"
