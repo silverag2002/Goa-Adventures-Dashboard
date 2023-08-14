@@ -1,14 +1,19 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Box, useTheme, Grid, Button, Stack } from "@mui/material";
+import { Link, useLocation } from "react-router-dom";
 import Header from "components/Header";
 import JoditEditor from "jodit-react";
 import Loader from "react-loader";
+import { axiosInstance } from "../base/api/axios.util";
+import { URLConstants } from "../base/api/url.constants";
 
 const PrivacyPolicry = () => {
+  const location = useLocation();
   const [privacyPolicy, setPrivacyPolicy] = useState("");
   const theme = useTheme();
   const [loaded, setLoaded] = useState(true);
   const editor = useRef();
+  const [reloadPage, setReloadPage] = useState(false);
 
   const getSunEditorInstance = (sunEditor) => {
     editor.current = sunEditor;
@@ -22,7 +27,34 @@ const PrivacyPolicry = () => {
 
   function handleSubmit() {
     console.log("Inside handle sibmit", privacyPolicy);
+    axiosInstance
+      .post(URLConstants.privacy(), { privacy_policy: privacyPolicy })
+      .then((response) => {
+        setLoaded(true);
+        console.log("Response form privacy", response);
+        // setPrivacyPolicy(response);
+        setReloadPage(!reloadPage);
+      })
+      .catch((err) => {
+        setLoaded(true);
+        console.log(err);
+      });
   }
+
+  useEffect(() => {
+    setLoaded(false);
+    axiosInstance
+      .get(URLConstants.privacy())
+      .then((response) => {
+        setLoaded(true);
+        console.log("Response form privacy", response);
+        setPrivacyPolicy(response);
+      })
+      .catch((err) => {
+        setLoaded(true);
+        console.log(err);
+      });
+  }, [reloadPage]);
 
   return (
     <Box m="1.5rem 2.5rem">

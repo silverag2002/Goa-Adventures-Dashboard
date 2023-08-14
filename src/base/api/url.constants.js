@@ -57,3 +57,9 @@ URLConstants.modifyProduct = (productId) =>
   `${URLConstants.BASE_URL}/v1/products/${productId}`;
 URLConstants.disableProduct = (productId) =>
   `${URLConstants.BASE_URL}/v1/products/deactivate/${productId}`;
+
+//terms-routes
+URLConstants.terms = () => `${URLConstants.BASE_URL}/v1/terms-conditions`;
+
+//privacy-routes
+URLConstants.privacy = () => `${URLConstants.BASE_URL}/v1/privacy-policies`;
