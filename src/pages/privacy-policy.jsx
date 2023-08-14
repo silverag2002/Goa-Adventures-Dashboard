@@ -28,7 +28,7 @@ const PrivacyPolicry = () => {
   function handleSubmit() {
     console.log("Inside handle sibmit", privacyPolicy);
     axiosInstance
-      .post(URLConstants.privacy(), { privacy_policy: privacyPolicy })
+      .put(URLConstants.privacy(), { privacy_policies: privacyPolicy })
       .then((response) => {
         setLoaded(true);
         console.log("Response form privacy", response);
@@ -48,7 +48,7 @@ const PrivacyPolicry = () => {
       .then((response) => {
         setLoaded(true);
         console.log("Response form privacy", response);
-        setPrivacyPolicy(response);
+        setPrivacyPolicy(response.privacy_policies);
       })
       .catch((err) => {
         setLoaded(true);

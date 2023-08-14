@@ -22,7 +22,7 @@ const TermsConditions = () => {
       .then((response) => {
         setLoaded(true);
         console.log("Response form countries", response);
-        setTermsConditions(response);
+        setTermsConditions(response.terms_conditions);
       })
       .catch((err) => {
         setLoaded(true);
