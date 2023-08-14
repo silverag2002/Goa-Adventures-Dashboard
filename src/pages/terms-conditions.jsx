@@ -43,7 +43,7 @@ const TermsConditions = () => {
   function handleSubmit() {
     console.log("Inside handle sibmit", termsConditions);
     axiosInstance
-      .post(URLConstants.terms(), { terms_conditions: termsConditions })
+      .put(URLConstants.terms(), { terms_conditions: termsConditions })
       .then((response) => {
         setLoaded(true);
         console.log("Response form privacy", response);
