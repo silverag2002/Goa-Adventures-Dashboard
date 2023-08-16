@@ -29,6 +29,7 @@ import {
   ManageAccountsOutlined,
   VerifiedUserOutlined,
   ArticleOutlined,
+  SummarizeOutlined,
 } from "@mui/icons-material";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -36,6 +37,7 @@ import FlexBetween from "./FlexBetween";
 import profileImage from "assets/profile.jpeg";
 import goaAdventureLogo from "assets/goaadventure_color_logo.svg";
 import goaAdventureWhite from "assets/goaadventure_white_logo.svg";
+
 
 const navItems = [
   {
@@ -45,6 +47,10 @@ const navItems = [
   {
     text: "Bookings",
     icon: <ShoppingCartOutlined />,
+  },
+  {
+    text: "Instant Quotation",
+    icon: <SummarizeOutlined />,
   },
   {
     text: "Products",

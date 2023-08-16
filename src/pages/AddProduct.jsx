@@ -12,13 +12,12 @@ import {
   Divider,
 } from "@mui/material";
 import Header from "components/Header";
-import { Link, useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
 import { axiosInstance } from "../base/api/axios.util";
 import { URLConstants } from "../base/api/url.constants";
 import JoditEditor from "jodit-react";
 import axios, * as others from "axios";
-import { useNavigate } from "react-router-dom";
 import Loader from "react-loader";
 var FormData = require("form-data");
 
@@ -46,13 +45,14 @@ const AddProduct = () => {
 
   console.log(imageUrl);
 
+  const navigate = useNavigate();
+
   useEffect(() => {
     if (selectedImage) {
       setImageUrl(URL.createObjectURL(selectedImage));
     }
   }, [selectedImage]);
   console.log("Featured images selected", featuredImage);
-  const navigate = useNavigate();
 
   const getSunEditorInstance = (sunEditor) => {
     editor.current = sunEditor;
@@ -941,7 +941,7 @@ const AddProduct = () => {
                 color: theme.palette.neutral[600],
                 fontWeight: "bold",
               }}
-              href="/products"
+              onClick={() => navigate("/products")}
             >
               Cancel
             </Button>

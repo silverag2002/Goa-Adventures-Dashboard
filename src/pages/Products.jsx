@@ -12,7 +12,7 @@ import {
 } from "@mui/material";
 import FlexBetween from "components/FlexBetween";
 import ProductCard from "components/ProductCard";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import ProductFilter from "components/Product/ProductFilter";
 import Loader from "react-loader";
 import { axiosInstance } from "../base/api/axios.util";
@@ -23,6 +23,7 @@ const Products = () => {
   const [reloadPage, setReloadPage] = useState(false);
   const [loaded, setLoaded] = useState(true);
   const [products, setProduct] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     setLoaded(false);
@@ -51,7 +52,7 @@ const Products = () => {
             color: theme.palette.neutral[600],
             fontWeight: "bold",
           }}
-          href="/add-product"
+          onClick={() => navigate("/add-product")}
         >
           Add New
         </Button>

@@ -21,6 +21,8 @@ import CreateBooking from "pages/CreateBooking";
 import Login from "./pages/Login";
 import PrivacyPolicry from "./pages/privacy-policy";
 import TermsConditions from "./pages/terms-conditions";
+import InstantQuotation from "./pages/InstantQuotation";
+import AddQuotation from "./pages/AddQuotation";
 
 function App() {
   const mode = useSelector((state) => state.global.mode);
@@ -35,6 +37,8 @@ function App() {
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/bookings" element={<Bookings />} />
               <Route path="/create-booking" element={<CreateBooking />} />
+              <Route path="/instant-quotation" element={<InstantQuotation />} />
+              <Route path="/create-quotation" element={<AddQuotation />} />
               <Route path="/products" element={<Products />} />
               <Route path="/add-product" element={<AddProduct />} />
               <Route path="/customers" element={<Customers />} />
