@@ -30,6 +30,7 @@ import {
   VerifiedUserOutlined,
   ArticleOutlined,
   SummarizeOutlined,
+  AddLocationAltOutlined,
 } from "@mui/icons-material";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -37,7 +38,6 @@ import FlexBetween from "./FlexBetween";
 import profileImage from "assets/profile.jpeg";
 import goaAdventureLogo from "assets/goaadventure_color_logo.svg";
 import goaAdventureWhite from "assets/goaadventure_white_logo.svg";
-
 
 const navItems = [
   {
@@ -63,6 +63,10 @@ const navItems = [
   {
     text: "Sub Category",
     icon: <CategoryOutlined />,
+  },
+  {
+    text: "Location",
+    icon: <AddLocationAltOutlined />,
   },
   {
     text: "Customers",

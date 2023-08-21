@@ -922,7 +922,7 @@ const AddProduct = () => {
             sx={{ marginTop: "1rem" }}
           >
             <Button
-              size="large"
+              size="medium"
               variant="contained"
               type="submit"
               style={{
@@ -934,7 +934,7 @@ const AddProduct = () => {
               Add Product
             </Button>
             <Button
-              size="large"
+              size="medium"
               variant="contained"
               style={{
                 backgroundColor: theme.palette.secondary.main,

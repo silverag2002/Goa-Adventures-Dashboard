@@ -23,6 +23,8 @@ import PrivacyPolicry from "./pages/privacy-policy";
 import TermsConditions from "./pages/terms-conditions";
 import InstantQuotation from "./pages/InstantQuotation";
 import AddQuotation from "./pages/AddQuotation";
+import Location from "pages/Location";
+import AddLocation from "pages/AddLocation";
 
 function App() {
   const mode = useSelector((state) => state.global.mode);
@@ -48,6 +50,9 @@ function App() {
               <Route path="/category" element={<Category />} />
               <Route path="/sub-category" element={<SubCategory />} />
               <Route path="/add-category" element={<AddCategory />} />
+              <Route path="/location" element={<Location />} />
+              <Route path="/add-location" element={<AddLocation />} />
+
               <Route path="/create-product" element={<CreateProduct />} />
               <Route path="/privacy-policy" element={<PrivacyPolicry />} />
               <Route path="/terms-conditions" element={<TermsConditions />} />
