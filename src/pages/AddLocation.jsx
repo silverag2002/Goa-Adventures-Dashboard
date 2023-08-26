@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {
   Box,
   Button,
@@ -8,6 +8,7 @@ import {
   TextField,
   MenuItem,
 } from "@mui/material";
+import axios, * as others from "axios";
 
 import { useNavigate, useLocation } from "react-router-dom";
 import FlexBetween from "components/FlexBetween";
@@ -58,12 +59,23 @@ const AddLocation = () => {
   console.log("ASsingment issue", clientDataAssignment);
 
   useEffect(() => {
-    axiosInstance.get(URLConstants);
+    axiosInstance
+      .get(URLConstants.getParentLocation())
+      .then((response) => {
+        setLoaded(true);
+        console.log("Response form parent location", response);
+        setParentLocation(response);
+      })
+      .catch((err) => {
+        setLoaded(true);
+        console.log(err);
+      });
   }, []);
 
   const onSubmit = (data) => {
     //reset({});
     // setClientType(undefined);
+    data.description = description;
     setLoaded(false);
     console.log("Data captured", data);
 
@@ -82,43 +94,43 @@ const AddLocation = () => {
     if (clientDataAssignment?.id) {
       var config = {
         method: "PUT",
-        url: URLConstants.modifyProduct(clientDataAssignment.id),
+        url: URLConstants.updateLocation(clientDataAssignment.id),
         headers: {
           headers: { "content-type": "multipart/form-data" },
         },
         data: formData,
       };
 
-      // axios(config)
-      //   .then((response) => {
-      //     setLoaded(true);
-      //     console.log("Response after submitting form", response);
-      //     navigate("/products");
-      //   })
-      //   .catch((err) => {
-      //     setLoaded(true);
-      //     console.log(err);
-      //   });
+      axios(config)
+        .then((response) => {
+          setLoaded(true);
+          console.log("Response after submitting form", response);
+          navigate("/location");
+        })
+        .catch((err) => {
+          setLoaded(true);
+          console.log(err);
+        });
     } else {
       var config = {
         method: "POST",
-        url: URLConstants.product(),
+        url: URLConstants.location(),
         headers: {
           headers: { "content-type": "multipart/form-data" },
         },
         data: formData,
       };
 
-      // axios(config)
-      //   .then((response) => {
-      //     setLoaded(true);
-      //     console.log("Response after submitting form", response);
-      //     navigate("/products");
-      //   })
-      //   .catch((err) => {
-      //     setLoaded(true);
-      //     console.log(err);
-      //   });
+      axios(config)
+        .then((response) => {
+          setLoaded(true);
+          console.log("Response after submitting form", response);
+          navigate("/location");
+        })
+        .catch((err) => {
+          setLoaded(true);
+          console.log(err);
+        });
     }
   };
 
@@ -139,9 +151,8 @@ const AddLocation = () => {
           Go Back
         </Button>
       </FlexBetween>
-
-      <Grid container spacing={2}>
-        <form onSubmit={handleSubmit(onSubmit, onError)}>
+      <form onSubmit={handleSubmit(onSubmit, onError)}>
+        <Grid container spacing={2}>
           <Grid item lg={12}>
             <Controller
               name="location"
@@ -173,10 +184,17 @@ const AddLocation = () => {
                   variant="filled"
                   fullWidth
                   margin="normal"
+                  defaultValue={
+                    clientDataAssignment?.parent_location
+                      ? clientDataAssignment?.parent_location
+                      : ""
+                  }
                   {...field}
                 >
                   {parentLocation.map((place) => (
-                    <MenuItem>{place}</MenuItem>
+                    <MenuItem key={place} value={place}>
+                      {place}
+                    </MenuItem>
                   ))}
                 </TextField>
               )}
@@ -197,44 +215,44 @@ const AddLocation = () => {
           <Grid item>
             <Button variant="contained" component="label">
               Upload File
-              <input type="file" hidden />
+              <input type="file" {...register("image")} />
             </Button>
           </Grid>
-        </form>
-      </Grid>
+        </Grid>
 
-      <Stack
-        direction="row"
-        justifyContent="flex-end"
-        alignItems="center"
-        spacing={4}
-        sx={{ marginTop: "1rem" }}
-      >
-        <Button
-          size="large"
-          variant="contained"
-          type="submit"
-          style={{
-            backgroundColor: theme.palette.secondary.main,
-            color: theme.palette.neutral[600],
-            fontWeight: "bold",
-          }}
+        <Stack
+          direction="row"
+          justifyContent="flex-end"
+          alignItems="center"
+          spacing={4}
+          sx={{ marginTop: "1rem" }}
         >
-          Add Location
-        </Button>
-        <Button
-          size="large"
-          variant="contained"
-          style={{
-            backgroundColor: theme.palette.secondary.main,
-            color: theme.palette.neutral[600],
-            fontWeight: "bold",
-          }}
-          onClick={() => navigate("/location")}
-        >
-          Cancel
-        </Button>
-      </Stack>
+          <Button
+            size="large"
+            variant="contained"
+            type="submit"
+            style={{
+              backgroundColor: theme.palette.secondary.main,
+              color: theme.palette.neutral[600],
+              fontWeight: "bold",
+            }}
+          >
+            Add Location
+          </Button>
+          <Button
+            size="large"
+            variant="contained"
+            style={{
+              backgroundColor: theme.palette.secondary.main,
+              color: theme.palette.neutral[600],
+              fontWeight: "bold",
+            }}
+            onClick={() => navigate("/location")}
+          >
+            Cancel
+          </Button>
+        </Stack>
+      </form>
     </Box>
   );
 };
