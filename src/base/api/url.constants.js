@@ -63,3 +63,12 @@ URLConstants.terms = () => `${URLConstants.BASE_URL}/v1/terms-conditions`;
 
 //privacy-routes
 URLConstants.privacy = () => `${URLConstants.BASE_URL}/v1/privacy-policies`;
+
+//location routes
+URLConstants.location = () => `${URLConstants.BASE_URL}/v1/location`;
+URLConstants.getParentLocation = () =>
+  `${URLConstants.BASE_URL}/v1/location/getHomePageDestination`;
+URLConstants.getLocationFromParent = (locationName) =>
+  `${URLConstants.BASE_URL}/v1/location/getLocationFromParent/${locationName}`;
+URLConstants.updateLocation = (locationId) =>
+  `${URLConstants.BASE_URL}/v1/location/${locationId}`;
