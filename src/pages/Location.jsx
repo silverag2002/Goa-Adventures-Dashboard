@@ -40,7 +40,7 @@ const Location = () => {
   }, [reloadPage]);
 
   const renderDetailsButton = (params) => {
-    let bookingInfo = location.filter((book) => (book.id = params.id));
+    let bookingInfo = location.filter((book) => book.id == params.id);
 
     return (
       <Box sx={{ display: "flex", gap: "0.8rem" }}>
@@ -52,7 +52,7 @@ const Location = () => {
         >
           Delete
         </Button>
-        <Link to="/add-location" state={{ booking: bookingInfo[0] }}>
+        <Link to="/add-location" state={{ location: bookingInfo[0] }}>
           <Button variant="contained" color="secondary" size="small">
             Edit
           </Button>

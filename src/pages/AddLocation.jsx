@@ -54,7 +54,7 @@ const AddLocation = () => {
 
   console.log("LOcaltion", location);
   if (location.state) {
-    clientDataAssignment = location.state.product;
+    clientDataAssignment = location.state.location;
   }
   console.log("ASsingment issue", clientDataAssignment);
 
@@ -64,12 +64,16 @@ const AddLocation = () => {
       .then((response) => {
         setLoaded(true);
         console.log("Response form parent location", response);
+        setValue("parent_location", clientDataAssignment?.parent_location);
         setParentLocation(response);
       })
       .catch((err) => {
         setLoaded(true);
         console.log(err);
       });
+
+    setValue("location", clientDataAssignment?.location);
+    setDescription(clientDataAssignment?.description);
   }, []);
 
   const onSubmit = (data) => {
