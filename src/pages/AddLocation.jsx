@@ -85,8 +85,8 @@ const AddLocation = () => {
     }
 
     formData.append("location", data.location.trim());
-    if (data.parentLocation) {
-      formData.append("parentLocation", data.parentLocation.trim());
+    if (data.parent_location) {
+      formData.append("parent_location", data.parent_location.trim());
     }
     formData.append("description", data.description.trim());
 
@@ -179,7 +179,7 @@ const AddLocation = () => {
               render={({ field, value }) => (
                 <TextField
                   select
-                  id="parent"
+                  id="parent_location"
                   label="Parent Location"
                   variant="filled"
                   fullWidth
@@ -191,8 +191,8 @@ const AddLocation = () => {
                   }
                   {...field}
                 >
-                  {parentLocation.map((place) => (
-                    <MenuItem key={place} value={place}>
+                  {parentLocation.map((place, index) => (
+                    <MenuItem key={index} value={place}>
                       {place}
                     </MenuItem>
                   ))}

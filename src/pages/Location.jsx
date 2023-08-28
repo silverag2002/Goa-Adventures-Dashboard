@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Box, Button, useTheme } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { DataGrid } from "@mui/x-data-grid";
 import FlexBetween from "components/FlexBetween";
 import Header from "components/Header";
@@ -39,6 +39,43 @@ const Location = () => {
       });
   }, [reloadPage]);
 
+  const renderDetailsButton = (params) => {
+    let bookingInfo = location.filter((book) => (book.id = params.id));
+
+    return (
+      <Box sx={{ display: "flex", gap: "0.8rem" }}>
+        <Button
+          variant="contained"
+          color="secondary"
+          size="small"
+          // onClick={(e) => deleteLocation(params.row.id)}
+        >
+          Delete
+        </Button>
+        <Link to="/add-location" state={{ booking: bookingInfo[0] }}>
+          <Button variant="contained" color="secondary" size="small">
+            Edit
+          </Button>
+        </Link>
+      </Box>
+    );
+  };
+
+  // function deleteLocation(bookingId) {
+  //   setLoaded(false);
+  //   axiosInstance
+  //     .delete(URLConstants.modifyBookings(bookingId))
+  //     .then((response) => {
+  //       setLoaded(true);
+  //       console.log("Response form bookings", response);
+  //       setReloadPage(!reloadPage);
+  //     })
+  //     .catch((err) => {
+  //       setLoaded(true);
+  //       console.log(err);
+  //     });
+  // }
+
   const columns = [
     {
       field: "id",
@@ -51,6 +88,12 @@ const Location = () => {
     {
       field: "location",
       headerName: "Location",
+    },
+    {
+      field: "action",
+      headerName: "Action",
+      width: 175,
+      renderCell: renderDetailsButton,
     },
   ];
 
