@@ -11,6 +11,7 @@ import {
   ListItemText,
   Typography,
   useTheme,
+  useMediaQuery,
 } from "@mui/material";
 import {
   SettingsOutlined,
@@ -90,11 +91,7 @@ const navItems = [
   },
   {
     text: "Geography",
-    icon: <PublicOutlined />,
-  },
-  {
-    text: "Sales",
-    icon: <PieChartOutlined />,
+    icon: <ArticleOutlined />,
   },
 ];
 
@@ -125,17 +122,18 @@ const Sidebar = ({
           sx={{
             width: drawerWidth,
             "& .MuiDrawer-paper": {
-              color: theme.palette.secondary[200],
-              backgroundColor: theme.palette.background.alt,
+              color: theme.palette.neutral.grey700,
+              backgroundColor: theme.palette.background.default,
               boxSixing: "border-box",
               borderWidth: isNonMobile ? 0 : "2px",
               width: drawerWidth,
+              padding: "5px",
             },
           }}
         >
           <Box width="100%">
-            <Box m="1.5rem 2rem 2rem 3rem">
-              <FlexBetween color={theme.palette.secondary.main}>
+            <Box m="0.5rem">
+              <FlexBetween color={theme.palette.secondary.purple50}>
                 <Box display="flex" alignItems="center" gap="0.5rem">
                   {/* <Typography variant="h5" fontWeight="semibold">
                     GOA ADVENTURE
@@ -165,7 +163,9 @@ const Sidebar = ({
                 )}
               </FlexBetween>
             </Box>
-            <List>
+            <List
+              sx={{ maxHeight: "calc(100vh - 200px)", overflowY: "scroll" }}
+            >
               {navItems.map(({ text, icon }) => {
                 if (!icon) {
                   return (
@@ -186,12 +186,14 @@ const Sidebar = ({
                       sx={{
                         backgroundColor:
                           active === lcText
-                            ? theme.palette.secondary[300]
+                            ? theme.palette.secondary.main
                             : "transparent",
                         color:
                           active === lcText
-                            ? theme.palette.primary[600]
-                            : theme.palette.secondary[200],
+                            ? theme.palette.secondary.purple600
+                            : theme.palette.neutral.grey700,
+                        fontWeight: active === lcText ? "bold" : "500",
+                        borderRadius: "5px",
                       }}
                     >
                       <ListItemIcon
@@ -199,8 +201,8 @@ const Sidebar = ({
                           ml: "2rem",
                           color:
                             active === lcText
-                              ? theme.palette.primary.main
-                              : theme.palette.secondary[200],
+                              ? theme.palette.secondary.purple600
+                              : theme.palette.neutral.grey700,
                         }}
                       >
                         {icon}
@@ -216,8 +218,8 @@ const Sidebar = ({
             </List>
           </Box>
 
-          <Box position="absolute" bottom="2rem">
-            <Divider />
+          <Box position="absolute" bottom="1rem">
+            <Divider variant="middle" />
             <FlexBetween textTransform="none" gap="1rem" m="1.5rem 2rem 0 3rem">
               <Box
                 component="img"
@@ -232,20 +234,20 @@ const Sidebar = ({
                 <Typography
                   fontWeight="bold"
                   fontSize="0.9rem"
-                  sx={{ color: theme.palette.secondary[100] }}
+                  sx={{ color: theme.palette.secondary.purple50 }}
                 >
                   {user.name}
                 </Typography>
                 <Typography
                   fontSize="0.8rem"
-                  sx={{ color: theme.palette.secondary[200] }}
+                  sx={{ color: theme.palette.secondary.purple200 }}
                 >
                   {user.occupation}
                 </Typography>
               </Box>
               <SettingsOutlined
                 sx={{
-                  color: theme.palette.secondary[300],
+                  color: theme.palette.secondary.purple500,
                   fontSize: "25px ",
                 }}
               />

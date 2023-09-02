@@ -1,63 +1,56 @@
 // color design tokens export
-export const tokensDark = {
+export const colorPalette = {
   grey: {
-    0: "#ffffff", // manually adjusted
-    10: "#f6f6f6", // manually adjusted
-    50: "#f0f0f0", // manually adjusted
-    100: "#e0e0e0",
-    200: "#c2c2c2",
-    300: "#a3a3a3",
-    400: "#858585",
-    500: "#666666",
-    600: "#525252",
-    700: "#3d3d3d",
-    800: "#292929",
-    900: "#141414",
-    1000: "#000000", // manually adjusted
+    0: "#FAFAFA", // manually adjusted
+    100: "#F5F5F5", // manually adjusted
+    200: "#EEEEEE", // manually adjusted
+    300: "#E0E0E0",
+    500: "#9E9E9E",
+    600: "#757575",
+    700: "#616161",
+    900: "#212121",
+    1000: "#FFFFFF",
   },
   primary: {
-    // blue
-    100: "#d3d4de",
-    200: "#a6a9be",
-    300: "#7a7f9d",
-    400: "#4d547d",
-    500: "#21295c",
-    600: "#191F45", // manually adjusted
-    700: "#141937",
-    800: "#0d1025",
-    900: "#070812",
+    // blue E3F2FD
+    10: "#eef2f6",
+    50: "#E3F2FD",
+    200: "#90CAF9",
+    500: "#2196F3",
+    600: "#1E88E5",
+    800: "#1565C0",
   },
   secondary: {
     // yellow
-    50: "#f0f0f0", // manually adjusted
-    100: "#fff6e0",
-    200: "#ffedc2",
-    300: "#ffe3a3",
-    400: "#ffda85",
-    500: "#ffd166",
-    600: "#cca752",
-    700: "#997d3d",
-    800: "#665429",
-    900: "#332a14",
+    50: "#EDE7F6", // manually adjusted
+    200: "#B39DDB",
+    500: "#673AB7",
+    600: "#5E35B1",
+    800: "#4527A0",
+  },
+  warning: {
+    50: "#B9F6CA",
+    100: "#FFE57F",
+    500: "#FFC107",
   },
 };
 
-// function that reverses the color palette
-function reverseTokens(tokensDark) {
-  const reversedTokens = {};
-  Object.entries(tokensDark).forEach(([key, val]) => {
-    const keys = Object.keys(val);
-    const values = Object.values(val);
-    const length = keys.length;
-    const reversedObj = {};
-    for (let i = 0; i < length; i++) {
-      reversedObj[keys[i]] = values[length - i - 1];
-    }
-    reversedTokens[key] = reversedObj;
-  });
-  return reversedTokens;
-}
-export const tokensLight = reverseTokens(tokensDark);
+// // function that reverses the color palette
+// function reverseTokens(tokensDark) {
+//   const reversedTokens = {};
+//   Object.entries(tokensDark).forEach(([key, val]) => {
+//     const keys = Object.keys(val);
+//     const values = Object.values(val);
+//     const length = keys.length;
+//     const reversedObj = {};
+//     for (let i = 0; i < length; i++) {
+//       reversedObj[keys[i]] = values[length - i - 1];
+//     }
+//     reversedTokens[key] = reversedObj;
+//   });
+//   return reversedTokens;
+// }
+// export const tokensLight = reverseTokens(tokensDark);
 
 // mui theme settings
 export const themeSettings = (mode) => {
@@ -68,42 +61,62 @@ export const themeSettings = (mode) => {
         ? {
             // palette values for dark mode
             primary: {
-              ...tokensDark.primary,
-              main: tokensDark.primary[400],
-              light: tokensDark.primary[400],
+              ...colorPalette.primary,
+              main: colorPalette.primary[400],
+              light: colorPalette.primary[400],
             },
             secondary: {
-              ...tokensDark.secondary,
-              main: tokensDark.secondary[300],
+              ...colorPalette.secondary,
+              main: colorPalette.secondary[300],
+            },
+            warning: {
+              main: colorPalette.warning[100],
+              light: colorPalette.warning[50],
+              dark: colorPalette.warning[500],
             },
             neutral: {
-              ...tokensDark.grey,
-              main: tokensDark.grey[500],
+              ...colorPalette.grey,
+              main: colorPalette.grey[500],
             },
             background: {
-              default: tokensDark.primary[600],
-              alt: tokensDark.primary[500],
+              default: colorPalette.primary[600],
+              alt: colorPalette.primary[500],
             },
           }
         : {
             // palette values for light mode
             primary: {
-              ...tokensLight.primary,
-              main: tokensDark.grey[50],
-              light: tokensDark.grey[100],
+              ...colorPalette.primary,
+              main: colorPalette.primary[500],
+              light: colorPalette.primary[10],
+              blue200: colorPalette.primary[200],
+              blue500: colorPalette.primary[500],
+              blue600: colorPalette.primary[600],
+              blue800: colorPalette.primary[800],
             },
             secondary: {
-              ...tokensLight.secondary,
-              main: tokensDark.secondary[600],
-              light: tokensDark.secondary[700],
+              ...colorPalette.secondary,
+              main: colorPalette.secondary[50],
+              purple200: colorPalette.secondary[200],
+              purple500: colorPalette.secondary[500],
+              purple600: colorPalette.secondary[600],
+              purple800: colorPalette.secondary[800],
             },
             neutral: {
-              ...tokensLight.grey,
-              main: tokensDark.grey[500],
+              ...colorPalette.grey,
+              main: colorPalette.grey[50],
+              grey100: colorPalette.grey[100],
+              grey200: colorPalette.grey[200],
+              grey300: colorPalette.grey[300],
+              grey500: colorPalette.grey[500],
+              grey600: colorPalette.grey[600],
+              grey700: colorPalette.grey[700],
+              grey900: colorPalette.grey[900],
+              white: colorPalette.grey[1000],
             },
             background: {
-              default: tokensDark.grey[0],
-              alt: tokensDark.grey[50],
+              default: colorPalette.grey[1000],
+              alt: colorPalette.grey[700],
             },
           }),
     },

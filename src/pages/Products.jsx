@@ -17,6 +17,7 @@ import ProductFilter from "components/Product/ProductFilter";
 import Loader from "react-loader";
 import { axiosInstance } from "../base/api/axios.util";
 import { URLConstants } from "../base/api/url.constants";
+import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
 
 const Products = () => {
   const theme = useTheme();
@@ -42,21 +43,13 @@ const Products = () => {
   }, [reloadPage]);
   return (
     <Box m="1.5rem 2.5rem">
-      <FlexBetween>
-        <Header title="Product" subtitle="Entire list of product" />
-        <Button
-          variant="contained"
-          size="large"
-          style={{
-            backgroundColor: theme.palette.secondary.main,
-            color: theme.palette.neutral[600],
-            fontWeight: "bold",
-          }}
-          onClick={() => navigate("/add-product")}
-        >
-          Add New
-        </Button>
-      </FlexBetween>
+      <Header
+        title="All Products"
+        subtitle="Entire list of products"
+        buttonText="Add Product"
+        onClick={() => navigate("/add-product")}
+      />
+
       <ProductFilter />
       {/* List of Card Start */}
       <Grid container spacing={2} rowSpacing={4} width="100%" marginTop="40px">

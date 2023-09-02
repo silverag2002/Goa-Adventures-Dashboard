@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Header from "components/Header";
-import FlexBetween from "components/FlexBetween";
+import ReplyOutlinedIcon from "@mui/icons-material/ReplyOutlined";
 import {
   Box,
   Grid,
@@ -138,21 +138,13 @@ const AddCustomer = () => {
   const onError = (errors) => console.log(errors);
   return (
     <Box sx={{ flexGrow: 1, margin: "1.5rem 2.5rem" }}>
-      <FlexBetween>
-        <Header title="Create Customer" subtitle="" />
-        <Button
-          variant="contained"
-          size="large"
-          style={{
-            backgroundColor: theme.palette.secondary.main,
-            color: theme.palette.neutral[600],
-            fontWeight: "bold",
-          }}
-          href="/customers"
-        >
-          Go Back
-        </Button>
-      </FlexBetween>
+      <Header
+        title="Create Customer"
+        buttonText="Go Back"
+        icon={<ReplyOutlinedIcon />}
+        onClick={() => navigate("/customers")}
+      />
+
       <form onSubmit={handleSubmit(onSubmit, onError)}>
         <Grid container spacing={2}>
           <Grid item xs={12} md={4}>
@@ -164,16 +156,19 @@ const AddCustomer = () => {
                   <TextField
                     id="name"
                     label="Customer Name"
-                    variant="filled"
+                    variant="outlined"
                     fullWidth
                     margin="normal"
+                    sx={{
+                      backgroundColor: theme.palette.primary.light,
+                    }}
                     {...field}
                   />
                 )}
               />
             </Box>
           </Grid>
-          <Grid item xs={12} md={3}>
+          <Grid item xs={12} md={4}>
             <Box>
               <Controller
                 name="mobile_number"
@@ -182,16 +177,19 @@ const AddCustomer = () => {
                   <TextField
                     id="mobile_number"
                     label="Mobile Number"
-                    variant="filled"
+                    variant="outlined"
                     fullWidth
                     margin="normal"
+                    sx={{
+                      backgroundColor: theme.palette.primary.light,
+                    }}
                     {...field}
                   />
                 )}
               />
             </Box>
           </Grid>
-          <Grid item xs={12} md={3}>
+          <Grid item xs={12} md={4}>
             <Box>
               <Controller
                 name="email"
@@ -200,9 +198,12 @@ const AddCustomer = () => {
                   <TextField
                     id="email"
                     label="Email"
-                    variant="filled"
+                    variant="outlined"
                     fullWidth
                     margin="normal"
+                    sx={{
+                      backgroundColor: theme.palette.primary.light,
+                    }}
                     {...field}
                   />
                 )}
@@ -210,7 +211,7 @@ const AddCustomer = () => {
             </Box>
           </Grid>
 
-          <Grid item xs={12} md={3}>
+          <Grid item xs={12} md={4}>
             <Box>
               <Controller
                 name="city"
@@ -219,16 +220,19 @@ const AddCustomer = () => {
                   <TextField
                     id="city"
                     label="City"
-                    variant="filled"
+                    variant="outlined"
                     fullWidth
                     margin="normal"
+                    sx={{
+                      backgroundColor: theme.palette.primary.light,
+                    }}
                     {...field}
                   />
                 )}
               />
             </Box>
           </Grid>
-          <Grid item xs={12} md={3}>
+          <Grid item xs={12} md={4}>
             <Box>
               <Controller
                 name="state"
@@ -237,9 +241,12 @@ const AddCustomer = () => {
                   <TextField
                     id="state"
                     label="State"
-                    variant="filled"
+                    variant="outlined"
                     fullWidth
                     margin="normal"
+                    sx={{
+                      backgroundColor: theme.palette.primary.light,
+                    }}
                     {...field}
                   />
                 )}
@@ -247,7 +254,7 @@ const AddCustomer = () => {
             </Box>
           </Grid>
 
-          <Grid item xs={12} md={3}>
+          <Grid item xs={12} md={4}>
             <Box>
               <Controller
                 name="country"
@@ -256,9 +263,12 @@ const AddCustomer = () => {
                   <TextField
                     id="country"
                     label="Country"
-                    variant="filled"
+                    variant="outlined"
                     fullWidth
                     margin="normal"
+                    sx={{
+                      backgroundColor: theme.palette.primary.light,
+                    }}
                     {...field}
                   />
                 )}
@@ -307,7 +317,7 @@ const AddCustomer = () => {
               color: theme.palette.neutral[600],
               fontWeight: "bold",
             }}
-            href="/bookings"
+            onClick={() => navigate("/customers")}
           >
             Cancel
           </Button>

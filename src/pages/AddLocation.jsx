@@ -17,6 +17,7 @@ import { URLConstants } from "../base/api/url.constants";
 import Header from "components/Header";
 import JoditEditor from "jodit-react";
 import { useForm, Controller } from "react-hook-form";
+import ReplyOutlinedIcon from "@mui/icons-material/ReplyOutlined";
 
 const AddLocation = () => {
   const [description, setDescription] = useState("");
@@ -140,21 +141,13 @@ const AddLocation = () => {
 
   return (
     <Box m="1.5rem 2.5rem">
-      <FlexBetween>
-        <Header title="Add Location" subtitle="Add New Location" />
-        <Button
-          variant="contained"
-          size="medium"
-          style={{
-            backgroundColor: theme.palette.secondary.main,
-            color: theme.palette.neutral[600],
-            fontWeight: "bold",
-          }}
-          onClick={() => navigate("/location")}
-        >
-          Go Back
-        </Button>
-      </FlexBetween>
+      <Header
+        title="Add Location"
+        subtitle="Fill the details to add location"
+        buttonText="Go Back"
+        icon={<ReplyOutlinedIcon />}
+        onClick={() => navigate("/location")}
+      />
       <form onSubmit={handleSubmit(onSubmit, onError)}>
         <Grid container spacing={2}>
           <Grid item lg={12}>
@@ -165,10 +158,13 @@ const AddLocation = () => {
                 <TextField
                   id="location"
                   label="Add Location"
-                  variant="filled"
+                  variant="outlined"
                   fullWidth
                   margin="normal"
-                  size="small"
+                  sx={{
+                    backgroundColor: theme.palette.primary.light,
+                  }}
+                  size="medium"
                   inputProps={{ style: { fontSize: 16 } }}
                   InputLabelProps={{ style: { fontSize: 16 } }}
                   {...field}
@@ -185,9 +181,12 @@ const AddLocation = () => {
                   select
                   id="parent_location"
                   label="Parent Location"
-                  variant="filled"
+                  variant="outlined"
                   fullWidth
                   margin="normal"
+                  sx={{
+                    backgroundColor: theme.palette.primary.light,
+                  }}
                   defaultValue={
                     clientDataAssignment?.parent_location
                       ? clientDataAssignment?.parent_location

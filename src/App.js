@@ -15,7 +15,6 @@ import AddStaff from "pages/AddStaff";
 import Bookings from "pages/Bookings";
 import CreateProduct from "pages/CreateProduct";
 import Category from "pages/Category";
-import AddCategory from "pages/AddCategory";
 import SubCategory from "pages/SubCategory";
 import CreateBooking from "pages/CreateBooking";
 import Login from "./pages/Login";
@@ -49,10 +48,8 @@ function App() {
               <Route path="/add-staff" element={<AddStaff />} />
               <Route path="/category" element={<Category />} />
               <Route path="/sub-category" element={<SubCategory />} />
-              <Route path="/add-category" element={<AddCategory />} />
               <Route path="/location" element={<Location />} />
               <Route path="/add-location" element={<AddLocation />} />
-
               <Route path="/create-product" element={<CreateProduct />} />
               <Route path="/privacy-policy" element={<PrivacyPolicry />} />
               <Route path="/terms-conditions" element={<TermsConditions />} />

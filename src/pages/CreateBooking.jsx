@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Header from "components/Header";
-import FlexBetween from "components/FlexBetween";
+import ReplyOutlinedIcon from "@mui/icons-material/ReplyOutlined";
 import {
   Box,
   Grid,
@@ -17,8 +17,6 @@ import Loader from "react-loader";
 import { useNavigate, useLocation } from "react-router-dom";
 
 const CreateBooking = () => {
-  const navigate = useNavigate();
-  const theme = useTheme();
   const [loaded, setLoaded] = useState(true);
   const [customers, setCustomers] = useState([]);
   const [reloadPage, setReloadPage] = useState(false);
@@ -30,6 +28,9 @@ const CreateBooking = () => {
   const [mobileNumber, setMobileNumber] = useState("");
   const [customerId, setCustomerId] = useState("");
   const location = useLocation();
+
+  const navigate = useNavigate();
+  const theme = useTheme();
 
   var clientDataAssignment = {};
 
@@ -173,21 +174,14 @@ const CreateBooking = () => {
   const onError = (errors) => console.log(errors);
   return (
     <Box sx={{ flexGrow: 1, margin: "1.5rem 2.5rem" }}>
-      <FlexBetween>
-        <Header title="Create Booking" subtitle="" />
-        <Button
-          variant="contained"
-          size="large"
-          style={{
-            backgroundColor: theme.palette.secondary.main,
-            color: theme.palette.neutral[600],
-            fontWeight: "bold",
-          }}
-          href="/bookings"
-        >
-          Go Back
-        </Button>
-      </FlexBetween>
+      <Header
+        title="Create Booking"
+        subtitle="Create manual booking"
+        buttonText="Go Back"
+        icon={<ReplyOutlinedIcon />}
+        onClick={() => navigate("/bookings")}
+      />
+
       <form onSubmit={handleSubmit(onSubmit, onError)}>
         <Grid container spacing={2}>
           <Grid item xs={12} md={3}>
@@ -227,6 +221,24 @@ const CreateBooking = () => {
                       </MenuItem>
                     ))}
                   </TextField>
+                )}
+              />
+            </Box>
+          </Grid>
+          <Grid item xs={12} md={3}>
+            <Box>
+              <Controller
+                name="customer_mobile_number"
+                control={control}
+                render={({ field }) => (
+                  <TextField
+                    id="customer_mobile_number"
+                    label="Customer Mobile Number"
+                    variant="filled"
+                    value={mobileNumber}
+                    fullWidth
+                    margin="normal"
+                  />
                 )}
               />
             </Box>
@@ -564,24 +576,6 @@ const CreateBooking = () => {
               />
             </Box>
           </Grid>
-          <Grid item xs={12} md={3}>
-            <Box>
-              <Controller
-                name="customer_mobile_number"
-                control={control}
-                render={({ field }) => (
-                  <TextField
-                    id="customer_mobile_number"
-                    label="Customer Mobile Number"
-                    variant="filled"
-                    value={mobileNumber}
-                    fullWidth
-                    margin="normal"
-                  />
-                )}
-              />
-            </Box>
-          </Grid>
         </Grid>
 
         <Stack
@@ -611,7 +605,7 @@ const CreateBooking = () => {
               color: theme.palette.neutral[600],
               fontWeight: "bold",
             }}
-            href="/bookings"
+            onClick={() => navigate("/bookings")}
           >
             Cancel
           </Button>

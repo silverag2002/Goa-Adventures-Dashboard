@@ -11,6 +11,7 @@ import FlexBetween from "components/FlexBetween";
 import { useDispatch } from "react-redux";
 import { setMode } from "state";
 import profileImage from "assets/profile.jpeg";
+import { BsGear, BsBell } from "react-icons/bs";
 import {
   AppBar,
   Button,
@@ -36,22 +37,34 @@ const Navbar = ({ user, isSidebarOpen, setIsSidebarOpen }) => {
   return (
     <AppBar
       sx={{
-        position: "static",
-        background: "none",
+        position: "sticky",
+        background: theme.palette.neutral.white,
         boxShadow: "none",
+        padding: "0.5rem",
       }}
     >
       <Toolbar sx={{ justifyContent: "space-between" }}>
         {/* LEFT SIDE */}
-        <FlexBetween>
-          <IconButton onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
-            <MenuIcon />
+        <FlexBetween gap="0.5rem">
+          <IconButton
+            onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+            sx={{
+              backgroundColor: theme.palette.secondary.main,
+              borderRadius: "10px",
+            }}
+          >
+            <MenuIcon
+              sx={{
+                fontSize: "25px",
+                color: theme.palette.secondary.purple500,
+              }}
+            />
           </IconButton>
           <FlexBetween
-            backgroundColor={theme.palette.background.alt}
-            borderRadius="9px"
+            backgroundColor={theme.palette.neutral.grey100}
+            borderRadius="10px"
             gap="3rem"
-            p="0.1rem 1.5rem"
+            p="0.3rem 1.5rem"
           >
             <InputBase placeholder="Search..." />
             <IconButton>
@@ -62,15 +75,36 @@ const Navbar = ({ user, isSidebarOpen, setIsSidebarOpen }) => {
 
         {/* RIGHT SIDE */}
         <FlexBetween gap="1.5rem">
-          <IconButton onClick={() => dispatch(setMode())}>
+          <IconButton
+            onClick={() => dispatch(setMode())}
+            sx={{
+              backgroundColor: theme.palette.secondary.main,
+              borderRadius: "10px",
+            }}
+          >
             {theme.palette.mode === "light" ? (
-              <DarkModeOutlined sx={{ fontSize: "25px" }} />
+              <DarkModeOutlined
+                sx={{
+                  fontSize: "25px",
+                  color: theme.palette.secondary.purple500,
+                }}
+              />
             ) : (
               <LightModeOutlined sx={{ fontSize: "25px" }} />
             )}
           </IconButton>
-          <IconButton>
-            <SettingsOutlined sx={{ fontSize: "25px" }} />
+          <IconButton
+            sx={{
+              backgroundColor: theme.palette.secondary.main,
+              borderRadius: "10px",
+            }}
+          >
+            <BsBell
+              style={{
+                fontSize: "25px",
+                color: theme.palette.secondary.purple500,
+              }}
+            />
           </IconButton>
 
           <FlexBetween>
@@ -81,7 +115,11 @@ const Navbar = ({ user, isSidebarOpen, setIsSidebarOpen }) => {
                 justifyContent: "space-between",
                 alignItems: "center",
                 textTransform: "none",
-                gap: "1rem",
+                gap: "0.5rem",
+                backgroundColor: theme.palette.primary.light,
+                borderRadius: "50px",
+                overflow: "hidden",
+                boxShadow: "rgba(0, 0, 0, 0.04) 0px 3px 5px;",
               }}
             >
               <Box
@@ -108,8 +146,11 @@ const Navbar = ({ user, isSidebarOpen, setIsSidebarOpen }) => {
                   {user.occupation}
                 </Typography>
               </Box>
-              <ArrowDropDownOutlined
-                sx={{ color: theme.palette.secondary[300], fontSize: "25px" }}
+              <BsGear
+                style={{
+                  fontSize: "20px",
+                  color: theme.palette.primary.blue500,
+                }}
               />
             </Button>
             <Menu

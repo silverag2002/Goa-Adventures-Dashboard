@@ -255,9 +255,12 @@ const SubCategory = () => {
                   <TextField
                     id="sub-category"
                     label="Sub Category"
-                    variant="filled"
+                    variant="outlined"
                     fullWidth
                     margin="normal"
+                    sx={{
+                      backgroundColor: theme.palette.primary.light,
+                    }}
                     value={subCategory}
                     onChange={(e) => setSubCategory(e.target.value)}
                     inputProps={{ style: { fontSize: 16, fontWeight: 500 } }}
@@ -277,9 +280,12 @@ const SubCategory = () => {
                     select
                     id="category"
                     label="Category"
-                    variant="filled"
+                    variant="outlined"
                     fullWidth
                     margin="normal"
+                    sx={{
+                      backgroundColor: theme.palette.primary.light,
+                    }}
                     value={category}
                     onChange={(e) => setCategory(e.target.value)}
                     inputProps={{ style: { fontSize: 16, fontWeight: 500 } }}

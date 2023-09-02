@@ -212,10 +212,13 @@ const Category = () => {
                   <TextField
                     id="category"
                     label="Category"
-                    variant="filled"
+                    variant="outlined"
                     value={category}
                     fullWidth
                     margin="normal"
+                    sx={{
+                      backgroundColor: theme.palette.primary.light,
+                    }}
                     onChange={(e) => setCategory(e.target.value)}
                   />
                 )}

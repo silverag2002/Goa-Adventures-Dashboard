@@ -99,49 +99,14 @@ const Location = () => {
 
   return (
     <Box m="1.5rem 2.5rem">
-      <FlexBetween>
-        <Header title="Location" subtitle="Get a list of locations" />
-        <Button
-          variant="contained"
-          size="medium"
-          style={{
-            backgroundColor: theme.palette.secondary.main,
-            color: theme.palette.neutral[600],
-            fontWeight: "bold",
-          }}
-          onClick={() => navigate("/add-location")}
-        >
-          Add Location
-        </Button>
-      </FlexBetween>
+      <Header
+        title="Location"
+        subtitle="Entire list of locations"
+        buttonText="Add Location"
+        onClick={() => navigate("/add-location")}
+      />
 
-      <Box
-        height="80vh"
-        sx={{
-          "& .MuiDataGrid-root": {
-            border: "none",
-          },
-          "& .MuiDataGrid-cell": {
-            borderBottom: "none",
-          },
-          "& .MuiDataGrid-columnHeaders": {
-            backgroundColor: theme.palette.background.alt,
-            color: theme.palette.secondary[100],
-            borderBottom: "none",
-          },
-          "& .MuiDataGrid-virtualScroller": {
-            backgroundColor: theme.palette.primary.light,
-          },
-          "& .MuiDataGrid-footerContainer": {
-            backgroundColor: theme.palette.background.alt,
-            color: theme.palette.secondary[100],
-            borderTop: "none",
-          },
-          "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
-            color: `${theme.palette.secondary[200]} !important`,
-          },
-        }}
-      >
+      <Box height="80vh" sx={{ width: "100%" }}>
         <DataGrid
           getRowId={(rows) => rows.id}
           rows={location}
@@ -152,14 +117,16 @@ const Location = () => {
           page={page}
           pageSize={pageSize}
           paginationMode="server"
-          sortingMode="server"
+          disableRowSelectionOnClick
+          // sortingMode="server"
           onPageChange={(newPage) => setPage(newPage)}
           onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
-          onSortModelChange={(newSortModel) => setSort(...newSortModel)}
-          components={{ Toolbar: DataGridCustomToolbar }}
-          componentsProps={{
-            toolbar: { searchInput, setSearchInput, setSearch },
-          }}
+          // onSortModelChange={(newSortModel) => setSort(...newSortModel)}
+          checkboxSelection
+          // components={{ Toolbar: DataGridCustomToolbar }}
+          // componentsProps={{
+          //   toolbar: { searchInput, setSearchInput, setSearch },
+          // }}
         />
       </Box>
       <div className="spinner">

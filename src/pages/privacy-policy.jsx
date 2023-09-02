@@ -58,8 +58,11 @@ const PrivacyPolicry = () => {
 
   return (
     <Box m="1.5rem 2.5rem">
-      <Header title="Privacy Policy" subtitle="" />
-      <Grid item xs={12} md={12}>
+      <Header
+        title="Privacy Policy"
+        subtitle="Add your website privacy policy"
+      />
+      <Grid item xs={12} md={12} pt="1rem">
         <Box>
           <JoditEditor
             height={200}
@@ -93,18 +96,6 @@ const PrivacyPolicry = () => {
           onClick={handleSubmit}
         >
           Add Privacy Policy
-        </Button>
-        <Button
-          size="large"
-          variant="contained"
-          style={{
-            backgroundColor: theme.palette.secondary.main,
-            color: theme.palette.neutral[600],
-            fontWeight: "bold",
-          }}
-          href="/products"
-        >
-          Cancel
         </Button>
       </Stack>
       <div className="spinner">

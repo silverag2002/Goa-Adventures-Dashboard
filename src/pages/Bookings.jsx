@@ -8,10 +8,11 @@ import FlexBetween from "../components/FlexBetween";
 import { axiosInstance } from "../base/api/axios.util";
 import { URLConstants } from "../base/api/url.constants";
 import Loader from "react-loader";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Bookings = () => {
   const theme = useTheme();
+  const navigate = useNavigate();
 
   // values to be sent to the backend
   const [page, setPage] = useState(0);
@@ -165,21 +166,13 @@ const Bookings = () => {
 
   return (
     <Box m="1.5rem 2.5rem">
-      <FlexBetween>
-        <Header title="Booking" subtitle="Entire list of bookings" />
-        <Button
-          variant="contained"
-          size="large"
-          style={{
-            backgroundColor: theme.palette.secondary.main,
-            color: theme.palette.neutral[600],
-            fontWeight: "bold",
-          }}
-          href="/create-booking"
-        >
-          Create Booking
-        </Button>
-      </FlexBetween>
+      <Header
+        title="Bookings"
+        subtitle="Entire list of bookings"
+        buttonText="Create Booking"
+        onClick={() => navigate("/create-booking")}
+      />
+
       <Box
         height="80vh"
         sx={{
@@ -190,20 +183,23 @@ const Bookings = () => {
             borderBottom: "none",
           },
           "& .MuiDataGrid-columnHeaders": {
-            backgroundColor: theme.palette.background.alt,
-            color: theme.palette.secondary[100],
+            backgroundColor: theme.palette.background.default,
+            color: theme.palette.neutral.grey700,
             borderBottom: "none",
           },
           "& .MuiDataGrid-virtualScroller": {
-            backgroundColor: theme.palette.primary.light,
+            backgroundColor: theme.palette.neutral.main,
           },
           "& .MuiDataGrid-footerContainer": {
-            backgroundColor: theme.palette.background.alt,
-            color: theme.palette.secondary[100],
+            backgroundColor: theme.palette.neutral.grey100,
+            color: theme.palette.neutral.grey900,
             borderTop: "none",
           },
           "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
-            color: `${theme.palette.secondary[200]} !important`,
+            color: `${theme.palette.neutral.grey900} !important`,
+          },
+          "& .MuiTablePagination-toolbar": {
+            alignItems: "baseline",
           },
         }}
       >

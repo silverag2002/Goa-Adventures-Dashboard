@@ -8,11 +8,9 @@ import FlexBetween from "../components/FlexBetween";
 import { axiosInstance } from "../base/api/axios.util";
 import { URLConstants } from "../base/api/url.constants";
 import Loader from "react-loader";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Customers = () => {
-  const theme = useTheme();
-
   // values to be sent to the backend
   const [page, setPage] = useState(0);
 
@@ -23,6 +21,9 @@ const Customers = () => {
   const [customer, setCustomer] = useState([]);
   const [searchInput, setSearchInput] = useState("");
   const [reloadPage, setReloadPage] = useState(false);
+
+  const theme = useTheme();
+  const navigate = useNavigate();
 
   const { data, isLoading } = useGetTransactionsQuery({
     page,
@@ -170,21 +171,13 @@ const Customers = () => {
 
   return (
     <Box m="1.5rem 2.5rem">
-      <FlexBetween>
-        <Header title="Customer" subtitle="Entire list of customers" />
-        <Button
-          variant="contained"
-          size="large"
-          style={{
-            backgroundColor: theme.palette.secondary.main,
-            color: theme.palette.neutral[600],
-            fontWeight: "bold",
-          }}
-          href="/add-customer"
-        >
-          Create Customer
-        </Button>
-      </FlexBetween>
+      <Header
+        title="Customers"
+        subtitle="Entire list of customers"
+        buttonText="Create Customer"
+        onClick={() => navigate("/add-customer")}
+      />
+
       <Box
         height="80vh"
         sx={{
@@ -195,20 +188,23 @@ const Customers = () => {
             borderBottom: "none",
           },
           "& .MuiDataGrid-columnHeaders": {
-            backgroundColor: theme.palette.background.alt,
-            color: theme.palette.secondary[100],
+            backgroundColor: theme.palette.background.default,
+            color: theme.palette.neutral.grey700,
             borderBottom: "none",
           },
           "& .MuiDataGrid-virtualScroller": {
-            backgroundColor: theme.palette.primary.light,
+            backgroundColor: theme.palette.neutral.main,
           },
           "& .MuiDataGrid-footerContainer": {
-            backgroundColor: theme.palette.background.alt,
-            color: theme.palette.secondary[100],
+            backgroundColor: theme.palette.neutral.grey100,
+            color: theme.palette.neutral.grey900,
             borderTop: "none",
           },
           "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
-            color: `${theme.palette.secondary[200]} !important`,
+            color: `${theme.palette.neutral.grey900} !important`,
+          },
+          "& .MuiTablePagination-toolbar": {
+            alignItems: "baseline",
           },
         }}
       >

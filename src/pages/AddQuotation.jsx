@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import ItineraryAccordion from "../components/ItineraryAccordion";
+import ReplyOutlinedIcon from "@mui/icons-material/ReplyOutlined";
 import { useForm, Controller } from "react-hook-form";
 import JoditEditor from "jodit-react";
 import FlexBetween from "components/FlexBetween";
@@ -46,21 +46,14 @@ const AddQuotation = () => {
 
   return (
     <Box m="1.5rem 2.5rem">
-      <FlexBetween>
-        <Header title="Create Quotation" subtitle="" />
-        <Button
-          size="large"
-          variant="contained"
-          onClick={() => navigate("/instant-quotation")}
-          style={{
-            backgroundColor: theme.palette.secondary.main,
-            color: theme.palette.neutral[600],
-            fontWeight: "bold",
-          }}
-        >
-          Go Back
-        </Button>
-      </FlexBetween>
+      <Header
+        title="Create Quotation"
+        subtitle="Fill the details to create quotation"
+        buttonText="Go Back"
+        icon={<ReplyOutlinedIcon />}
+        onClick={() => navigate("/instant-quotation")}
+      />
+
       <Box>
         <form onSubmit={handleSubmit(onSubmit, onError)}>
           <Grid container spacing={2}>

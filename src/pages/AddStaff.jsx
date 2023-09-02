@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Header from "components/Header";
 import FlexBetween from "components/FlexBetween";
+import ReplyOutlinedIcon from "@mui/icons-material/ReplyOutlined";
 import {
   Box,
   Grid,
@@ -116,191 +117,200 @@ const AddStaff = () => {
   const onError = (errors) => console.log(errors);
   return (
     <Box sx={{ flexGrow: 1, margin: "1.5rem 2.5rem" }}>
-      <FlexBetween>
-        <Header title="Create Staff" subtitle="" />
-        <Button
-          variant="contained"
-          size="large"
-          style={{
-            backgroundColor: theme.palette.secondary.main,
-            color: theme.palette.neutral[600],
-            fontWeight: "bold",
-          }}
-          href="/customers"
-        >
-          Go Back
-        </Button>
-      </FlexBetween>
-      <form onSubmit={handleSubmit(onSubmit, onError)}>
-        <Grid container spacing={2}>
-          <Grid item xs={12} md={4}>
-            <Box>
-              <Controller
-                name="name"
-                control={control}
-                render={({ field }) => (
-                  <TextField
-                    id="name"
-                    label="Staff Name"
-                    variant="filled"
-                    fullWidth
-                    margin="normal"
-                    {...field}
-                  />
-                )}
-              />
-            </Box>
-          </Grid>
-          <Grid item xs={12} md={3}>
-            <Box>
-              <Controller
-                name="mobile_number"
-                control={control}
-                render={({ field }) => (
-                  <TextField
-                    id="mobile_number"
-                    label="Mobile Number"
-                    variant="filled"
-                    fullWidth
-                    margin="normal"
-                    {...field}
-                  />
-                )}
-              />
-            </Box>
-          </Grid>
-          <Grid item xs={12} md={3}>
-            <Box>
-              <Controller
-                name="email"
-                control={control}
-                render={({ field }) => (
-                  <TextField
-                    id="email"
-                    label="Email"
-                    variant="filled"
-                    fullWidth
-                    margin="normal"
-                    {...field}
-                  />
-                )}
-              />
-            </Box>
+      <Header
+        title="Add New Staff"
+        subtitle="Fill the details to add new staff"
+        buttonText="Go Back"
+        icon={<ReplyOutlinedIcon />}
+        onClick={() => navigate("/manage-staff")}
+      />
+      <Box pt="1rem">
+        <form onSubmit={handleSubmit(onSubmit, onError)}>
+          <Grid container spacing={2}>
+            <Grid item xs={12} md={4}>
+              <Box>
+                <Controller
+                  name="name"
+                  control={control}
+                  render={({ field }) => (
+                    <TextField
+                      id="name"
+                      label="Staff Name"
+                      variant="outlined"
+                      fullWidth
+                      margin="normal"
+                      sx={{
+                        backgroundColor: theme.palette.primary.light,
+                      }}
+                      {...field}
+                    />
+                  )}
+                />
+              </Box>
+            </Grid>
+            <Grid item xs={12} md={4}>
+              <Box>
+                <Controller
+                  name="mobile_number"
+                  control={control}
+                  render={({ field }) => (
+                    <TextField
+                      id="mobile_number"
+                      label="Mobile Number"
+                      variant="outlined"
+                      fullWidth
+                      margin="normal"
+                      sx={{
+                        backgroundColor: theme.palette.primary.light,
+                      }}
+                      {...field}
+                    />
+                  )}
+                />
+              </Box>
+            </Grid>
+            <Grid item xs={12} md={4}>
+              <Box>
+                <Controller
+                  name="email"
+                  control={control}
+                  render={({ field }) => (
+                    <TextField
+                      id="email"
+                      label="Email"
+                      variant="outlined"
+                      fullWidth
+                      margin="normal"
+                      sx={{
+                        backgroundColor: theme.palette.primary.light,
+                      }}
+                      {...field}
+                    />
+                  )}
+                />
+              </Box>
+            </Grid>
+
+            <Grid item xs={12} md={4}>
+              <Box>
+                <Controller
+                  name="aadhar_number"
+                  control={control}
+                  render={({ field }) => (
+                    <TextField
+                      id="aadhar_number"
+                      label="Aadhar Number"
+                      variant="outlined"
+                      fullWidth
+                      margin="normal"
+                      sx={{
+                        backgroundColor: theme.palette.primary.light,
+                      }}
+                      {...field}
+                    />
+                  )}
+                />
+              </Box>
+            </Grid>
+            <Grid item xs={4} md={4}>
+              <Box>
+                <Controller
+                  name="active"
+                  control={control}
+                  render={({ field }) => (
+                    <TextField
+                      select
+                      id="active"
+                      label="Active"
+                      variant="outlined"
+                      fullWidth
+                      margin="normal"
+                      sx={{
+                        backgroundColor: theme.palette.primary.light,
+                      }}
+                      value={active}
+                      onChange={(e) => setActive(e.target.value)}
+                    >
+                      <MenuItem value={true}>Yes</MenuItem>
+                      <MenuItem value={false}>No</MenuItem>
+                    </TextField>
+                  )}
+                />
+              </Box>
+            </Grid>
+
+            <Grid item xs={12} md={12}>
+              <Typography variant="h4">Profile Picture</Typography>
+            </Grid>
+            <Grid item xs={4} md={4}>
+              <Box>
+                <input
+                  type="file"
+                  placeholder="Image URL"
+                  {...register("profile_image")}
+                />
+              </Box>
+            </Grid>
           </Grid>
 
-          <Grid item xs={12} md={3}>
-            <Box>
-              <Controller
-                name="aadhar_number"
-                control={control}
-                render={({ field }) => (
-                  <TextField
-                    id="aadhar_number"
-                    label="Aadhar Number"
-                    variant="filled"
-                    fullWidth
-                    margin="normal"
-                    {...field}
-                  />
-                )}
-              />
-            </Box>
-          </Grid>
-          <Grid item xs={4} md={4}>
-            <Box>
-              <Controller
-                name="active"
-                control={control}
-                render={({ field }) => (
-                  <TextField
-                    select
-                    id="active"
-                    label="Active"
-                    variant="filled"
-                    fullWidth
-                    margin="normal"
-                    value={active}
-                    onChange={(e) => setActive(e.target.value)}
-                  >
-                    <MenuItem value={true}>Yes</MenuItem>
-                    <MenuItem value={false}>No</MenuItem>
-                  </TextField>
-                )}
-              />
-            </Box>
-          </Grid>
-
-          <Grid item xs={12} md={12}>
-            <Typography variant="h4">Profile Picture</Typography>
-          </Grid>
-          <Grid item xs={4} md={4}>
-            <Box>
-              <input
-                type="file"
-                placeholder="Image URL"
-                {...register("profile_image")}
-              />
-            </Box>
-          </Grid>
-        </Grid>
-
-        <Stack
-          direction="row"
-          justifyContent="flex-end"
-          alignItems="center"
-          spacing={4}
-          sx={{ marginTop: "1rem" }}
-        >
-          <Button
-            size="large"
-            variant="contained"
-            type="submit"
-            style={{
-              backgroundColor: theme.palette.secondary.main,
-              color: theme.palette.neutral[600],
-              fontWeight: "bold",
-            }}
+          <Stack
+            direction="row"
+            justifyContent="flex-end"
+            alignItems="center"
+            spacing={4}
+            sx={{ marginTop: "1rem" }}
           >
-            Book
-          </Button>
-          <Button
-            size="large"
-            variant="contained"
-            style={{
-              backgroundColor: theme.palette.secondary.main,
-              color: theme.palette.neutral[600],
-              fontWeight: "bold",
-            }}
-            href="/bookings"
-          >
-            Cancel
-          </Button>
-        </Stack>
+            <Button
+              size="large"
+              variant="contained"
+              type="submit"
+              style={{
+                backgroundColor: theme.palette.secondary.main,
+                color: theme.palette.neutral[600],
+                fontWeight: "bold",
+              }}
+            >
+              Book
+            </Button>
+            <Button
+              size="large"
+              variant="contained"
+              style={{
+                backgroundColor: theme.palette.secondary.main,
+                color: theme.palette.neutral[600],
+                fontWeight: "bold",
+              }}
+              onClick={() => navigate("/manage-staff")}
+            >
+              Cancel
+            </Button>
+          </Stack>
 
-        <div className="spinner">
-          <Loader
-            loaded={loaded}
-            lines={13}
-            length={20}
-            width={10}
-            radius={30}
-            corners={1}
-            rotate={0}
-            direction={1}
-            color="#000"
-            speed={1}
-            trail={60}
-            shadow={false}
-            hwaccel={false}
-            className="spinner"
-            zIndex={2e9}
-            top="50%"
-            left="50%"
-            scale={1.0}
-            loadedClassName="loadedContent"
-          />
-        </div>
-      </form>
+          <div className="spinner">
+            <Loader
+              loaded={loaded}
+              lines={13}
+              length={20}
+              width={10}
+              radius={30}
+              corners={1}
+              rotate={0}
+              direction={1}
+              color="#000"
+              speed={1}
+              trail={60}
+              shadow={false}
+              hwaccel={false}
+              className="spinner"
+              zIndex={2e9}
+              top="50%"
+              left="50%"
+              scale={1.0}
+              loadedClassName="loadedContent"
+            />
+          </div>
+        </form>
+      </Box>
     </Box>
   );
 };

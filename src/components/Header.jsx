@@ -1,22 +1,29 @@
-import { Typography, Box, useTheme } from "@mui/material";
 import React from "react";
+import { Typography, useTheme, Button } from "@mui/material";
+import Heading from "./Heading";
+import FlexBetween from "./FlexBetween";
 
-const Header = ({ title, subtitle }) => {
+const Header = ({ title, subtitle, buttonText, onClick, icon }) => {
   const theme = useTheme();
   return (
-    <Box>
-      <Typography
-        variant="h3"
-        color={theme.palette.secondary[100]}
-        fontWeight="bold"
-        sx={{ mb: "5px" }}
-      >
-        {title}
-      </Typography>
-      <Typography variant="h5" color={theme.palette.secondary[300]}>
-        {subtitle}
-      </Typography>
-    </Box>
+    <FlexBetween>
+      <Heading title={title} subtitle={subtitle} />
+      {buttonText && (
+        <Button
+          size="large"
+          variant="contained"
+          onClick={onClick}
+          style={{
+            backgroundColor: theme.palette.primary.main,
+            color: theme.palette.neutral.white,
+            fontWeight: "bold",
+          }}
+        >
+          {icon}
+          {buttonText}
+        </Button>
+      )}
+    </FlexBetween>
   );
 };
 

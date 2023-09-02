@@ -19,6 +19,7 @@ import { URLConstants } from "../base/api/url.constants";
 import JoditEditor from "jodit-react";
 import axios, * as others from "axios";
 import Loader from "react-loader";
+import ReplyOutlinedIcon from "@mui/icons-material/ReplyOutlined";
 var FormData = require("form-data");
 
 const AddProduct = () => {
@@ -351,625 +352,695 @@ const AddProduct = () => {
   return (
     <>
       <Box sx={{ flexGrow: 1, margin: "1.5rem 2.5rem" }}>
-        <form onSubmit={handleSubmit(onSubmit, onError)}>
-          <Grid container spacing={2}>
-            <Grid item xs={12} md={12}>
-              <Typography variant="h4">Basic Information</Typography>
-              <Box>
-                <Controller
-                  name="title"
-                  control={control}
-                  render={({ field }) => (
-                    <TextField
-                      id="title"
-                      label="Title"
-                      variant="filled"
-                      placeholder="Activity Or Tour Title"
-                      fullWidth
-                      margin="normal"
-                      size="small"
-                      inputProps={{ style: { fontSize: 16 } }}
-                      InputLabelProps={{ style: { fontSize: 16 } }}
-                      {...field}
-                    />
-                  )}
-                />
-              </Box>
+        <Header
+          title="Add Product"
+          subtitle="Fill the details to add product"
+          buttonText="Go Back"
+          icon={<ReplyOutlinedIcon />}
+          onClick={() => navigate("/products")}
+        />
+        <Box pt="1rem">
+          <form onSubmit={handleSubmit(onSubmit, onError)}>
+            <Grid container spacing={2}>
+              <Grid item xs={12} md={12}>
+                <Typography variant="h5">Basic Information</Typography>
+                <Box>
+                  <Controller
+                    name="title"
+                    control={control}
+                    render={({ field }) => (
+                      <TextField
+                        id="title"
+                        label="Title"
+                        variant="outlined"
+                        placeholder="Activity Or Tour Title"
+                        fullWidth
+                        margin="normal"
+                        size="medium"
+                        sx={{
+                          backgroundColor: theme.palette.primary.light,
+                        }}
+                        inputProps={{ style: { fontSize: 16 } }}
+                        InputLabelProps={{ style: { fontSize: 16 } }}
+                        {...field}
+                      />
+                    )}
+                  />
+                </Box>
+              </Grid>
+              <Grid item xs={12} md={4}>
+                <Box>
+                  <Controller
+                    name="category_id"
+                    control={control}
+                    render={({ field, value }) => (
+                      <TextField
+                        select
+                        id="category_id"
+                        label="Category"
+                        variant="outlined"
+                        fullWidth
+                        margin="normal"
+                        sx={{
+                          backgroundColor: theme.palette.primary.light,
+                        }}
+                        inputProps={{ style: { fontSize: 16 } }}
+                        InputLabelProps={{ style: { fontSize: 16 } }}
+                        defaultValue={
+                          clientDataAssignment.category_id
+                            ? clientDataAssignment.category_id
+                            : ""
+                        }
+                        {...field}
+                      >
+                        {categories.map((option) => (
+                          <MenuItem key={option.id} value={option.id}>
+                            {option.category}
+                          </MenuItem>
+                        ))}
+                      </TextField>
+                    )}
+                  />
+                </Box>
+              </Grid>
+              <Grid item xs={12} md={4}>
+                <Box>
+                  <Controller
+                    name="subcategory_id"
+                    control={control}
+                    render={({ field }) => (
+                      <TextField
+                        select
+                        id="subcategory_id"
+                        label="Category Type"
+                        variant="outlined"
+                        fullWidth
+                        margin="normal"
+                        sx={{
+                          backgroundColor: theme.palette.primary.light,
+                        }}
+                        inputProps={{ style: { fontSize: 16 } }}
+                        InputLabelProps={{ style: { fontSize: 16 } }}
+                        defaultValue={
+                          clientDataAssignment.subcategory_id
+                            ? clientDataAssignment.subcategory_id
+                            : ""
+                        }
+                        {...field}
+                      >
+                        {subcategories.map((option) => (
+                          <MenuItem key={option.id} value={option.id}>
+                            {option.subcategory}
+                          </MenuItem>
+                        ))}
+                      </TextField>
+                    )}
+                  />
+                </Box>
+              </Grid>
+              <Grid item xs={12} md={4}>
+                <Box>
+                  <Controller
+                    name="duration"
+                    control={control}
+                    render={({ field }) => (
+                      <TextField
+                        id="duration"
+                        label="Duration"
+                        type="text"
+                        variant="outlined"
+                        fullWidth
+                        margin="normal"
+                        sx={{
+                          backgroundColor: theme.palette.primary.light,
+                        }}
+                        inputProps={{ style: { fontSize: 16 } }}
+                        InputLabelProps={{ style: { fontSize: 16 } }}
+                        {...field}
+                      />
+                    )}
+                  />
+                </Box>
+              </Grid>
+              <Grid item xs={12} md={12}>
+                <Box>
+                  <JoditEditor
+                    height={200}
+                    name="overview"
+                    className="text-black"
+                    // config={{ theme: "dark" }}
+                    getSunEditorInstance={getSunEditorInstance}
+                    value={overview}
+                    onChange={handleOverviewChange}
+                    setContents={overview}
+                  />
+                </Box>
+              </Grid>
+              <Grid item xs={12} md={4}>
+                <Box>
+                  <Controller
+                    name="highlight"
+                    control={control}
+                    render={({ field }) => (
+                      <TextField
+                        id="highlight"
+                        label="Highlight"
+                        variant="outlined"
+                        multiline
+                        rows={6}
+                        fullWidth
+                        margin="normal"
+                        sx={{
+                          backgroundColor: theme.palette.primary.light,
+                        }}
+                        inputProps={{ style: { fontSize: 16 } }}
+                        InputLabelProps={{ style: { fontSize: 16 } }}
+                        {...field}
+                      />
+                    )}
+                  />
+                </Box>
+              </Grid>
+              <Grid item xs={12} md={4}>
+                <Box>
+                  <Controller
+                    name="inclusion"
+                    control={control}
+                    render={({ field }) => (
+                      <TextField
+                        id="inclusion"
+                        label="Inclusion"
+                        variant="outlined"
+                        multiline
+                        rows={6}
+                        fullWidth
+                        margin="normal"
+                        sx={{
+                          backgroundColor: theme.palette.primary.light,
+                        }}
+                        inputProps={{ style: { fontSize: 16 } }}
+                        InputLabelProps={{ style: { fontSize: 16 } }}
+                        {...field}
+                      />
+                    )}
+                  />
+                </Box>
+              </Grid>
+              <Grid item xs={12} md={4}>
+                <Box>
+                  <Controller
+                    name="exclusion"
+                    control={control}
+                    render={({ field }) => (
+                      <TextField
+                        id="exclusion"
+                        label="Exclusion"
+                        variant="outlined"
+                        multiline
+                        rows={6}
+                        fullWidth
+                        margin="normal"
+                        sx={{
+                          backgroundColor: theme.palette.primary.light,
+                        }}
+                        inputProps={{ style: { fontSize: 16 } }}
+                        InputLabelProps={{ style: { fontSize: 16 } }}
+                        {...field}
+                      />
+                    )}
+                  />
+                </Box>
+              </Grid>
+              <Grid item xs={12} md={4}>
+                <Box>
+                  <Controller
+                    name="min_people"
+                    control={control}
+                    render={({ field }) => (
+                      <TextField
+                        id="min_people"
+                        label="Min People"
+                        variant="outlined"
+                        type="number"
+                        fullWidth
+                        margin="normal"
+                        sx={{
+                          backgroundColor: theme.palette.primary.light,
+                        }}
+                        inputProps={{ style: { fontSize: 16 } }}
+                        InputLabelProps={{ style: { fontSize: 16 } }}
+                        {...field}
+                      />
+                    )}
+                  />
+                </Box>
+              </Grid>
+              <Grid item xs={12} md={4}>
+                <Box>
+                  <Controller
+                    name="max_people"
+                    control={control}
+                    render={({ field }) => (
+                      <TextField
+                        id="max_people"
+                        label="Max People"
+                        variant="outlined"
+                        type="number"
+                        fullWidth
+                        margin="normal"
+                        sx={{
+                          backgroundColor: theme.palette.primary.light,
+                        }}
+                        inputProps={{ style: { fontSize: 16 } }}
+                        InputLabelProps={{ style: { fontSize: 16 } }}
+                        {...field}
+                      />
+                    )}
+                  />
+                </Box>
+              </Grid>
+              <Grid item xs={12} md={4}>
+                <Box>
+                  <Controller
+                    name="booking_period"
+                    control={control}
+                    render={({ field }) => (
+                      <TextField
+                        id="booking_period"
+                        label="Booking Period"
+                        variant="outlined"
+                        type="number"
+                        fullWidth
+                        margin="normal"
+                        sx={{
+                          backgroundColor: theme.palette.primary.light,
+                        }}
+                        inputProps={{ style: { fontSize: 16 } }}
+                        InputLabelProps={{ style: { fontSize: 16 } }}
+                        {...field}
+                      />
+                    )}
+                  />
+                </Box>
+              </Grid>
+              <Grid item xs={12} md={4}>
+                <Box>
+                  <Controller
+                    name="allow_deposit"
+                    control={control}
+                    render={({ field }) => (
+                      <TextField
+                        select
+                        id="allow_deposit"
+                        label="Deposit"
+                        variant="outlined"
+                        fullWidth
+                        margin="normal"
+                        sx={{
+                          backgroundColor: theme.palette.primary.light,
+                        }}
+                        inputProps={{ style: { fontSize: 16 } }}
+                        InputLabelProps={{ style: { fontSize: 16 } }}
+                        defaultValue={
+                          clientDataAssignment.allow_deposit
+                            ? clientDataAssignment.allow_deposit
+                            : ""
+                        }
+                        {...field}
+                      >
+                        <MenuItem value={true}>Allow Deposit</MenuItem>
+                        <MenuItem value={false}>Disallow Deposit</MenuItem>
+                      </TextField>
+                    )}
+                  />
+                </Box>
+              </Grid>
+              <Grid item xs={12} md={4}>
+                <Box>
+                  <Controller
+                    name="deposit_value"
+                    control={control}
+                    render={({ field }) => (
+                      <TextField
+                        id="deposit_percent"
+                        label="Deposit Percent"
+                        variant="outlined"
+                        type="number"
+                        fullWidth
+                        margin="normal"
+                        sx={{
+                          backgroundColor: theme.palette.primary.light,
+                        }}
+                        inputProps={{ style: { fontSize: 16 } }}
+                        InputLabelProps={{ style: { fontSize: 16 } }}
+                        {...field}
+                      />
+                    )}
+                  />
+                </Box>
+              </Grid>
+              <Grid item xs={12} md={4}>
+                <Box>
+                  <Controller
+                    name="allow_cancel"
+                    control={control}
+                    render={({ field }) => (
+                      <TextField
+                        select
+                        id="allow_cancel"
+                        label="Allow Cancel"
+                        variant="outlined"
+                        fullWidth
+                        margin="normal"
+                        sx={{
+                          backgroundColor: theme.palette.primary.light,
+                        }}
+                        inputProps={{ style: { fontSize: 16 } }}
+                        InputLabelProps={{ style: { fontSize: 16 } }}
+                        defaultValue={
+                          clientDataAssignment.allow_cancel
+                            ? clientDataAssignment.allow_cancel
+                            : ""
+                        }
+                        {...field}
+                      >
+                        <MenuItem value={true}>Yes</MenuItem>
+                        <MenuItem value={false}>No</MenuItem>
+                      </TextField>
+                    )}
+                  />
+                </Box>
+              </Grid>
             </Grid>
-            <Grid item xs={12} md={4}>
-              <Box>
-                <Controller
-                  name="category_id"
-                  control={control}
-                  render={({ field, value }) => (
-                    <TextField
-                      select
-                      id="category_id"
-                      label="Category"
-                      variant="filled"
-                      fullWidth
-                      margin="normal"
-                      inputProps={{ style: { fontSize: 16 } }}
-                      InputLabelProps={{ style: { fontSize: 16 } }}
-                      defaultValue={
-                        clientDataAssignment.category_id
-                          ? clientDataAssignment.category_id
-                          : ""
-                      }
-                      {...field}
-                    >
-                      {categories.map((option) => (
-                        <MenuItem key={option.id} value={option.id}>
-                          {option.category}
-                        </MenuItem>
-                      ))}
-                    </TextField>
-                  )}
-                />
-              </Box>
-            </Grid>
-            <Grid item xs={12} md={4}>
-              <Box>
-                <Controller
-                  name="subcategory_id"
-                  control={control}
-                  render={({ field }) => (
-                    <TextField
-                      select
-                      id="subcategory_id"
-                      label="Category Type"
-                      variant="filled"
-                      fullWidth
-                      margin="normal"
-                      inputProps={{ style: { fontSize: 16 } }}
-                      InputLabelProps={{ style: { fontSize: 16 } }}
-                      defaultValue={
-                        clientDataAssignment.subcategory_id
-                          ? clientDataAssignment.subcategory_id
-                          : ""
-                      }
-                      {...field}
-                    >
-                      {subcategories.map((option) => (
-                        <MenuItem key={option.id} value={option.id}>
-                          {option.subcategory}
-                        </MenuItem>
-                      ))}
-                    </TextField>
-                  )}
-                />
-              </Box>
-            </Grid>
-            <Grid item xs={12} md={4}>
-              <Box>
-                <Controller
-                  name="duration"
-                  control={control}
-                  render={({ field }) => (
-                    <TextField
-                      id="duration"
-                      label="Duration"
-                      type="text"
-                      variant="filled"
-                      fullWidth
-                      margin="normal"
-                      inputProps={{ style: { fontSize: 16 } }}
-                      InputLabelProps={{ style: { fontSize: 16 } }}
-                      {...field}
-                    />
-                  )}
-                />
-              </Box>
-            </Grid>
-            <Grid item xs={12} md={12}>
-              <Box>
-                <JoditEditor
-                  height={200}
-                  name="overview"
-                  className="text-black"
-                  // config={{ theme: "dark" }}
-                  getSunEditorInstance={getSunEditorInstance}
-                  value={overview}
-                  onChange={handleOverviewChange}
-                  setContents={overview}
-                />
-              </Box>
-            </Grid>
-            <Grid item xs={12} md={4}>
-              <Box>
-                <Controller
-                  name="highlight"
-                  control={control}
-                  render={({ field }) => (
-                    <TextField
-                      id="highlight"
-                      label="Highlight"
-                      variant="filled"
-                      multiline
-                      rows={6}
-                      fullWidth
-                      margin="normal"
-                      inputProps={{ style: { fontSize: 16 } }}
-                      InputLabelProps={{ style: { fontSize: 16 } }}
-                      {...field}
-                    />
-                  )}
-                />
-              </Box>
-            </Grid>
-            <Grid item xs={12} md={4}>
-              <Box>
-                <Controller
-                  name="inclusion"
-                  control={control}
-                  render={({ field }) => (
-                    <TextField
-                      id="inclusion"
-                      label="Inclusion"
-                      variant="filled"
-                      multiline
-                      rows={6}
-                      fullWidth
-                      margin="normal"
-                      inputProps={{ style: { fontSize: 16 } }}
-                      InputLabelProps={{ style: { fontSize: 16 } }}
-                      {...field}
-                    />
-                  )}
-                />
-              </Box>
-            </Grid>
-            <Grid item xs={12} md={4}>
-              <Box>
-                <Controller
-                  name="exclusion"
-                  control={control}
-                  render={({ field }) => (
-                    <TextField
-                      id="exclusion"
-                      label="Exclusion"
-                      variant="filled"
-                      multiline
-                      rows={6}
-                      fullWidth
-                      margin="normal"
-                      inputProps={{ style: { fontSize: 16 } }}
-                      InputLabelProps={{ style: { fontSize: 16 } }}
-                      {...field}
-                    />
-                  )}
-                />
-              </Box>
-            </Grid>
-            <Grid item xs={12} md={4}>
-              <Box>
-                <Controller
-                  name="min_people"
-                  control={control}
-                  render={({ field }) => (
-                    <TextField
-                      id="min_people"
-                      label="Min People"
-                      variant="filled"
-                      type="number"
-                      fullWidth
-                      margin="normal"
-                      inputProps={{ style: { fontSize: 16 } }}
-                      InputLabelProps={{ style: { fontSize: 16 } }}
-                      {...field}
-                    />
-                  )}
-                />
-              </Box>
-            </Grid>
-            <Grid item xs={12} md={4}>
-              <Box>
-                <Controller
-                  name="max_people"
-                  control={control}
-                  render={({ field }) => (
-                    <TextField
-                      id="max_people"
-                      label="Max People"
-                      variant="filled"
-                      type="number"
-                      fullWidth
-                      margin="normal"
-                      inputProps={{ style: { fontSize: 16 } }}
-                      InputLabelProps={{ style: { fontSize: 16 } }}
-                      {...field}
-                    />
-                  )}
-                />
-              </Box>
-            </Grid>
-            <Grid item xs={12} md={4}>
-              <Box>
-                <Controller
-                  name="booking_period"
-                  control={control}
-                  render={({ field }) => (
-                    <TextField
-                      id="booking_period"
-                      label="Booking Period"
-                      variant="filled"
-                      type="number"
-                      fullWidth
-                      margin="normal"
-                      inputProps={{ style: { fontSize: 16 } }}
-                      InputLabelProps={{ style: { fontSize: 16 } }}
-                      {...field}
-                    />
-                  )}
-                />
-              </Box>
-            </Grid>
-            <Grid item xs={12} md={4}>
-              <Box>
-                <Controller
-                  name="allow_deposit"
-                  control={control}
-                  render={({ field }) => (
-                    <TextField
-                      select
-                      id="allow_deposit"
-                      label="Deposit"
-                      variant="filled"
-                      fullWidth
-                      margin="normal"
-                      inputProps={{ style: { fontSize: 16 } }}
-                      InputLabelProps={{ style: { fontSize: 16 } }}
-                      defaultValue={
-                        clientDataAssignment.allow_deposit
-                          ? clientDataAssignment.allow_deposit
-                          : ""
-                      }
-                      {...field}
-                    >
-                      <MenuItem value={true}>Allow Deposit</MenuItem>
-                      <MenuItem value={false}>Disallow Deposit</MenuItem>
-                    </TextField>
-                  )}
-                />
-              </Box>
-            </Grid>
-            <Grid item xs={12} md={4}>
-              <Box>
-                <Controller
-                  name="deposit_value"
-                  control={control}
-                  render={({ field }) => (
-                    <TextField
-                      id="deposit_percent"
-                      label="Deposit Percent"
-                      variant="filled"
-                      type="number"
-                      fullWidth
-                      margin="normal"
-                      inputProps={{ style: { fontSize: 16 } }}
-                      InputLabelProps={{ style: { fontSize: 16 } }}
-                      {...field}
-                    />
-                  )}
-                />
-              </Box>
-            </Grid>
-            <Grid item xs={12} md={4}>
-              <Box>
-                <Controller
-                  name="allow_cancel"
-                  control={control}
-                  render={({ field }) => (
-                    <TextField
-                      select
-                      id="allow_cancel"
-                      label="Allow Cancel"
-                      variant="filled"
-                      fullWidth
-                      margin="normal"
-                      inputProps={{ style: { fontSize: 16 } }}
-                      InputLabelProps={{ style: { fontSize: 16 } }}
-                      defaultValue={
-                        clientDataAssignment.allow_cancel
-                          ? clientDataAssignment.allow_cancel
-                          : ""
-                      }
-                      {...field}
-                    >
-                      <MenuItem value={true}>Yes</MenuItem>
-                      <MenuItem value={false}>No</MenuItem>
-                    </TextField>
-                  )}
-                />
-              </Box>
-            </Grid>
-          </Grid>
-          <Divider
-            sx={{ borderWidth: "2px", marginTop: "1rem" }}
-            variant="fullWidth"
-            color={theme.palette.neutral.main}
-          />
-          <Grid container spacing={2} sx={{ paddingTop: "1rem" }}>
-            <Grid item xs={12} md={12}>
-              <Typography variant="h4">Pricing & Location</Typography>
-            </Grid>
-            <Grid item xs={12} md={4}>
-              <Box>
-                <Controller
-                  name="price"
-                  control={control}
-                  render={({ field }) => (
-                    <TextField
-                      id="price"
-                      label="Price"
-                      variant="filled"
-                      type="number"
-                      fullWidth
-                      margin="normal"
-                      inputProps={{ style: { fontSize: 16 } }}
-                      InputLabelProps={{ style: { fontSize: 16 } }}
-                      {...field}
-                    />
-                  )}
-                />
-              </Box>
-            </Grid>
-            <Grid item xs={12} md={4}>
-              <Box>
-                <Controller
-                  name="discount_percent"
-                  control={control}
-                  render={({ field }) => (
-                    <TextField
-                      id="discount"
-                      label="Discount"
-                      variant="filled"
-                      type="number"
-                      fullWidth
-                      margin="normal"
-                      inputProps={{ style: { fontSize: 16 } }}
-                      InputLabelProps={{ style: { fontSize: 16 } }}
-                      {...field}
-                    />
-                  )}
-                />
-              </Box>
-            </Grid>
-            <Grid item xs={12} md={4}>
-              <Box>
-                <Controller
-                  name="country"
-                  control={control}
-                  render={({ field }) => (
-                    <TextField
-                      select
-                      id="country"
-                      label="Country"
-                      variant="filled"
-                      fullWidth
-                      margin="normal"
-                      inputProps={{ style: { fontSize: 16 } }}
-                      InputLabelProps={{ style: { fontSize: 16 } }}
-                      defaultValue={
-                        clientDataAssignment.country
-                          ? clientDataAssignment.country
-                          : ""
-                      }
-                      onChange={(e) => {
-                        console.log("Field", e.target.value, field);
-                        e.preventDefault();
-                        handleCountryChange(encodeURIComponent(e.target.value));
-                      }}
-                    >
-                      {countries.map((con) => (
-                        <MenuItem value={con.country_name}>
-                          {con.country_name}
-                        </MenuItem>
-                      ))}
-                    </TextField>
-                  )}
-                />
-              </Box>
-            </Grid>
-            <Grid item xs={12} md={4}>
-              <Box>
-                <Controller
-                  name="state"
-                  control={control}
-                  render={({ field }) => (
-                    <TextField
-                      select
-                      id="state"
-                      label="State"
-                      variant="filled"
-                      fullWidth
-                      margin="normal"
-                      inputProps={{ style: { fontSize: 16 } }}
-                      InputLabelProps={{ style: { fontSize: 16 } }}
-                      defaultValue={
-                        clientDataAssignment.state
-                          ? clientDataAssignment.state
-                          : ""
-                      }
-                      onChange={(e) => {
-                        e.preventDefault();
-                        handleStateChange(encodeURIComponent(e.target.value));
-                        console.log("Field", e.target.value, field);
-                      }}
-                    >
-                      {countryStates.map((con) => (
-                        <MenuItem value={con.state_name}>
-                          {con.state_name}
-                        </MenuItem>
-                      ))}
-                    </TextField>
-                  )}
-                />
-              </Box>
-            </Grid>
-            <Grid item xs={12} md={4}>
-              <Box>
-                <Controller
-                  name="city"
-                  control={control}
-                  render={({ field }) => (
-                    <TextField
-                      select
-                      id="city"
-                      label="City"
-                      variant="filled"
-                      fullWidth
-                      margin="normal"
-                      inputProps={{ style: { fontSize: 16 } }}
-                      InputLabelProps={{ style: { fontSize: 16 } }}
-                      defaultValue={
-                        clientDataAssignment.city
-                          ? clientDataAssignment.city
-                          : ""
-                      }
-                      {...field}
-                    >
-                      {stateCities.map((con) => (
-                        <MenuItem value={con.city_name}>
-                          {con.city_name}
-                        </MenuItem>
-                      ))}
-                    </TextField>
-                  )}
-                />
-              </Box>
-            </Grid>
-          </Grid>
-          <Divider
-            sx={{ borderWidth: "2px", marginTop: "1rem" }}
-            variant="fullWidth"
-            color={theme.palette.neutral.main}
-          />
-          <Grid container spacing={2} sx={{ paddingTop: "1rem" }}>
-            <Grid item xs={12} md={12}>
-              <Typography variant="h4">Photos & Video</Typography>
-            </Grid>
-            <Grid item xs={12} md={4}>
-              <Box>
-                <label>Featured Image</label>
-                <input
-                  type="file"
-                  placeholder="Image URL"
-                  {...register("featured_image", {
-                    onChange: (e) => {
-                      setFeaturedImage(URL.createObjectURL(e.target.files[0]));
-                      console.log("Ankit");
-                    },
-                  })}
-                />
-              </Box>
-            </Grid>
-            <Grid item xs={12} md={4}>
-              <Box>
-                <label>Gallery Image</label>
-                <input
-                  type="file"
-                  placeholder="Image URL"
-                  multiple
-                  {...register("gallery", {
-                    onChange: (e) => {
-                      let arr = [];
-                      for (let i = 0; i < e.target.files.length; i++) {
-                        arr.push(URL.createObjectURL(e.target.files[i]));
-                      }
-                      setGalleryImage(arr);
-                      console.log("Gupta");
-                    },
-                  })}
-                />
-              </Box>
-            </Grid>
-            <Grid item xs={12} md={4}>
-              <Box>
-                <Controller
-                  name="video"
-                  control={control}
-                  render={({ field }) => (
-                    <TextField
-                      id="video-url"
-                      label="Video"
-                      variant="filled"
-                      fullWidth
-                      margin="normal"
-                      inputProps={{ style: { fontSize: 16 } }}
-                      InputLabelProps={{ style: { fontSize: 16 } }}
-                      {...field}
-                    />
-                  )}
-                />
-              </Box>
-            </Grid>
-          </Grid>
-
-          <div>
-            <img src={featuredImage} />
-
-            {galleryImage.length > 0
-              ? galleryImage.map((element) => <img src={element} />)
-              : null}
-          </div>
-
-          <Stack
-            direction="row"
-            justifyContent="flex-end"
-            alignItems="center"
-            spacing={4}
-            sx={{ marginTop: "1rem" }}
-          >
-            <Button
-              size="medium"
-              variant="contained"
-              type="submit"
-              style={{
-                backgroundColor: theme.palette.secondary.main,
-                color: theme.palette.neutral[600],
-                fontWeight: "bold",
-              }}
-            >
-              Add Product
-            </Button>
-            <Button
-              size="medium"
-              variant="contained"
-              style={{
-                backgroundColor: theme.palette.secondary.main,
-                color: theme.palette.neutral[600],
-                fontWeight: "bold",
-              }}
-              onClick={() => navigate("/products")}
-            >
-              Cancel
-            </Button>
-          </Stack>
-          <div className="spinner">
-            <Loader
-              loaded={loaded}
-              lines={13}
-              length={10}
-              width={5}
-              radius={30}
-              corners={1}
-              rotate={0}
-              direction={1}
-              color="#000"
-              speed={1}
-              trail={60}
-              shadow={false}
-              hwaccel={false}
-              className="spinner"
-              zIndex={2e9}
-              top="50%"
-              left="50%"
-              scale={1.0}
-              loadedClassName="loadedContent"
+            <Divider
+              sx={{ borderWidth: "2px", marginTop: "1rem" }}
+              variant="fullWidth"
+              color={theme.palette.neutral.main}
             />
-          </div>
-        </form>
+            <Grid container spacing={2} sx={{ paddingTop: "1rem" }}>
+              <Grid item xs={12} md={12}>
+                <Typography variant="h5">Pricing & Location</Typography>
+              </Grid>
+              <Grid item xs={12} md={4}>
+                <Box>
+                  <Controller
+                    name="price"
+                    control={control}
+                    render={({ field }) => (
+                      <TextField
+                        id="price"
+                        label="Price"
+                        variant="outlined"
+                        type="number"
+                        fullWidth
+                        margin="normal"
+                        sx={{
+                          backgroundColor: theme.palette.primary.light,
+                        }}
+                        inputProps={{ style: { fontSize: 16 } }}
+                        InputLabelProps={{ style: { fontSize: 16 } }}
+                        {...field}
+                      />
+                    )}
+                  />
+                </Box>
+              </Grid>
+              <Grid item xs={12} md={4}>
+                <Box>
+                  <Controller
+                    name="discount_percent"
+                    control={control}
+                    render={({ field }) => (
+                      <TextField
+                        id="discount"
+                        label="Discount"
+                        variant="outlined"
+                        type="number"
+                        fullWidth
+                        margin="normal"
+                        sx={{
+                          backgroundColor: theme.palette.primary.light,
+                        }}
+                        inputProps={{ style: { fontSize: 16 } }}
+                        InputLabelProps={{ style: { fontSize: 16 } }}
+                        {...field}
+                      />
+                    )}
+                  />
+                </Box>
+              </Grid>
+              <Grid item xs={12} md={4}>
+                <Box>
+                  <Controller
+                    name="country"
+                    control={control}
+                    render={({ field }) => (
+                      <TextField
+                        select
+                        id="country"
+                        label="Country"
+                        variant="outlined"
+                        fullWidth
+                        margin="normal"
+                        sx={{
+                          backgroundColor: theme.palette.primary.light,
+                        }}
+                        inputProps={{ style: { fontSize: 16 } }}
+                        InputLabelProps={{ style: { fontSize: 16 } }}
+                        defaultValue={
+                          clientDataAssignment.country
+                            ? clientDataAssignment.country
+                            : ""
+                        }
+                        onChange={(e) => {
+                          console.log("Field", e.target.value, field);
+                          e.preventDefault();
+                          handleCountryChange(
+                            encodeURIComponent(e.target.value)
+                          );
+                        }}
+                      >
+                        {countries.map((con) => (
+                          <MenuItem value={con.country_name}>
+                            {con.country_name}
+                          </MenuItem>
+                        ))}
+                      </TextField>
+                    )}
+                  />
+                </Box>
+              </Grid>
+              <Grid item xs={12} md={4}>
+                <Box>
+                  <Controller
+                    name="state"
+                    control={control}
+                    render={({ field }) => (
+                      <TextField
+                        select
+                        id="state"
+                        label="State"
+                        variant="outlined"
+                        fullWidth
+                        margin="normal"
+                        sx={{
+                          backgroundColor: theme.palette.primary.light,
+                        }}
+                        inputProps={{ style: { fontSize: 16 } }}
+                        InputLabelProps={{ style: { fontSize: 16 } }}
+                        defaultValue={
+                          clientDataAssignment.state
+                            ? clientDataAssignment.state
+                            : ""
+                        }
+                        onChange={(e) => {
+                          e.preventDefault();
+                          handleStateChange(encodeURIComponent(e.target.value));
+                          console.log("Field", e.target.value, field);
+                        }}
+                      >
+                        {countryStates.map((con) => (
+                          <MenuItem value={con.state_name}>
+                            {con.state_name}
+                          </MenuItem>
+                        ))}
+                      </TextField>
+                    )}
+                  />
+                </Box>
+              </Grid>
+              <Grid item xs={12} md={4}>
+                <Box>
+                  <Controller
+                    name="city"
+                    control={control}
+                    render={({ field }) => (
+                      <TextField
+                        select
+                        id="city"
+                        label="City"
+                        variant="outlined"
+                        fullWidth
+                        margin="normal"
+                        sx={{
+                          backgroundColor: theme.palette.primary.light,
+                        }}
+                        inputProps={{ style: { fontSize: 16 } }}
+                        InputLabelProps={{ style: { fontSize: 16 } }}
+                        defaultValue={
+                          clientDataAssignment.city
+                            ? clientDataAssignment.city
+                            : ""
+                        }
+                        {...field}
+                      >
+                        {stateCities.map((con) => (
+                          <MenuItem value={con.city_name}>
+                            {con.city_name}
+                          </MenuItem>
+                        ))}
+                      </TextField>
+                    )}
+                  />
+                </Box>
+              </Grid>
+            </Grid>
+            <Divider
+              sx={{ borderWidth: "2px", marginTop: "1rem" }}
+              variant="fullWidth"
+              color={theme.palette.neutral.main}
+            />
+            <Grid container spacing={2} sx={{ paddingTop: "1rem" }}>
+              <Grid item xs={12} md={12}>
+                <Typography variant="h5">Photos & Video</Typography>
+              </Grid>
+              <Grid item xs={12} md={4}>
+                <Box>
+                  <label>Featured Image</label>
+                  <input
+                    type="file"
+                    placeholder="Image URL"
+                    {...register("featured_image", {
+                      onChange: (e) => {
+                        setFeaturedImage(
+                          URL.createObjectURL(e.target.files[0])
+                        );
+                        console.log("Ankit");
+                      },
+                    })}
+                  />
+                </Box>
+              </Grid>
+              <Grid item xs={12} md={4}>
+                <Box>
+                  <label>Gallery Image</label>
+                  <input
+                    type="file"
+                    placeholder="Image URL"
+                    multiple
+                    {...register("gallery", {
+                      onChange: (e) => {
+                        let arr = [];
+                        for (let i = 0; i < e.target.files.length; i++) {
+                          arr.push(URL.createObjectURL(e.target.files[i]));
+                        }
+                        setGalleryImage(arr);
+                        console.log("Gupta");
+                      },
+                    })}
+                  />
+                </Box>
+              </Grid>
+              <Grid item xs={12} md={4}>
+                <Box>
+                  <Controller
+                    name="video"
+                    control={control}
+                    render={({ field }) => (
+                      <TextField
+                        id="video-url"
+                        label="Video"
+                        variant="outlined"
+                        fullWidth
+                        margin="normal"
+                        sx={{
+                          backgroundColor: theme.palette.primary.light,
+                        }}
+                        inputProps={{ style: { fontSize: 16 } }}
+                        InputLabelProps={{ style: { fontSize: 16 } }}
+                        {...field}
+                      />
+                    )}
+                  />
+                </Box>
+              </Grid>
+            </Grid>
+
+            <div>
+              <img src={featuredImage} />
+
+              {galleryImage.length > 0
+                ? galleryImage.map((element) => <img src={element} />)
+                : null}
+            </div>
+
+            <Stack
+              direction="row"
+              justifyContent="flex-end"
+              alignItems="center"
+              spacing={4}
+              sx={{ marginTop: "1rem" }}
+            >
+              <Button
+                size="medium"
+                variant="contained"
+                type="submit"
+                style={{
+                  backgroundColor: theme.palette.secondary.main,
+                  color: theme.palette.neutral[600],
+                  fontWeight: "bold",
+                }}
+              >
+                Add Product
+              </Button>
+              <Button
+                size="medium"
+                variant="contained"
+                style={{
+                  backgroundColor: theme.palette.secondary.main,
+                  color: theme.palette.neutral[600],
+                  fontWeight: "bold",
+                }}
+                onClick={() => navigate("/products")}
+              >
+                Cancel
+              </Button>
+            </Stack>
+            <div className="spinner">
+              <Loader
+                loaded={loaded}
+                lines={13}
+                length={10}
+                width={5}
+                radius={30}
+                corners={1}
+                rotate={0}
+                direction={1}
+                color="#000"
+                speed={1}
+                trail={60}
+                shadow={false}
+                hwaccel={false}
+                className="spinner"
+                zIndex={2e9}
+                top="50%"
+                left="50%"
+                scale={1.0}
+                loadedClassName="loadedContent"
+              />
+            </div>
+          </form>
+        </Box>
       </Box>
     </>
   );

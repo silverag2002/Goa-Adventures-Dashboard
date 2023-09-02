@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Box, useTheme, Grid, Button, Stack } from "@mui/material";
-import { Link, useLocation } from "react-router-dom";
+import { Link, Navigate, useLocation } from "react-router-dom";
 import Header from "components/Header";
 import JoditEditor from "jodit-react";
 import Loader from "react-loader";
@@ -58,8 +58,11 @@ const TermsConditions = () => {
 
   return (
     <Box m="1.5rem 2.5rem">
-      <Header title="Terms & Conditions" subtitle="" />
-      <Grid item xs={12} md={12}>
+      <Header
+        title="Terms & Conditions"
+        subtitle="Add your website terms and conditions"
+      />
+      <Grid item xs={12} md={12} pt="1rem">
         <Box>
           <JoditEditor
             height={200}
@@ -93,18 +96,6 @@ const TermsConditions = () => {
           onClick={handleSubmit}
         >
           Add Terms & Conditions
-        </Button>
-        <Button
-          size="large"
-          variant="contained"
-          style={{
-            backgroundColor: theme.palette.secondary.main,
-            color: theme.palette.neutral[600],
-            fontWeight: "bold",
-          }}
-          href="/products"
-        >
-          Cancel
         </Button>
       </Stack>
       <div className="spinner">
