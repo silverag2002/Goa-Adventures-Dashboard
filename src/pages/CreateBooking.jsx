@@ -15,6 +15,7 @@ import { axiosInstance } from "../base/api/axios.util";
 import { URLConstants } from "../base/api/url.constants";
 import Loader from "react-loader";
 import { useNavigate, useLocation } from "react-router-dom";
+import { DatePicker } from "@mui/x-date-pickers";
 
 const CreateBooking = () => {
   const [loaded, setLoaded] = useState(true);
@@ -195,7 +196,7 @@ const CreateBooking = () => {
                     select
                     id="customer_name"
                     label="Select Customer"
-                    variant="filled"
+                    variant="outlined"
                     margin="normal"
                     fullWidth
                     value={customerId}
@@ -234,7 +235,7 @@ const CreateBooking = () => {
                   <TextField
                     id="customer_mobile_number"
                     label="Customer Mobile Number"
-                    variant="filled"
+                    variant="outlined"
                     value={mobileNumber}
                     fullWidth
                     margin="normal"
@@ -253,7 +254,7 @@ const CreateBooking = () => {
                     select
                     id="location"
                     label="Destination"
-                    variant="filled"
+                    variant="outlined"
                     margin="normal"
                     fullWidth
                     defaultValue={
@@ -284,7 +285,7 @@ const CreateBooking = () => {
                     select
                     id="category"
                     label="Category"
-                    variant="filled"
+                    variant="outlined"
                     margin="normal"
                     defaultValue={
                       clientDataAssignment.category_id
@@ -314,7 +315,7 @@ const CreateBooking = () => {
                     select
                     id="sub-category"
                     label="Sub Category"
-                    variant="filled"
+                    variant="outlined"
                     fullWidth
                     margin="normal"
                     defaultValue={
@@ -334,7 +335,7 @@ const CreateBooking = () => {
               />
             </Box>
           </Grid>
-          <Grid item xs={12} md={8}>
+          <Grid item xs={12} md={6}>
             <Box>
               <Controller
                 name="product_id"
@@ -344,7 +345,7 @@ const CreateBooking = () => {
                     select
                     id="productName"
                     label="Product Name"
-                    variant="filled"
+                    variant="outlined"
                     fullWidth
                     margin="normal"
                     defaultValue={
@@ -364,7 +365,7 @@ const CreateBooking = () => {
               />
             </Box>
           </Grid>
-          <Grid item xs={12} md={4}>
+          <Grid item xs={12} md={3}>
             <Box>
               <Controller
                 name="total_seat"
@@ -373,7 +374,7 @@ const CreateBooking = () => {
                   <TextField
                     id="total_seat"
                     label="Total Seat"
-                    variant="filled"
+                    variant="outlined"
                     type="number"
                     fullWidth
                     margin="normal"
@@ -392,7 +393,7 @@ const CreateBooking = () => {
                   <TextField
                     id="total_amount"
                     label="Total Amount"
-                    variant="filled"
+                    variant="outlined"
                     type="number"
                     fullWidth
                     margin="normal"
@@ -411,7 +412,7 @@ const CreateBooking = () => {
                   <TextField
                     id="deposit_amount"
                     label="Deposit Amount"
-                    variant="filled"
+                    variant="outlined"
                     type="number"
                     fullWidth
                     margin="normal"
@@ -446,7 +447,7 @@ const CreateBooking = () => {
                   <TextField
                     id="pending_amount"
                     label="Pending Amount"
-                    variant="filled"
+                    variant="outlined"
                     fullWidth
                     margin="normal"
                     value={pendingAmount}
@@ -465,7 +466,7 @@ const CreateBooking = () => {
                     select
                     id="payment_mode"
                     label="Payment Mode"
-                    variant="filled"
+                    variant="outlined"
                     fullWidth
                     margin="normal"
                     defaultValue={
@@ -492,7 +493,7 @@ const CreateBooking = () => {
                     id="start_date"
                     label="Start Date"
                     type="date"
-                    variant="filled"
+                    variant="outlined"
                     fullWidth
                     margin="normal"
                     {...field}
@@ -511,7 +512,7 @@ const CreateBooking = () => {
                     id="end_date"
                     label="End Date"
                     type="date"
-                    variant="filled"
+                    variant="outlined"
                     fullWidth
                     margin="normal"
                     {...field}
@@ -529,7 +530,7 @@ const CreateBooking = () => {
                   <TextField
                     id="reporting_time"
                     label="Reporting Time"
-                    variant="filled"
+                    variant="outlined"
                     type="time"
                     fullWidth
                     margin="normal"
@@ -548,7 +549,7 @@ const CreateBooking = () => {
                   <TextField
                     id="meeting_point"
                     label="Meeting Point"
-                    variant="filled"
+                    variant="outlined"
                     fullWidth
                     margin="normal"
                     {...field}
@@ -557,7 +558,7 @@ const CreateBooking = () => {
               />
             </Box>
           </Grid>
-          <Grid item xs={12} md={3}>
+          <Grid item xs={12} md={12}>
             <Box>
               <Controller
                 name="quantity"
@@ -566,8 +567,10 @@ const CreateBooking = () => {
                   <TextField
                     id="quantity"
                     type="number"
-                    label="Quantity"
-                    variant="filled"
+                    label="Note"
+                    variant="outlined"
+                    multiline
+                    rows={5}
                     fullWidth
                     margin="normal"
                     {...field}
