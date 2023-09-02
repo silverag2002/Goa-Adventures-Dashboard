@@ -10,6 +10,9 @@ import {
   useTheme,
   Stack,
   Divider,
+  ImageList,
+  ImageListItem,
+  useMediaQuery,
 } from "@mui/material";
 import Header from "components/Header";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -20,6 +23,7 @@ import JoditEditor from "jodit-react";
 import axios, * as others from "axios";
 import Loader from "react-loader";
 import ReplyOutlinedIcon from "@mui/icons-material/ReplyOutlined";
+import FlexBetween from "components/FlexBetween";
 var FormData = require("form-data");
 
 const AddProduct = () => {
@@ -45,6 +49,8 @@ const AddProduct = () => {
   const [imageUrl, setImageUrl] = useState(null);
 
   console.log(imageUrl);
+
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
   const navigate = useNavigate();
 
@@ -930,25 +936,59 @@ const AddProduct = () => {
                     })}
                   />
                 </Box>
+                <ImageList
+                  cols={1}
+                  rowHeight={80}
+                  gap={4}
+                  sx={{ width: 100, height: 100, paddingTop: "10px" }}
+                >
+                  <ImageListItem>
+                    <img
+                      src={featuredImage}
+                      width="50px"
+                      height="50px"
+                      loading="lazy"
+                    />
+                  </ImageListItem>
+                </ImageList>
               </Grid>
               <Grid item xs={12} md={4}>
                 <Box>
-                  <label>Gallery Image</label>
-                  <input
-                    type="file"
-                    placeholder="Image URL"
-                    multiple
-                    {...register("gallery", {
-                      onChange: (e) => {
-                        let arr = [];
-                        for (let i = 0; i < e.target.files.length; i++) {
-                          arr.push(URL.createObjectURL(e.target.files[i]));
-                        }
-                        setGalleryImage(arr);
-                        console.log("Gupta");
-                      },
-                    })}
-                  />
+                  <Box>
+                    <label>Gallery Image</label>
+                    <input
+                      type="file"
+                      placeholder="Image URL"
+                      multiple
+                      {...register("gallery", {
+                        onChange: (e) => {
+                          let arr = [];
+                          for (let i = 0; i < e.target.files.length; i++) {
+                            arr.push(URL.createObjectURL(e.target.files[i]));
+                          }
+                          setGalleryImage(arr);
+                        },
+                      })}
+                    />
+                  </Box>
+                  <ImageList
+                    cols={6}
+                    rowHeight={80}
+                    gap={4}
+                    sx={{ width: 500, marginTop: "1.5rem" }}
+                  >
+                    {galleryImage?.map((item, index) => (
+                      <ImageListItem key={index}>
+                        <img
+                          src={item}
+                          width="50px"
+                          height="50px"
+                          alt="Gallery Image"
+                          loading="lazy"
+                        />
+                      </ImageListItem>
+                    ))}
+                  </ImageList>
                 </Box>
               </Grid>
               <Grid item xs={12} md={4}>
@@ -976,13 +1016,7 @@ const AddProduct = () => {
               </Grid>
             </Grid>
 
-            <div>
-              <img src={featuredImage} />
-
-              {galleryImage.length > 0
-                ? galleryImage.map((element) => <img src={element} />)
-                : null}
-            </div>
+            <div></div>
 
             <Stack
               direction="row"
