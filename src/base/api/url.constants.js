@@ -1,7 +1,8 @@
 export class URLConstants {}
 
-URLConstants.BASE_URL =
-  "http://ec2-65-2-166-56.ap-south-1.compute.amazonaws.com:4000/";
+URLConstants.BASE_URL = "http://localhost:4000";
+// URLConstants.BASE_URL =
+//   "http://ec2-65-2-166-56.ap-south-1.compute.amazonaws.com:4000";
 // AUTH ROUTES
 
 URLConstants.getCountries = () => `${URLConstants.BASE_URL}/v1/countries`;
@@ -28,15 +29,17 @@ URLConstants.modifyCategory = (categoryId) =>
 URLConstants.activateCategory = (categoryId) =>
   `${URLConstants.BASE_URL}/v1/categories/activate/${categoryId}`;
 URLConstants.deactivateCategory = (categoryId) =>
-  //subcategory routes
-
   `${URLConstants.BASE_URL}/v1/categories/deactivate/${categoryId}`;
+
+//subcategory routes
 URLConstants.modifySubCategory = (categoryId) =>
   `${URLConstants.BASE_URL}/v1/subcategories/${categoryId}`;
 URLConstants.activateSubCategory = (subCategoryId) =>
   `${URLConstants.BASE_URL}/v1/subcategories/activate/${subCategoryId}`;
 URLConstants.deactivateSubCategory = (subCategoryId) =>
   `${URLConstants.BASE_URL}/v1/subcategories/deactivate/${subCategoryId}`;
+URLConstants.getSubCategoryUnderCategory = (categoryId) =>
+  `${URLConstants.BASE_URL}/v1/subcategories/getSubCategoryByCategory/${categoryId}`;
 
 //customer routes
 

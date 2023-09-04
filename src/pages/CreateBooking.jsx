@@ -28,6 +28,8 @@ const CreateBooking = () => {
   const [depositAmount, setDepositAmount] = useState("");
   const [mobileNumber, setMobileNumber] = useState("");
   const [customerId, setCustomerId] = useState("");
+  const [categoryId, setCategoryId] = useState("");
+  const [subCategoryId, setSubCategoryId] = useState("");
   const location = useLocation();
 
   const navigate = useNavigate();
@@ -81,21 +83,21 @@ const CreateBooking = () => {
       });
   }, [reloadPage]);
 
-  useEffect(() => {
-    setLoaded(false);
-    axiosInstance
-      .get(URLConstants.subcategories())
-      .then((res) => {
-        console.log("Response", res);
+  // useEffect(() => {
+  //   setLoaded(false);
+  //   axiosInstance
+  //     .get(URLConstants.subcategories())
+  //     .then((res) => {
+  //       console.log("Response", res);
 
-        setSubCategories(res);
-        setLoaded(true);
-      })
-      .catch((err) => {
-        console.log("Error", err);
-        setLoaded(true);
-      });
-  }, [reloadPage]);
+  //       setSubCategories(res);
+  //       setLoaded(true);
+  //     })
+  //     .catch((err) => {
+  //       console.log("Error", err);
+  //       setLoaded(true);
+  //     });
+  // }, [reloadPage]);
 
   useEffect(() => {
     setLoaded(false);
@@ -131,6 +133,40 @@ const CreateBooking = () => {
     setValue("meeting_point", clientDataAssignment.meeting_point);
   }, [reloadPage]);
 
+  function handleCategoryChange(categoryId) {
+    console.log("categoryId selecrted", categoryId);
+    setCategoryId(categoryId);
+    setLoaded(false);
+    axiosInstance
+      .get(URLConstants.getSubCategoryUnderCategory(categoryId))
+      .then((response) => {
+        setLoaded(true);
+        console.log("Response form subcateogry new api", response);
+        setSubCategories(response);
+      })
+      .catch((err) => {
+        setLoaded(true);
+        console.log(err);
+      });
+  }
+
+  function handleSubCategoryChange(subCategoryId) {
+    console.log("subCategoryId selecrted", subCategoryId);
+    setSubCategoryId(subCategoryId);
+    setLoaded(false);
+    axiosInstance
+      .get(URLConstants.getProductsFromSubCategory(subCategoryId))
+      .then((response) => {
+        setLoaded(true);
+        console.log("Response form subcateogry new api", response);
+        setSubCategories(response);
+      })
+      .catch((err) => {
+        setLoaded(true);
+        console.log(err);
+      });
+  }
+
   const onSubmit = (data) => {
     setLoaded(false);
 
@@ -145,31 +181,31 @@ const CreateBooking = () => {
     data.customer_id = customerId;
     data.booking_status = "CONFIRMED";
     console.log("Data entered", data);
-    if (clientDataAssignment.id) {
-      axiosInstance
-        .put(URLConstants.modifyBookings(clientDataAssignment.id), data)
-        .then((res) => {
-          setLoaded(true);
-          console.log("Responsse form booking post method", res);
-          navigate("/bookings");
-        })
-        .catch((err) => {
-          setLoaded(true);
-          console.log("error", err);
-        });
-    } else {
-      axiosInstance
-        .post(URLConstants.bookings(), data)
-        .then((res) => {
-          setLoaded(true);
-          console.log("Responsse form booking post method", res);
-          navigate("/bookings");
-        })
-        .catch((err) => {
-          setLoaded(true);
-          console.log("error", err);
-        });
-    }
+    // if (clientDataAssignment.id) {
+    //   axiosInstance
+    //     .put(URLConstants.modifyBookings(clientDataAssignment.id), data)
+    //     .then((res) => {
+    //       setLoaded(true);
+    //       console.log("Responsse form booking post method", res);
+    //       navigate("/bookings");
+    //     })
+    //     .catch((err) => {
+    //       setLoaded(true);
+    //       console.log("error", err);
+    //     });
+    // } else {
+    //   axiosInstance
+    //     .post(URLConstants.bookings(), data)
+    //     .then((res) => {
+    //       setLoaded(true);
+    //       console.log("Responsse form booking post method", res);
+    //       navigate("/bookings");
+    //     })
+    //     .catch((err) => {
+    //       setLoaded(true);
+    //       console.log("error", err);
+    //     });
+    // }
   };
 
   const onError = (errors) => console.log(errors);
@@ -244,37 +280,7 @@ const CreateBooking = () => {
               />
             </Box>
           </Grid>
-          <Grid item xs={12} md={3}>
-            <Box>
-              <Controller
-                name="destination_location"
-                control={control}
-                render={({ field }) => (
-                  <TextField
-                    select
-                    id="location"
-                    label="Destination"
-                    variant="outlined"
-                    margin="normal"
-                    fullWidth
-                    defaultValue={
-                      clientDataAssignment.destination_location
-                        ? clientDataAssignment.destination_location
-                        : ""
-                    }
-                    {...field}
-                  >
-                    <MenuItem key="" value="Goa">
-                      Goa
-                    </MenuItem>
-                    <MenuItem key="" value="Mumbai">
-                      Mumbai
-                    </MenuItem>
-                  </TextField>
-                )}
-              />
-            </Box>
-          </Grid>
+
           <Grid item xs={12} md={3}>
             <Box>
               <Controller
@@ -287,13 +293,17 @@ const CreateBooking = () => {
                     label="Category"
                     variant="outlined"
                     margin="normal"
+                    fullWidth
                     defaultValue={
                       clientDataAssignment.category_id
                         ? clientDataAssignment.category_id
                         : ""
                     }
-                    fullWidth
-                    {...field}
+                    onChange={(e) => {
+                      e.preventDefault();
+                      handleCategoryChange(e.target.value);
+                      console.log("Field", e.target.value, field);
+                    }}
                   >
                     {categories.map((option) => (
                       <MenuItem key={option.id} value={option.id}>
@@ -323,7 +333,11 @@ const CreateBooking = () => {
                         ? clientDataAssignment.sub_category_id
                         : ""
                     }
-                    {...field}
+                    onChange={(e) => {
+                      e.preventDefault();
+                      handleSubCategoryChange(e.target.value);
+                      console.log("Field", e.target.value, field);
+                    }}
                   >
                     {subcategories.map((option) => (
                       <MenuItem key={option.id} value={option.id}>
