@@ -1,13 +1,13 @@
 export class URLConstants {}
 
-URLConstants.BASE_URL = "http://localhost:4000";
+//URLConstants.BASE_URL = "http://localhost:4000";
 
-(URLConstants.BASE_URL = "http://backend.goaadventure.in:80"),
-  // URLConstants.BASE_URL =
-  //   "http://ec2-65-2-166-56.ap-south-1.compute.amazonaws.com:4000";
-  // AUTH ROUTES
+URLConstants.BASE_URL = "http://backend.goaadventure.in:80";
+// URLConstants.BASE_URL =
+//   "http://ec2-65-2-166-56.ap-south-1.compute.amazonaws.com:4000";
+// AUTH ROUTES
 
-  (URLConstants.getCountries = () => `${URLConstants.BASE_URL}/v1/countries`);
+URLConstants.getCountries = () => `${URLConstants.BASE_URL}/v1/countries`;
 URLConstants.getStates = (country) =>
   `${URLConstants.BASE_URL}/v1/states/${country}`;
 URLConstants.getCities = (state) =>
