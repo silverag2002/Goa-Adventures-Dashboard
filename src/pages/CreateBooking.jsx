@@ -30,6 +30,8 @@ const CreateBooking = () => {
   const [customerId, setCustomerId] = useState("");
   const [categoryId, setCategoryId] = useState("");
   const [subCategoryId, setSubCategoryId] = useState("");
+  const [productLocations, setProducLocation] = useState([]);
+  const [dest_location, setDestLocation] = useState("");
   const location = useLocation();
 
   const navigate = useNavigate();
@@ -101,18 +103,18 @@ const CreateBooking = () => {
 
   useEffect(() => {
     setLoaded(false);
-    axiosInstance
-      .get(URLConstants.product())
-      .then((res) => {
-        console.log("Response", res);
+    // axiosInstance
+    //   .get(URLConstants.product())
+    //   .then((res) => {
+    //     console.log("Response", res);
 
-        setProduct(res);
-        setLoaded(true);
-      })
-      .catch((err) => {
-        console.log("Error", err);
-        setLoaded(true);
-      });
+    //     setProduct(res);
+    //     setLoaded(true);
+    //   })
+    //   .catch((err) => {
+    //     console.log("Error", err);
+    //     setLoaded(true);
+    //   });
 
     setValue("product_id", clientDataAssignment.product_id);
     setValue("destination_location", clientDataAssignment.destination_location);
@@ -155,11 +157,14 @@ const CreateBooking = () => {
     setSubCategoryId(subCategoryId);
     setLoaded(false);
     axiosInstance
-      .get(URLConstants.getProductsFromSubCategory(subCategoryId))
+      .get(URLConstants.getProductUnderSubCategory(subCategoryId))
       .then((response) => {
         setLoaded(true);
         console.log("Response form subcateogry new api", response);
-        setSubCategories(response);
+        const prodLoc = response.map((loca) => loca.city);
+        console.log("PRoducts locaiton", prodLoc);
+        setProducLocation(prodLoc);
+        setProduct(response);
       })
       .catch((err) => {
         setLoaded(true);
@@ -176,10 +181,11 @@ const CreateBooking = () => {
       data.booking_date = new Date();
     }
     data.booked_by = "SUPER_ADMIN";
-    data.invoice = "Test url";
+    data.bookinga_date = new Date();
     data.customer_mobile_number = mobileNumber;
     data.customer_id = customerId;
     data.booking_status = "CONFIRMED";
+
     console.log("Data entered", data);
     // if (clientDataAssignment.id) {
     //   axiosInstance
@@ -367,7 +373,13 @@ const CreateBooking = () => {
                         ? clientDataAssignment.product_id
                         : ""
                     }
-                    {...field}
+                    onChange={(e) => {
+                      e.preventDefault();
+                      let prod = product.filter((p) => p.id == e.target.value);
+                      console.log("PROdu item", prod);
+                      setDestLocation(prod[0].city);
+                      console.log("Field in product id", e.target, field);
+                    }}
                   >
                     {product.map((option) => (
                       <MenuItem key={option.id} value={option.id}>
@@ -493,6 +505,51 @@ const CreateBooking = () => {
                     <MenuItem value="Online">Online Payment</MenuItem>
                     <MenuItem value="Offline">Offline Payment</MenuItem>
                   </TextField>
+                )}
+              />
+            </Box>
+          </Grid>
+          <Grid item xs={12} md={3}>
+            <Box>
+              <Controller
+                name="paying_full"
+                control={control}
+                render={({ field }) => (
+                  <TextField
+                    select
+                    id="paying_full"
+                    label="Paying Full"
+                    variant="outlined"
+                    fullWidth
+                    margin="normal"
+                    defaultValue={
+                      clientDataAssignment.paying_full
+                        ? clientDataAssignment.paying_full
+                        : ""
+                    }
+                    {...field}
+                  >
+                    <MenuItem value={true}>Yes</MenuItem>
+                    <MenuItem value={false}>No</MenuItem>
+                  </TextField>
+                )}
+              />
+            </Box>
+          </Grid>
+          <Grid item xs={12} md={3}>
+            <Box>
+              <Controller
+                name="destination_location"
+                control={control}
+                render={({ field }) => (
+                  <TextField
+                    id="destination_location"
+                    label="Destiantion"
+                    variant="outlined"
+                    value={dest_location}
+                    fullWidth
+                    margin="normal"
+                  />
                 )}
               />
             </Box>

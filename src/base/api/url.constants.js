@@ -61,6 +61,8 @@ URLConstants.modifyProduct = (productId) =>
   `${URLConstants.BASE_URL}/v1/products/${productId}`;
 URLConstants.disableProduct = (productId) =>
   `${URLConstants.BASE_URL}/v1/products/deactivate/${productId}`;
+URLConstants.getProductUnderSubCategory = (subCategoryId) =>
+  `${URLConstants.BASE_URL}/v1/products/getProductFromSubCategory/${subCategoryId}`;
 
 //terms-routes
 URLConstants.terms = () => `${URLConstants.BASE_URL}/v1/terms-conditions`;
