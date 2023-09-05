@@ -32,6 +32,7 @@ const CreateBooking = () => {
   const [subCategoryId, setSubCategoryId] = useState("");
   const [productLocations, setProducLocation] = useState([]);
   const [dest_location, setDestLocation] = useState("");
+  const [productId, setProductId] = useState("");
   const location = useLocation();
 
   const navigate = useNavigate();
@@ -173,45 +174,49 @@ const CreateBooking = () => {
   }
 
   const onSubmit = (data) => {
+    console.log("Date capiutred in booking", data);
     setLoaded(false);
-
+    data.quantity = 1;
+    data.product_id = productId;
+    data.category_id = categoryId;
+    data.destination_location = dest_location;
+    data.sub_category_id = subCategoryId;
     data.pending_amount = pendingAmount;
     data.deposit_amount = depositAmount;
     if (!clientDataAssignment.booking_date) {
       data.booking_date = new Date();
     }
     data.booked_by = "SUPER_ADMIN";
-    data.bookinga_date = new Date();
+
     data.customer_mobile_number = mobileNumber;
     data.customer_id = customerId;
-    data.booking_status = "CONFIRMED";
 
     console.log("Data entered", data);
-    // if (clientDataAssignment.id) {
-    //   axiosInstance
-    //     .put(URLConstants.modifyBookings(clientDataAssignment.id), data)
-    //     .then((res) => {
-    //       setLoaded(true);
-    //       console.log("Responsse form booking post method", res);
-    //       navigate("/bookings");
-    //     })
-    //     .catch((err) => {
-    //       setLoaded(true);
-    //       console.log("error", err);
-    //     });
-    // } else {
-    //   axiosInstance
-    //     .post(URLConstants.bookings(), data)
-    //     .then((res) => {
-    //       setLoaded(true);
-    //       console.log("Responsse form booking post method", res);
-    //       navigate("/bookings");
-    //     })
-    //     .catch((err) => {
-    //       setLoaded(true);
-    //       console.log("error", err);
-    //     });
-    // }
+    if (clientDataAssignment.id) {
+      axiosInstance
+        .put(URLConstants.modifyBookings(clientDataAssignment.id), data)
+        .then((res) => {
+          setLoaded(true);
+          console.log("Responsse form booking post method", res);
+          navigate("/bookings");
+        })
+        .catch((err) => {
+          setLoaded(true);
+          console.log("error", err);
+        });
+    } else {
+      axiosInstance
+        .post(URLConstants.bookings(), data)
+        .then((res) => {
+          setLoaded(true);
+          console.log("Responsse form booking post method", res);
+          navigate("/bookings");
+        })
+        .catch((err) => {
+          setLoaded(true);
+          console.log("error", err);
+        });
+    }
   };
 
   const onError = (errors) => console.log(errors);
@@ -377,6 +382,7 @@ const CreateBooking = () => {
                       e.preventDefault();
                       let prod = product.filter((p) => p.id == e.target.value);
                       console.log("PROdu item", prod);
+                      setProductId(e.target.value);
                       setDestLocation(prod[0].city);
                       console.log("Field in product id", e.target, field);
                     }}
@@ -502,8 +508,8 @@ const CreateBooking = () => {
                     }
                     {...field}
                   >
-                    <MenuItem value="Online">Online Payment</MenuItem>
-                    <MenuItem value="Offline">Offline Payment</MenuItem>
+                    <MenuItem value={0}>Online Payment</MenuItem>
+                    <MenuItem value={1}>Offline Payment</MenuItem>
                   </TextField>
                 )}
               />
@@ -632,11 +638,11 @@ const CreateBooking = () => {
           <Grid item xs={12} md={12}>
             <Box>
               <Controller
-                name="quantity"
+                name="note"
                 control={control}
                 render={({ field }) => (
                   <TextField
-                    id="quantity"
+                    id="note"
                     type="number"
                     label="Note"
                     variant="outlined"
