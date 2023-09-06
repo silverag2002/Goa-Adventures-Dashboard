@@ -9,7 +9,8 @@ import { setupListeners } from "@reduxjs/toolkit/query";
 import { api } from "state/api";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle";
-
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import AuthProvider from "./context/AuthProvider";
 const store = configureStore({
   reducer: {
     global: globalReducer,
@@ -20,10 +21,13 @@ const store = configureStore({
 setupListeners(store.dispatch);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
+
 root.render(
   <React.StrictMode>
-    <Provider store={store}>
-      <App />
-    </Provider>
+    <BrowserRouter>
+      <AuthProvider>
+        <App />
+      </AuthProvider>
+    </BrowserRouter>
   </React.StrictMode>
 );
