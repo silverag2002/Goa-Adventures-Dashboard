@@ -367,32 +367,12 @@ const CreateBooking = () => {
                 control={control}
                 render={({ field }) => (
                   <TextField
-                    select
                     id="productName"
                     label="Product Name"
                     variant="outlined"
                     fullWidth
                     margin="normal"
-                    defaultValue={
-                      clientDataAssignment.product_id
-                        ? clientDataAssignment.product_id
-                        : ""
-                    }
-                    onChange={(e) => {
-                      e.preventDefault();
-                      let prod = product.filter((p) => p.id == e.target.value);
-                      console.log("PROdu item", prod);
-                      setProductId(e.target.value);
-                      setDestLocation(prod[0].city);
-                      console.log("Field in product id", e.target, field);
-                    }}
-                  >
-                    {product.map((option) => (
-                      <MenuItem key={option.id} value={option.id}>
-                        {option.title}
-                      </MenuItem>
-                    ))}
-                  </TextField>
+                  />
                 )}
               />
             </Box>

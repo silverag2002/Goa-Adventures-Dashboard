@@ -5,6 +5,7 @@ import {
   TextField,
   InputAdornment,
   Typography,
+  useTheme,
 } from "@mui/material";
 import {
   GridToolbarDensitySelector,
@@ -12,17 +13,23 @@ import {
   GridToolbarExport,
   GridToolbarColumnsButton,
 } from "@mui/x-data-grid";
-import FlexBetween from "./FlexBetween";
+import FlexBetween from "components/FlexBetween";
 
-const DataGridCustomToolbar = ({ searchInput, setSearchInput, setSearch }) => {
+const TableSearchBar = ({ title, searchInput, setSearchInput, setSearch }) => {
+  const theme = useTheme();
   return (
     <GridToolbarContainer>
       <FlexBetween width="100%">
-        <FlexBetween>
-          <GridToolbarColumnsButton />
-          <GridToolbarDensitySelector />
-          <GridToolbarExport />
-        </FlexBetween>
+        <Typography
+          variant="h4"
+          sx={{
+            fontSize: "1rem",
+            fontWeight: "600",
+            color: `${theme.palette.secondary.purple600}`,
+          }}
+        >
+          {title}
+        </Typography>
         <TextField
           label="Search..."
           sx={{ mb: "0.5rem", width: "15rem" }}
@@ -49,4 +56,4 @@ const DataGridCustomToolbar = ({ searchInput, setSearchInput, setSearch }) => {
   );
 };
 
-export default DataGridCustomToolbar;
+export default TableSearchBar;
