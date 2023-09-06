@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { URLConstants } from "../base/api/url.constants";
 import { axiosInstance } from "../base/api/axios.util";
 import {
@@ -24,11 +24,13 @@ import FlexBetween from "components/FlexBetween";
 import { useForm, Controller } from "react-hook-form";
 import { useNavigate, useLocation } from "react-router-dom";
 import Loader from "react-loader";
+import useAuth from "../hooks/useAuth";
 
 const Login = () => {
   const theme = useTheme();
   const navigate = useNavigate();
   const [loaded, setLoaded] = useState(true);
+  const [setAuth] = useAuth();
   console.log(theme);
   const {
     handleSubmit,
