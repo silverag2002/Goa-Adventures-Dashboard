@@ -30,7 +30,9 @@ const Login = () => {
   const theme = useTheme();
   const navigate = useNavigate();
   const [loaded, setLoaded] = useState(true);
-  const [setAuth] = useAuth();
+  const { setAuth } = useAuth();
+  const location = useLocation();
+  const from = location?.state?.from?.pathname || "/dashboard";
   console.log(theme);
   const {
     handleSubmit,
@@ -43,6 +45,9 @@ const Login = () => {
 
   const onSubmit = (data) => {
     console.log("Date capiutred in booking", data);
+    console.log("From value", from);
+
+    navigate(from, { replace: true });
   };
   const onError = (errors) => console.log(errors);
 
