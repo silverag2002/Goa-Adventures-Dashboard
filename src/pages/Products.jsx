@@ -7,12 +7,9 @@ import ProductFilter from "components/Product/ProductFilter";
 import Loader from "react-loader";
 import { axiosInstance } from "../base/api/axios.util";
 import { URLConstants } from "../base/api/url.constants";
-<<<<<<< HEAD
-import Helmet from "components/Helmet/Helmet";
-=======
 import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
 import { useClient } from "../base/hooks/useClient";
->>>>>>> 7d3f050daefc8f099728033160224c35fa1ee661
+import Helmet from "components/Helmet/Helmet";
 
 const Products = () => {
   const theme = useTheme();

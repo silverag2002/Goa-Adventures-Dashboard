@@ -17,12 +17,9 @@ import Header from "components/Header";
 import JoditEditor from "jodit-react";
 import { useForm, Controller } from "react-hook-form";
 import ReplyOutlinedIcon from "@mui/icons-material/ReplyOutlined";
-<<<<<<< HEAD
-import Helmet from "components/Helmet/Helmet";
-=======
 import { ClientContext } from "../base/contexts/UserContext";
 import { useClient } from "../base/hooks/useClient";
->>>>>>> 7d3f050daefc8f099728033160224c35fa1ee661
+import Helmet from "components/Helmet/Helmet";
 
 const AddLocation = () => {
   const client = useClient();

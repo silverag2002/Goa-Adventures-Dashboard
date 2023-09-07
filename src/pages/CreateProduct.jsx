@@ -10,6 +10,7 @@ import axios, * as others from "axios";
 import { useNavigate } from "react-router-dom";
 import Loader from "react-loader";
 import Helmet from "components/Helmet/Helmet";
+import { useClient } from "../base/hooks/useClient";
 
 const CreateProduct = () => {
   const client = useClient();

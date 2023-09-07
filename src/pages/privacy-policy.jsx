@@ -1,17 +1,13 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Box, useTheme, Grid, Button, Stack } from "@mui/material";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import Header from "components/Header";
 import JoditEditor from "jodit-react";
 import Loader from "react-loader";
 import { axiosInstance } from "../base/api/axios.util";
 import { URLConstants } from "../base/api/url.constants";
-<<<<<<< HEAD
 import Helmet from "components/Helmet/Helmet";
-=======
 import { useClient } from "../base/hooks/useClient";
-import { useNavigate } from "react-router-dom";
->>>>>>> 7d3f050daefc8f099728033160224c35fa1ee661
 
 const PrivacyPolicry = () => {
   const location = useLocation();

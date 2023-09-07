@@ -4,11 +4,8 @@ import Header from "components/Header";
 import { useNavigate } from "react-router-dom";
 import { DataGrid } from "@mui/x-data-grid";
 import DataGridCustomToolbar from "components/DataGridCustomToolbar";
-<<<<<<< HEAD
 import Helmet from "components/Helmet/Helmet";
-=======
 import { useClient } from "../base/hooks/useClient";
->>>>>>> 7d3f050daefc8f099728033160224c35fa1ee661
 
 const InstantQuotation = () => {
   const [page, setPage] = useState(0);

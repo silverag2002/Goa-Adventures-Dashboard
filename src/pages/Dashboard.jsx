@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import Helmet from "components/Helmet/Helmet";
 import Header from "components/Header";
 import {
@@ -24,6 +24,8 @@ import StatBox from "components/StatBox";
 import EarningCard from "components/Dashboard/EarningCard";
 import { ClientContext } from "../base/contexts/UserContext";
 import { useClient } from "../base/hooks/useClient";
+
+import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
   const theme = useTheme();

@@ -13,6 +13,7 @@ import PropTypes from "prop-types";
 import TableSearchBar from "../components/UI/TableSearchBar";
 import { ClientContext } from "../base/contexts/UserContext";
 import Helmet from "components/Helmet/Helmet";
+import { useClient } from "../base/hooks/useClient";
 
 function CustomTabPanel(props) {
   const client = useClient();

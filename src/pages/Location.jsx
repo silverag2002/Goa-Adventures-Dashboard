@@ -9,11 +9,8 @@ import DataGridCustomToolbar from "components/DataGridCustomToolbar";
 import Loader from "react-loader";
 import { axiosInstance } from "../base/api/axios.util";
 import { URLConstants } from "../base/api/url.constants";
-<<<<<<< HEAD
 import Helmet from "components/Helmet/Helmet";
-=======
 import { useClient } from "../base/hooks/useClient";
->>>>>>> 7d3f050daefc8f099728033160224c35fa1ee661
 
 const Location = () => {
   const theme = useTheme();

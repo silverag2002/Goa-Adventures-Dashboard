@@ -17,6 +17,7 @@ import Loader from "react-loader";
 import { useNavigate, useLocation } from "react-router-dom";
 import { DatePicker } from "@mui/x-date-pickers";
 import Helmet from "components/Helmet/Helmet";
+import { useClient } from "../base/hooks/useClient";
 
 const CreateBooking = () => {
   const client = useClient();
