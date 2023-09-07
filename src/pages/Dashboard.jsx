@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import FlexBetween from "components/FlexBetween";
+import Helmet from "components/Helmet/Helmet";
 import Header from "components/Header";
 import {
   DownloadOutlined,
@@ -63,23 +63,25 @@ const Dashboard = () => {
   ];
 
   return (
-    <Box m="1.5rem 2.5rem">
-      <Header
-        title="Dashboard"
-        subtitle="Welcome to your dashboard"
-        buttonText="Download Report"
-        icon={<DownloadOutlined sx={{ mr: "10px" }} />}
-      />
-      <Grid container spacing={4}>
-        <Grid item xs={12}>
-          <Grid container spacing={4}>
-            <Grid item lg={4} md={6} sm={6} xs={12}>
-              <EarningCard isLoading={isLoading} />
+    <Helmet title="Dashboard">
+      <Box m="1.5rem 2.5rem">
+        <Header
+          title="Dashboard"
+          subtitle="Welcome to your dashboard"
+          buttonText="Download Report"
+          icon={<DownloadOutlined sx={{ mr: "10px" }} />}
+        />
+        <Grid container spacing={4}>
+          <Grid item xs={12}>
+            <Grid container spacing={4}>
+              <Grid item lg={4} md={6} sm={6} xs={12}>
+                <EarningCard isLoading={isLoading} />
+              </Grid>
             </Grid>
           </Grid>
         </Grid>
-      </Grid>
-    </Box>
+      </Box>
+    </Helmet>
   );
 };
 

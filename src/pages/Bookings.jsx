@@ -12,6 +12,7 @@ import { Link, useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 import TableSearchBar from "../components/UI/TableSearchBar";
 import { ClientContext } from "../base/contexts/UserContext";
+import Helmet from "components/Helmet/Helmet";
 
 function CustomTabPanel(props) {
   const { client, setClient } = useContext(ClientContext);
@@ -153,168 +154,170 @@ const Bookings = () => {
   ];
 
   return (
-    <Box m="1.5rem 2.5rem">
-      <Header
-        title="Bookings"
-        buttonText="Create Booking"
-        onClick={() => navigate("/create-booking")}
-      />
-
-      <Box>
-        <Tabs value={value} selectionFollowsFocus onChange={handleChange}>
-          <Tab
-            label="Online Booking"
-            {...a11yProps(0)}
-            sx={{ boxShadow: "0px 3px 2px 0px rgba(0,0,0,0.4)" }}
-          />
-          <Tab
-            label="Manual Booking"
-            {...a11yProps(1)}
-            sx={{ boxShadow: "0px 3px 2px 0px rgba(0,0,0,0.4)" }}
-          />
-        </Tabs>
-      </Box>
-      <CustomTabPanel value={value} index={0}>
-        <Box
-          height="80vh"
-          sx={{
-            "& .MuiDataGrid-root": {
-              border: "none",
-            },
-            "& .MuiDataGrid-cell": {
-              borderBottom: "none",
-            },
-            "& .MuiDataGrid-columnHeaders": {
-              backgroundColor: theme.palette.background.default,
-              color: theme.palette.neutral.grey700,
-              borderBottom: "none",
-            },
-            "& .MuiDataGrid-virtualScroller": {
-              backgroundColor: theme.palette.neutral.main,
-            },
-            "& .MuiDataGrid-footerContainer": {
-              backgroundColor: theme.palette.neutral.grey100,
-              color: theme.palette.neutral.grey900,
-              borderTop: "none",
-            },
-            "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
-              color: `${theme.palette.neutral.grey900} !important`,
-            },
-            "& .MuiTablePagination-toolbar": {
-              alignItems: "baseline",
-            },
-          }}
-        >
-          <DataGrid
-            getRowId={(rows) => rows.id}
-            rows={bookings}
-            columns={columns}
-            density="compact"
-            // rowCount={(data && data.total) || 0}
-            rowsPerPageOptions={[20, 50, 100]}
-            pagination
-            page={page}
-            pageSize={pageSize}
-            paginationMode="server"
-            sortingMode="server"
-            onPageChange={(newPage) => setPage(newPage)}
-            onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
-            onSortModelChange={(newSortModel) => setSort(...newSortModel)}
-            components={{ Toolbar: TableSearchBar }}
-            componentsProps={{
-              toolbar: {
-                title: "Online Booking",
-                searchInput,
-                setSearchInput,
-                setSearch,
-              },
-            }}
-          />
-        </Box>
-      </CustomTabPanel>
-
-      <CustomTabPanel value={value} index={1}>
-        <Box
-          height="80vh"
-          sx={{
-            "& .MuiDataGrid-root": {
-              border: "none",
-            },
-            "& .MuiDataGrid-cell": {
-              borderBottom: "none",
-            },
-            "& .MuiDataGrid-columnHeaders": {
-              backgroundColor: theme.palette.background.default,
-              color: theme.palette.neutral.grey700,
-              borderBottom: "none",
-            },
-            "& .MuiDataGrid-virtualScroller": {
-              backgroundColor: theme.palette.neutral.main,
-            },
-            "& .MuiDataGrid-footerContainer": {
-              backgroundColor: theme.palette.neutral.grey100,
-              color: theme.palette.neutral.grey900,
-              borderTop: "none",
-            },
-            "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
-              color: `${theme.palette.neutral.grey900} !important`,
-            },
-            "& .MuiTablePagination-toolbar": {
-              alignItems: "baseline",
-            },
-          }}
-        >
-          <DataGrid
-            getRowId={(rows) => rows.id}
-            rows={bookings}
-            columns={columns}
-            density="compact"
-            // rowCount={(data && data.total) || 0}
-            rowsPerPageOptions={[20, 50, 100]}
-            pagination
-            page={page}
-            pageSize={pageSize}
-            paginationMode="server"
-            sortingMode="server"
-            onPageChange={(newPage) => setPage(newPage)}
-            onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
-            onSortModelChange={(newSortModel) => setSort(...newSortModel)}
-            components={{ Toolbar: DataGridCustomToolbar }}
-            componentsProps={{
-              toolbar: {
-                searchInput,
-                setSearchInput,
-                setSearch,
-              },
-            }}
-          />
-        </Box>
-      </CustomTabPanel>
-
-      <div className="spinner">
-        <Loader
-          loaded={loaded}
-          lines={13}
-          length={20}
-          width={10}
-          radius={30}
-          corners={1}
-          rotate={0}
-          direction={1}
-          color="#000"
-          speed={1}
-          trail={60}
-          shadow={false}
-          hwaccel={false}
-          className="spinner"
-          zIndex={2e9}
-          top="50%"
-          left="50%"
-          scale={1.0}
-          loadedClassName="loadedContent"
+    <Helmet title="Bookings">
+      <Box m="1.5rem 2.5rem">
+        <Header
+          title="Bookings"
+          buttonText="Create Booking"
+          onClick={() => navigate("/create-booking")}
         />
-      </div>
-    </Box>
+
+        <Box>
+          <Tabs value={value} selectionFollowsFocus onChange={handleChange}>
+            <Tab
+              label="Online Booking"
+              {...a11yProps(0)}
+              sx={{ boxShadow: "0px 3px 2px 0px rgba(0,0,0,0.4)" }}
+            />
+            <Tab
+              label="Manual Booking"
+              {...a11yProps(1)}
+              sx={{ boxShadow: "0px 3px 2px 0px rgba(0,0,0,0.4)" }}
+            />
+          </Tabs>
+        </Box>
+        <CustomTabPanel value={value} index={0}>
+          <Box
+            height="80vh"
+            sx={{
+              "& .MuiDataGrid-root": {
+                border: "none",
+              },
+              "& .MuiDataGrid-cell": {
+                borderBottom: "none",
+              },
+              "& .MuiDataGrid-columnHeaders": {
+                backgroundColor: theme.palette.background.default,
+                color: theme.palette.neutral.grey700,
+                borderBottom: "none",
+              },
+              "& .MuiDataGrid-virtualScroller": {
+                backgroundColor: theme.palette.neutral.main,
+              },
+              "& .MuiDataGrid-footerContainer": {
+                backgroundColor: theme.palette.neutral.grey100,
+                color: theme.palette.neutral.grey900,
+                borderTop: "none",
+              },
+              "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
+                color: `${theme.palette.neutral.grey900} !important`,
+              },
+              "& .MuiTablePagination-toolbar": {
+                alignItems: "baseline",
+              },
+            }}
+          >
+            <DataGrid
+              getRowId={(rows) => rows.id}
+              rows={bookings}
+              columns={columns}
+              density="compact"
+              // rowCount={(data && data.total) || 0}
+              rowsPerPageOptions={[20, 50, 100]}
+              pagination
+              page={page}
+              pageSize={pageSize}
+              paginationMode="server"
+              sortingMode="server"
+              onPageChange={(newPage) => setPage(newPage)}
+              onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
+              onSortModelChange={(newSortModel) => setSort(...newSortModel)}
+              components={{ Toolbar: TableSearchBar }}
+              componentsProps={{
+                toolbar: {
+                  title: "Online Booking",
+                  searchInput,
+                  setSearchInput,
+                  setSearch,
+                },
+              }}
+            />
+          </Box>
+        </CustomTabPanel>
+
+        <CustomTabPanel value={value} index={1}>
+          <Box
+            height="80vh"
+            sx={{
+              "& .MuiDataGrid-root": {
+                border: "none",
+              },
+              "& .MuiDataGrid-cell": {
+                borderBottom: "none",
+              },
+              "& .MuiDataGrid-columnHeaders": {
+                backgroundColor: theme.palette.background.default,
+                color: theme.palette.neutral.grey700,
+                borderBottom: "none",
+              },
+              "& .MuiDataGrid-virtualScroller": {
+                backgroundColor: theme.palette.neutral.main,
+              },
+              "& .MuiDataGrid-footerContainer": {
+                backgroundColor: theme.palette.neutral.grey100,
+                color: theme.palette.neutral.grey900,
+                borderTop: "none",
+              },
+              "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
+                color: `${theme.palette.neutral.grey900} !important`,
+              },
+              "& .MuiTablePagination-toolbar": {
+                alignItems: "baseline",
+              },
+            }}
+          >
+            <DataGrid
+              getRowId={(rows) => rows.id}
+              rows={bookings}
+              columns={columns}
+              density="compact"
+              // rowCount={(data && data.total) || 0}
+              rowsPerPageOptions={[20, 50, 100]}
+              pagination
+              page={page}
+              pageSize={pageSize}
+              paginationMode="server"
+              sortingMode="server"
+              onPageChange={(newPage) => setPage(newPage)}
+              onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
+              onSortModelChange={(newSortModel) => setSort(...newSortModel)}
+              components={{ Toolbar: DataGridCustomToolbar }}
+              componentsProps={{
+                toolbar: {
+                  searchInput,
+                  setSearchInput,
+                  setSearch,
+                },
+              }}
+            />
+          </Box>
+        </CustomTabPanel>
+
+        <div className="spinner">
+          <Loader
+            loaded={loaded}
+            lines={13}
+            length={20}
+            width={10}
+            radius={30}
+            corners={1}
+            rotate={0}
+            direction={1}
+            color="#000"
+            speed={1}
+            trail={60}
+            shadow={false}
+            hwaccel={false}
+            className="spinner"
+            zIndex={2e9}
+            top="50%"
+            left="50%"
+            scale={1.0}
+            loadedClassName="loadedContent"
+          />
+        </div>
+      </Box>
+    </Helmet>
   );
 };
 

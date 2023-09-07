@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Header from "components/Header";
 import ReplyOutlinedIcon from "@mui/icons-material/ReplyOutlined";
+import Helmet from "components/Helmet/Helmet";
 import {
   Box,
   Grid,
@@ -137,217 +138,219 @@ const AddCustomer = () => {
 
   const onError = (errors) => console.log(errors);
   return (
-    <Box sx={{ flexGrow: 1, margin: "1.5rem 2.5rem" }}>
-      <Header
-        title="Create Customer"
-        buttonText="Go Back"
-        icon={<ReplyOutlinedIcon />}
-        onClick={() => navigate("/customers")}
-      />
+    <Helmet title="Add Customer">
+      <Box sx={{ flexGrow: 1, margin: "1.5rem 2.5rem" }}>
+        <Header
+          title="Create Customer"
+          buttonText="Go Back"
+          icon={<ReplyOutlinedIcon />}
+          onClick={() => navigate("/customers")}
+        />
 
-      <form onSubmit={handleSubmit(onSubmit, onError)}>
-        <Grid container spacing={2}>
-          <Grid item xs={12} md={4}>
-            <Box>
-              <Controller
-                name="name"
-                control={control}
-                render={({ field }) => (
-                  <TextField
-                    id="name"
-                    label="Customer Name"
-                    variant="outlined"
-                    fullWidth
-                    margin="normal"
-                    sx={{
-                      backgroundColor: theme.palette.primary.light,
-                    }}
-                    {...field}
-                  />
-                )}
-              />
-            </Box>
-          </Grid>
-          <Grid item xs={12} md={4}>
-            <Box>
-              <Controller
-                name="mobile_number"
-                control={control}
-                render={({ field }) => (
-                  <TextField
-                    id="mobile_number"
-                    label="Mobile Number"
-                    variant="outlined"
-                    fullWidth
-                    margin="normal"
-                    sx={{
-                      backgroundColor: theme.palette.primary.light,
-                    }}
-                    {...field}
-                  />
-                )}
-              />
-            </Box>
-          </Grid>
-          <Grid item xs={12} md={4}>
-            <Box>
-              <Controller
-                name="email"
-                control={control}
-                render={({ field }) => (
-                  <TextField
-                    id="email"
-                    label="Email"
-                    variant="outlined"
-                    fullWidth
-                    margin="normal"
-                    sx={{
-                      backgroundColor: theme.palette.primary.light,
-                    }}
-                    {...field}
-                  />
-                )}
-              />
-            </Box>
+        <form onSubmit={handleSubmit(onSubmit, onError)}>
+          <Grid container spacing={2}>
+            <Grid item xs={12} md={4}>
+              <Box>
+                <Controller
+                  name="name"
+                  control={control}
+                  render={({ field }) => (
+                    <TextField
+                      id="name"
+                      label="Customer Name"
+                      variant="outlined"
+                      fullWidth
+                      margin="normal"
+                      sx={{
+                        backgroundColor: theme.palette.primary.light,
+                      }}
+                      {...field}
+                    />
+                  )}
+                />
+              </Box>
+            </Grid>
+            <Grid item xs={12} md={4}>
+              <Box>
+                <Controller
+                  name="mobile_number"
+                  control={control}
+                  render={({ field }) => (
+                    <TextField
+                      id="mobile_number"
+                      label="Mobile Number"
+                      variant="outlined"
+                      fullWidth
+                      margin="normal"
+                      sx={{
+                        backgroundColor: theme.palette.primary.light,
+                      }}
+                      {...field}
+                    />
+                  )}
+                />
+              </Box>
+            </Grid>
+            <Grid item xs={12} md={4}>
+              <Box>
+                <Controller
+                  name="email"
+                  control={control}
+                  render={({ field }) => (
+                    <TextField
+                      id="email"
+                      label="Email"
+                      variant="outlined"
+                      fullWidth
+                      margin="normal"
+                      sx={{
+                        backgroundColor: theme.palette.primary.light,
+                      }}
+                      {...field}
+                    />
+                  )}
+                />
+              </Box>
+            </Grid>
+
+            <Grid item xs={12} md={4}>
+              <Box>
+                <Controller
+                  name="city"
+                  control={control}
+                  render={({ field }) => (
+                    <TextField
+                      id="city"
+                      label="City"
+                      variant="outlined"
+                      fullWidth
+                      margin="normal"
+                      sx={{
+                        backgroundColor: theme.palette.primary.light,
+                      }}
+                      {...field}
+                    />
+                  )}
+                />
+              </Box>
+            </Grid>
+            <Grid item xs={12} md={4}>
+              <Box>
+                <Controller
+                  name="state"
+                  control={control}
+                  render={({ field }) => (
+                    <TextField
+                      id="state"
+                      label="State"
+                      variant="outlined"
+                      fullWidth
+                      margin="normal"
+                      sx={{
+                        backgroundColor: theme.palette.primary.light,
+                      }}
+                      {...field}
+                    />
+                  )}
+                />
+              </Box>
+            </Grid>
+
+            <Grid item xs={12} md={4}>
+              <Box>
+                <Controller
+                  name="country"
+                  control={control}
+                  render={({ field }) => (
+                    <TextField
+                      id="country"
+                      label="Country"
+                      variant="outlined"
+                      fullWidth
+                      margin="normal"
+                      sx={{
+                        backgroundColor: theme.palette.primary.light,
+                      }}
+                      {...field}
+                    />
+                  )}
+                />
+              </Box>
+            </Grid>
+
+            <Grid item xs={12} md={12}>
+              <Typography variant="h4">Profile Picture</Typography>
+            </Grid>
+            <Grid item xs={4} md={4}>
+              <Box>
+                <input
+                  type="file"
+                  placeholder="Image URL"
+                  {...register("profile_image")}
+                />
+              </Box>
+            </Grid>
           </Grid>
 
-          <Grid item xs={12} md={4}>
-            <Box>
-              <Controller
-                name="city"
-                control={control}
-                render={({ field }) => (
-                  <TextField
-                    id="city"
-                    label="City"
-                    variant="outlined"
-                    fullWidth
-                    margin="normal"
-                    sx={{
-                      backgroundColor: theme.palette.primary.light,
-                    }}
-                    {...field}
-                  />
-                )}
-              />
-            </Box>
-          </Grid>
-          <Grid item xs={12} md={4}>
-            <Box>
-              <Controller
-                name="state"
-                control={control}
-                render={({ field }) => (
-                  <TextField
-                    id="state"
-                    label="State"
-                    variant="outlined"
-                    fullWidth
-                    margin="normal"
-                    sx={{
-                      backgroundColor: theme.palette.primary.light,
-                    }}
-                    {...field}
-                  />
-                )}
-              />
-            </Box>
-          </Grid>
-
-          <Grid item xs={12} md={4}>
-            <Box>
-              <Controller
-                name="country"
-                control={control}
-                render={({ field }) => (
-                  <TextField
-                    id="country"
-                    label="Country"
-                    variant="outlined"
-                    fullWidth
-                    margin="normal"
-                    sx={{
-                      backgroundColor: theme.palette.primary.light,
-                    }}
-                    {...field}
-                  />
-                )}
-              />
-            </Box>
-          </Grid>
-
-          <Grid item xs={12} md={12}>
-            <Typography variant="h4">Profile Picture</Typography>
-          </Grid>
-          <Grid item xs={4} md={4}>
-            <Box>
-              <input
-                type="file"
-                placeholder="Image URL"
-                {...register("profile_image")}
-              />
-            </Box>
-          </Grid>
-        </Grid>
-
-        <Stack
-          direction="row"
-          justifyContent="flex-end"
-          alignItems="center"
-          spacing={4}
-          sx={{ marginTop: "1rem" }}
-        >
-          <Button
-            size="large"
-            variant="contained"
-            type="submit"
-            style={{
-              backgroundColor: theme.palette.secondary.main,
-              color: theme.palette.neutral[600],
-              fontWeight: "bold",
-            }}
+          <Stack
+            direction="row"
+            justifyContent="flex-end"
+            alignItems="center"
+            spacing={4}
+            sx={{ marginTop: "1rem" }}
           >
-            Book
-          </Button>
-          <Button
-            size="large"
-            variant="contained"
-            style={{
-              backgroundColor: theme.palette.secondary.main,
-              color: theme.palette.neutral[600],
-              fontWeight: "bold",
-            }}
-            onClick={() => navigate("/customers")}
-          >
-            Cancel
-          </Button>
-        </Stack>
+            <Button
+              size="large"
+              variant="contained"
+              type="submit"
+              style={{
+                backgroundColor: theme.palette.secondary.main,
+                color: theme.palette.neutral[600],
+                fontWeight: "bold",
+              }}
+            >
+              Book
+            </Button>
+            <Button
+              size="large"
+              variant="contained"
+              style={{
+                backgroundColor: theme.palette.secondary.main,
+                color: theme.palette.neutral[600],
+                fontWeight: "bold",
+              }}
+              onClick={() => navigate("/customers")}
+            >
+              Cancel
+            </Button>
+          </Stack>
 
-        <div className="spinner">
-          <Loader
-            loaded={loaded}
-            lines={13}
-            length={20}
-            width={10}
-            radius={30}
-            corners={1}
-            rotate={0}
-            direction={1}
-            color="#000"
-            speed={1}
-            trail={60}
-            shadow={false}
-            hwaccel={false}
-            className="spinner"
-            zIndex={2e9}
-            top="50%"
-            left="50%"
-            scale={1.0}
-            loadedClassName="loadedContent"
-          />
-        </div>
-      </form>
-    </Box>
+          <div className="spinner">
+            <Loader
+              loaded={loaded}
+              lines={13}
+              length={20}
+              width={10}
+              radius={30}
+              corners={1}
+              rotate={0}
+              direction={1}
+              color="#000"
+              speed={1}
+              trail={60}
+              shadow={false}
+              hwaccel={false}
+              className="spinner"
+              zIndex={2e9}
+              top="50%"
+              left="50%"
+              scale={1.0}
+              loadedClassName="loadedContent"
+            />
+          </div>
+        </form>
+      </Box>
+    </Helmet>
   );
 };
 

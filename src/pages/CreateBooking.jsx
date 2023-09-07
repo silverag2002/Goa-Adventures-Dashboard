@@ -16,6 +16,7 @@ import { URLConstants } from "../base/api/url.constants";
 import Loader from "react-loader";
 import { useNavigate, useLocation } from "react-router-dom";
 import { DatePicker } from "@mui/x-date-pickers";
+import Helmet from "components/Helmet/Helmet";
 
 const CreateBooking = () => {
   const [loaded, setLoaded] = useState(true);
@@ -221,481 +222,483 @@ const CreateBooking = () => {
 
   const onError = (errors) => console.log(errors);
   return (
-    <Box sx={{ flexGrow: 1, margin: "1.5rem 2.5rem" }}>
-      <Header
-        title="Create Booking"
-        subtitle="Create manual booking"
-        buttonText="Go Back"
-        icon={<ReplyOutlinedIcon />}
-        onClick={() => navigate("/bookings")}
-      />
+    <Helmet title="Create Booking">
+      <Box sx={{ flexGrow: 1, margin: "1.5rem 2.5rem" }}>
+        <Header
+          title="Create Booking"
+          subtitle="Create manual booking"
+          buttonText="Go Back"
+          icon={<ReplyOutlinedIcon />}
+          onClick={() => navigate("/bookings")}
+        />
 
-      <form onSubmit={handleSubmit(onSubmit, onError)}>
-        <Grid container spacing={2}>
-          <Grid item xs={12} md={3}>
-            <Box>
-              <Controller
-                name="customer_id"
-                control={control}
-                onChange={(e) => console.log("Ankit", e.target.value)}
-                render={({ field }) => (
-                  <TextField
-                    select
-                    id="customer_name"
-                    label="Select Customer"
-                    variant="outlined"
-                    margin="normal"
-                    fullWidth
-                    value={customerId}
-                    onChange={(e) => {
-                      setCustomerId(e.target.value);
-                      console.log("Customer id selected", e.target.value);
-                      let mobNum;
-                      for (let i = 0; i < customers.length; i++) {
-                        let cust = customers[i];
-                        if (cust.id == e.target.value) {
-                          mobNum = cust.mobile_number;
-                          setMobileNumber(cust.mobile_number);
-                          break;
+        <form onSubmit={handleSubmit(onSubmit, onError)}>
+          <Grid container spacing={2}>
+            <Grid item xs={12} md={3}>
+              <Box>
+                <Controller
+                  name="customer_id"
+                  control={control}
+                  onChange={(e) => console.log("Ankit", e.target.value)}
+                  render={({ field }) => (
+                    <TextField
+                      select
+                      id="customer_name"
+                      label="Select Customer"
+                      variant="outlined"
+                      margin="normal"
+                      fullWidth
+                      value={customerId}
+                      onChange={(e) => {
+                        setCustomerId(e.target.value);
+                        console.log("Customer id selected", e.target.value);
+                        let mobNum;
+                        for (let i = 0; i < customers.length; i++) {
+                          let cust = customers[i];
+                          if (cust.id == e.target.value) {
+                            mobNum = cust.mobile_number;
+                            setMobileNumber(cust.mobile_number);
+                            break;
+                          }
                         }
+
+                        console.log("MOb num", mobNum);
+                      }}
+                    >
+                      {customers.map((cust) => (
+                        <MenuItem key={cust.id} value={cust.id}>
+                          {cust.name}
+                        </MenuItem>
+                      ))}
+                    </TextField>
+                  )}
+                />
+              </Box>
+            </Grid>
+            <Grid item xs={12} md={3}>
+              <Box>
+                <Controller
+                  name="customer_mobile_number"
+                  control={control}
+                  render={({ field }) => (
+                    <TextField
+                      id="customer_mobile_number"
+                      label="Customer Mobile Number"
+                      variant="outlined"
+                      value={mobileNumber}
+                      fullWidth
+                      margin="normal"
+                    />
+                  )}
+                />
+              </Box>
+            </Grid>
+
+            <Grid item xs={12} md={3}>
+              <Box>
+                <Controller
+                  name="category_id"
+                  control={control}
+                  render={({ field }) => (
+                    <TextField
+                      select
+                      id="category"
+                      label="Category"
+                      variant="outlined"
+                      margin="normal"
+                      fullWidth
+                      defaultValue={
+                        clientDataAssignment.category_id
+                          ? clientDataAssignment.category_id
+                          : ""
                       }
-
-                      console.log("MOb num", mobNum);
-                    }}
-                  >
-                    {customers.map((cust) => (
-                      <MenuItem key={cust.id} value={cust.id}>
-                        {cust.name}
-                      </MenuItem>
-                    ))}
-                  </TextField>
-                )}
-              />
-            </Box>
-          </Grid>
-          <Grid item xs={12} md={3}>
-            <Box>
-              <Controller
-                name="customer_mobile_number"
-                control={control}
-                render={({ field }) => (
-                  <TextField
-                    id="customer_mobile_number"
-                    label="Customer Mobile Number"
-                    variant="outlined"
-                    value={mobileNumber}
-                    fullWidth
-                    margin="normal"
-                  />
-                )}
-              />
-            </Box>
-          </Grid>
-
-          <Grid item xs={12} md={3}>
-            <Box>
-              <Controller
-                name="category_id"
-                control={control}
-                render={({ field }) => (
-                  <TextField
-                    select
-                    id="category"
-                    label="Category"
-                    variant="outlined"
-                    margin="normal"
-                    fullWidth
-                    defaultValue={
-                      clientDataAssignment.category_id
-                        ? clientDataAssignment.category_id
-                        : ""
-                    }
-                    onChange={(e) => {
-                      e.preventDefault();
-                      handleCategoryChange(e.target.value);
-                      console.log("Field", e.target.value, field);
-                    }}
-                  >
-                    {categories.map((option) => (
-                      <MenuItem key={option.id} value={option.id}>
-                        {option.category}
-                      </MenuItem>
-                    ))}
-                  </TextField>
-                )}
-              />
-            </Box>
-          </Grid>
-          <Grid item xs={12} md={3}>
-            <Box>
-              <Controller
-                name="sub_category_id"
-                control={control}
-                render={({ field }) => (
-                  <TextField
-                    select
-                    id="sub-category"
-                    label="Sub Category"
-                    variant="outlined"
-                    fullWidth
-                    margin="normal"
-                    defaultValue={
-                      clientDataAssignment.sub_category_id
-                        ? clientDataAssignment.sub_category_id
-                        : ""
-                    }
-                    onChange={(e) => {
-                      e.preventDefault();
-                      handleSubCategoryChange(e.target.value);
-                      console.log("Field", e.target.value, field);
-                    }}
-                  >
-                    {subcategories.map((option) => (
-                      <MenuItem key={option.id} value={option.id}>
-                        {option.subcategory}
-                      </MenuItem>
-                    ))}
-                  </TextField>
-                )}
-              />
-            </Box>
-          </Grid>
-          <Grid item xs={12} md={6}>
-            <Box>
-              <Controller
-                name="product_id"
-                control={control}
-                render={({ field }) => (
-                  <TextField
-                    id="productName"
-                    label="Product Name"
-                    variant="outlined"
-                    fullWidth
-                    margin="normal"
-                  />
-                )}
-              />
-            </Box>
-          </Grid>
-          <Grid item xs={12} md={3}>
-            <Box>
-              <Controller
-                name="total_seat"
-                control={control}
-                render={({ field }) => (
-                  <TextField
-                    id="total_seat"
-                    label="Total Seat"
-                    variant="outlined"
-                    type="number"
-                    fullWidth
-                    margin="normal"
-                    {...field}
-                  />
-                )}
-              />
-            </Box>
-          </Grid>
-          <Grid item xs={12} md={3}>
-            <Box>
-              <Controller
-                name="total_amount"
-                control={control}
-                render={({ field }) => (
-                  <TextField
-                    id="total_amount"
-                    label="Total Amount"
-                    variant="outlined"
-                    type="number"
-                    fullWidth
-                    margin="normal"
-                    {...field}
-                  />
-                )}
-              />
-            </Box>
-          </Grid>
-          <Grid item xs={12} md={3}>
-            <Box>
-              <Controller
-                name="deposit_amount"
-                control={control}
-                render={({ field }) => (
-                  <TextField
-                    id="deposit_amount"
-                    label="Deposit Amount"
-                    variant="outlined"
-                    type="number"
-                    fullWidth
-                    margin="normal"
-                    value={depositAmount}
-                    onChange={(e) => {
-                      console.log("Testing getValues", field);
-                      setDepositAmount(e.target.value);
-                      if (
-                        Number(getValues("total_amount")) >
-                        Number(e.target.value)
-                      ) {
-                        let amount =
-                          Number(getValues("total_amount")) -
-                          Number(e.target.value);
-                        setPendingAmount(amount);
-                      } else {
-                        setPendingAmount(0);
+                      onChange={(e) => {
+                        e.preventDefault();
+                        handleCategoryChange(e.target.value);
+                        console.log("Field", e.target.value, field);
+                      }}
+                    >
+                      {categories.map((option) => (
+                        <MenuItem key={option.id} value={option.id}>
+                          {option.category}
+                        </MenuItem>
+                      ))}
+                    </TextField>
+                  )}
+                />
+              </Box>
+            </Grid>
+            <Grid item xs={12} md={3}>
+              <Box>
+                <Controller
+                  name="sub_category_id"
+                  control={control}
+                  render={({ field }) => (
+                    <TextField
+                      select
+                      id="sub-category"
+                      label="Sub Category"
+                      variant="outlined"
+                      fullWidth
+                      margin="normal"
+                      defaultValue={
+                        clientDataAssignment.sub_category_id
+                          ? clientDataAssignment.sub_category_id
+                          : ""
                       }
-                    }}
-                    // {...field}
-                  />
-                )}
-              />
-            </Box>
+                      onChange={(e) => {
+                        e.preventDefault();
+                        handleSubCategoryChange(e.target.value);
+                        console.log("Field", e.target.value, field);
+                      }}
+                    >
+                      {subcategories.map((option) => (
+                        <MenuItem key={option.id} value={option.id}>
+                          {option.subcategory}
+                        </MenuItem>
+                      ))}
+                    </TextField>
+                  )}
+                />
+              </Box>
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <Box>
+                <Controller
+                  name="product_id"
+                  control={control}
+                  render={({ field }) => (
+                    <TextField
+                      id="productName"
+                      label="Product Name"
+                      variant="outlined"
+                      fullWidth
+                      margin="normal"
+                    />
+                  )}
+                />
+              </Box>
+            </Grid>
+            <Grid item xs={12} md={3}>
+              <Box>
+                <Controller
+                  name="total_seat"
+                  control={control}
+                  render={({ field }) => (
+                    <TextField
+                      id="total_seat"
+                      label="Total Seat"
+                      variant="outlined"
+                      type="number"
+                      fullWidth
+                      margin="normal"
+                      {...field}
+                    />
+                  )}
+                />
+              </Box>
+            </Grid>
+            <Grid item xs={12} md={3}>
+              <Box>
+                <Controller
+                  name="total_amount"
+                  control={control}
+                  render={({ field }) => (
+                    <TextField
+                      id="total_amount"
+                      label="Total Amount"
+                      variant="outlined"
+                      type="number"
+                      fullWidth
+                      margin="normal"
+                      {...field}
+                    />
+                  )}
+                />
+              </Box>
+            </Grid>
+            <Grid item xs={12} md={3}>
+              <Box>
+                <Controller
+                  name="deposit_amount"
+                  control={control}
+                  render={({ field }) => (
+                    <TextField
+                      id="deposit_amount"
+                      label="Deposit Amount"
+                      variant="outlined"
+                      type="number"
+                      fullWidth
+                      margin="normal"
+                      value={depositAmount}
+                      onChange={(e) => {
+                        console.log("Testing getValues", field);
+                        setDepositAmount(e.target.value);
+                        if (
+                          Number(getValues("total_amount")) >
+                          Number(e.target.value)
+                        ) {
+                          let amount =
+                            Number(getValues("total_amount")) -
+                            Number(e.target.value);
+                          setPendingAmount(amount);
+                        } else {
+                          setPendingAmount(0);
+                        }
+                      }}
+                      // {...field}
+                    />
+                  )}
+                />
+              </Box>
+            </Grid>
+            <Grid item xs={12} md={3}>
+              <Box>
+                <Controller
+                  name="pending_amount"
+                  control={control}
+                  render={({ field, value }) => (
+                    <TextField
+                      id="pending_amount"
+                      label="Pending Amount"
+                      variant="outlined"
+                      fullWidth
+                      margin="normal"
+                      value={pendingAmount}
+                    />
+                  )}
+                />
+              </Box>
+            </Grid>
+            <Grid item xs={12} md={3}>
+              <Box>
+                <Controller
+                  name="payment_mode"
+                  control={control}
+                  render={({ field }) => (
+                    <TextField
+                      select
+                      id="payment_mode"
+                      label="Payment Mode"
+                      variant="outlined"
+                      fullWidth
+                      margin="normal"
+                      defaultValue={
+                        clientDataAssignment.payment_mode
+                          ? clientDataAssignment.payment_mode
+                          : ""
+                      }
+                      {...field}
+                    >
+                      <MenuItem value={0}>Online Payment</MenuItem>
+                      <MenuItem value={1}>Offline Payment</MenuItem>
+                    </TextField>
+                  )}
+                />
+              </Box>
+            </Grid>
+            <Grid item xs={12} md={3}>
+              <Box>
+                <Controller
+                  name="paying_full"
+                  control={control}
+                  render={({ field }) => (
+                    <TextField
+                      select
+                      id="paying_full"
+                      label="Paying Full"
+                      variant="outlined"
+                      fullWidth
+                      margin="normal"
+                      defaultValue={
+                        clientDataAssignment.paying_full
+                          ? clientDataAssignment.paying_full
+                          : ""
+                      }
+                      {...field}
+                    >
+                      <MenuItem value={true}>Yes</MenuItem>
+                      <MenuItem value={false}>No</MenuItem>
+                    </TextField>
+                  )}
+                />
+              </Box>
+            </Grid>
+            <Grid item xs={12} md={3}>
+              <Box>
+                <Controller
+                  name="destination_location"
+                  control={control}
+                  render={({ field }) => (
+                    <TextField
+                      id="destination_location"
+                      label="Destiantion"
+                      variant="outlined"
+                      value={dest_location}
+                      fullWidth
+                      margin="normal"
+                    />
+                  )}
+                />
+              </Box>
+            </Grid>
+            <Grid item xs={12} md={3}>
+              <Box>
+                <Controller
+                  name="start_date"
+                  control={control}
+                  render={({ field }) => (
+                    <TextField
+                      id="start_date"
+                      label="Start Date"
+                      type="date"
+                      variant="outlined"
+                      fullWidth
+                      margin="normal"
+                      {...field}
+                    />
+                  )}
+                />
+              </Box>
+            </Grid>
+            <Grid item xs={12} md={3}>
+              <Box>
+                <Controller
+                  name="end_date"
+                  control={control}
+                  render={({ field }) => (
+                    <TextField
+                      id="end_date"
+                      label="End Date"
+                      type="date"
+                      variant="outlined"
+                      fullWidth
+                      margin="normal"
+                      {...field}
+                    />
+                  )}
+                />
+              </Box>
+            </Grid>
+            <Grid item xs={12} md={3}>
+              <Box>
+                <Controller
+                  name="reporting_time"
+                  control={control}
+                  render={({ field }) => (
+                    <TextField
+                      id="reporting_time"
+                      label="Reporting Time"
+                      variant="outlined"
+                      type="time"
+                      fullWidth
+                      margin="normal"
+                      {...field}
+                    />
+                  )}
+                />
+              </Box>
+            </Grid>
+            <Grid item xs={12} md={3}>
+              <Box>
+                <Controller
+                  name="meeting_point"
+                  control={control}
+                  render={({ field }) => (
+                    <TextField
+                      id="meeting_point"
+                      label="Meeting Point"
+                      variant="outlined"
+                      fullWidth
+                      margin="normal"
+                      {...field}
+                    />
+                  )}
+                />
+              </Box>
+            </Grid>
+            <Grid item xs={12} md={12}>
+              <Box>
+                <Controller
+                  name="note"
+                  control={control}
+                  render={({ field }) => (
+                    <TextField
+                      id="note"
+                      type="number"
+                      label="Note"
+                      variant="outlined"
+                      multiline
+                      rows={5}
+                      fullWidth
+                      margin="normal"
+                      {...field}
+                    />
+                  )}
+                />
+              </Box>
+            </Grid>
           </Grid>
-          <Grid item xs={12} md={3}>
-            <Box>
-              <Controller
-                name="pending_amount"
-                control={control}
-                render={({ field, value }) => (
-                  <TextField
-                    id="pending_amount"
-                    label="Pending Amount"
-                    variant="outlined"
-                    fullWidth
-                    margin="normal"
-                    value={pendingAmount}
-                  />
-                )}
-              />
-            </Box>
-          </Grid>
-          <Grid item xs={12} md={3}>
-            <Box>
-              <Controller
-                name="payment_mode"
-                control={control}
-                render={({ field }) => (
-                  <TextField
-                    select
-                    id="payment_mode"
-                    label="Payment Mode"
-                    variant="outlined"
-                    fullWidth
-                    margin="normal"
-                    defaultValue={
-                      clientDataAssignment.payment_mode
-                        ? clientDataAssignment.payment_mode
-                        : ""
-                    }
-                    {...field}
-                  >
-                    <MenuItem value={0}>Online Payment</MenuItem>
-                    <MenuItem value={1}>Offline Payment</MenuItem>
-                  </TextField>
-                )}
-              />
-            </Box>
-          </Grid>
-          <Grid item xs={12} md={3}>
-            <Box>
-              <Controller
-                name="paying_full"
-                control={control}
-                render={({ field }) => (
-                  <TextField
-                    select
-                    id="paying_full"
-                    label="Paying Full"
-                    variant="outlined"
-                    fullWidth
-                    margin="normal"
-                    defaultValue={
-                      clientDataAssignment.paying_full
-                        ? clientDataAssignment.paying_full
-                        : ""
-                    }
-                    {...field}
-                  >
-                    <MenuItem value={true}>Yes</MenuItem>
-                    <MenuItem value={false}>No</MenuItem>
-                  </TextField>
-                )}
-              />
-            </Box>
-          </Grid>
-          <Grid item xs={12} md={3}>
-            <Box>
-              <Controller
-                name="destination_location"
-                control={control}
-                render={({ field }) => (
-                  <TextField
-                    id="destination_location"
-                    label="Destiantion"
-                    variant="outlined"
-                    value={dest_location}
-                    fullWidth
-                    margin="normal"
-                  />
-                )}
-              />
-            </Box>
-          </Grid>
-          <Grid item xs={12} md={3}>
-            <Box>
-              <Controller
-                name="start_date"
-                control={control}
-                render={({ field }) => (
-                  <TextField
-                    id="start_date"
-                    label="Start Date"
-                    type="date"
-                    variant="outlined"
-                    fullWidth
-                    margin="normal"
-                    {...field}
-                  />
-                )}
-              />
-            </Box>
-          </Grid>
-          <Grid item xs={12} md={3}>
-            <Box>
-              <Controller
-                name="end_date"
-                control={control}
-                render={({ field }) => (
-                  <TextField
-                    id="end_date"
-                    label="End Date"
-                    type="date"
-                    variant="outlined"
-                    fullWidth
-                    margin="normal"
-                    {...field}
-                  />
-                )}
-              />
-            </Box>
-          </Grid>
-          <Grid item xs={12} md={3}>
-            <Box>
-              <Controller
-                name="reporting_time"
-                control={control}
-                render={({ field }) => (
-                  <TextField
-                    id="reporting_time"
-                    label="Reporting Time"
-                    variant="outlined"
-                    type="time"
-                    fullWidth
-                    margin="normal"
-                    {...field}
-                  />
-                )}
-              />
-            </Box>
-          </Grid>
-          <Grid item xs={12} md={3}>
-            <Box>
-              <Controller
-                name="meeting_point"
-                control={control}
-                render={({ field }) => (
-                  <TextField
-                    id="meeting_point"
-                    label="Meeting Point"
-                    variant="outlined"
-                    fullWidth
-                    margin="normal"
-                    {...field}
-                  />
-                )}
-              />
-            </Box>
-          </Grid>
-          <Grid item xs={12} md={12}>
-            <Box>
-              <Controller
-                name="note"
-                control={control}
-                render={({ field }) => (
-                  <TextField
-                    id="note"
-                    type="number"
-                    label="Note"
-                    variant="outlined"
-                    multiline
-                    rows={5}
-                    fullWidth
-                    margin="normal"
-                    {...field}
-                  />
-                )}
-              />
-            </Box>
-          </Grid>
-        </Grid>
 
-        <Stack
-          direction="row"
-          justifyContent="flex-end"
-          alignItems="center"
-          spacing={4}
-          sx={{ marginTop: "1rem" }}
-        >
-          <Button
-            size="large"
-            variant="contained"
-            type="submit"
-            style={{
-              backgroundColor: theme.palette.secondary.main,
-              color: theme.palette.neutral[600],
-              fontWeight: "bold",
-            }}
+          <Stack
+            direction="row"
+            justifyContent="flex-end"
+            alignItems="center"
+            spacing={4}
+            sx={{ marginTop: "1rem" }}
           >
-            Book
-          </Button>
-          <Button
-            size="large"
-            variant="contained"
-            style={{
-              backgroundColor: theme.palette.secondary.main,
-              color: theme.palette.neutral[600],
-              fontWeight: "bold",
-            }}
-            onClick={() => navigate("/bookings")}
-          >
-            Cancel
-          </Button>
-        </Stack>
+            <Button
+              size="large"
+              variant="contained"
+              type="submit"
+              style={{
+                backgroundColor: theme.palette.secondary.main,
+                color: theme.palette.neutral[600],
+                fontWeight: "bold",
+              }}
+            >
+              Book
+            </Button>
+            <Button
+              size="large"
+              variant="contained"
+              style={{
+                backgroundColor: theme.palette.secondary.main,
+                color: theme.palette.neutral[600],
+                fontWeight: "bold",
+              }}
+              onClick={() => navigate("/bookings")}
+            >
+              Cancel
+            </Button>
+          </Stack>
 
-        <div className="spinner">
-          <Loader
-            loaded={loaded}
-            lines={13}
-            length={20}
-            width={10}
-            radius={30}
-            corners={1}
-            rotate={0}
-            direction={1}
-            color="#000"
-            speed={1}
-            trail={60}
-            shadow={false}
-            hwaccel={false}
-            className="spinner"
-            zIndex={2e9}
-            top="50%"
-            left="50%"
-            scale={1.0}
-            loadedClassName="loadedContent"
-          />
-        </div>
-      </form>
-    </Box>
+          <div className="spinner">
+            <Loader
+              loaded={loaded}
+              lines={13}
+              length={20}
+              width={10}
+              radius={30}
+              corners={1}
+              rotate={0}
+              direction={1}
+              color="#000"
+              speed={1}
+              trail={60}
+              shadow={false}
+              hwaccel={false}
+              className="spinner"
+              zIndex={2e9}
+              top="50%"
+              left="50%"
+              scale={1.0}
+              loadedClassName="loadedContent"
+            />
+          </div>
+        </form>
+      </Box>
+    </Helmet>
   );
 };
 

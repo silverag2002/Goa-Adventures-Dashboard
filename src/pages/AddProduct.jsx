@@ -23,7 +23,8 @@ import JoditEditor from "jodit-react";
 import axios, * as others from "axios";
 import Loader from "react-loader";
 import ReplyOutlinedIcon from "@mui/icons-material/ReplyOutlined";
-import FlexBetween from "components/FlexBetween";
+import Helmet from "components/Helmet/Helmet";
+
 var FormData = require("form-data");
 
 const AddProduct = () => {
@@ -356,7 +357,7 @@ const AddProduct = () => {
   };
 
   return (
-    <>
+    <Helmet title="Add Product">
       <Box sx={{ flexGrow: 1, margin: "1.5rem 2.5rem" }}>
         <Header
           title="Add Product"
@@ -1076,7 +1077,7 @@ const AddProduct = () => {
           </form>
         </Box>
       </Box>
-    </>
+    </Helmet>
   );
 };
 

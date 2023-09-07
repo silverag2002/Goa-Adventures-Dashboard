@@ -9,6 +9,7 @@ import DataGridCustomToolbar from "components/DataGridCustomToolbar";
 import Loader from "react-loader";
 import { axiosInstance } from "../base/api/axios.util";
 import { URLConstants } from "../base/api/url.constants";
+import Helmet from "components/Helmet/Helmet";
 
 const Location = () => {
   const theme = useTheme();
@@ -98,61 +99,63 @@ const Location = () => {
   ];
 
   return (
-    <Box m="1.5rem 2.5rem">
-      <Header
-        title="Location"
-        subtitle="Entire list of locations"
-        buttonText="Add Location"
-        onClick={() => navigate("/add-location")}
-      />
+    <Helmet title="Location">
+      <Box m="1.5rem 2.5rem">
+        <Header
+          title="Location"
+          subtitle="Entire list of locations"
+          buttonText="Add Location"
+          onClick={() => navigate("/add-location")}
+        />
 
-      <Box height="80vh" sx={{ width: "100%" }}>
-        <DataGrid
-          getRowId={(rows) => rows.id}
-          rows={location}
-          columns={columns}
-          // rowCount={(data && data.total) || 0}
-          rowsPerPageOptions={[20, 50, 100]}
-          pagination
-          page={page}
-          pageSize={pageSize}
-          paginationMode="server"
-          disableRowSelectionOnClick
-          // sortingMode="server"
-          onPageChange={(newPage) => setPage(newPage)}
-          onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
-          // onSortModelChange={(newSortModel) => setSort(...newSortModel)}
-          checkboxSelection
-          // components={{ Toolbar: DataGridCustomToolbar }}
-          // componentsProps={{
-          //   toolbar: { searchInput, setSearchInput, setSearch },
-          // }}
-        />
+        <Box height="80vh" sx={{ width: "100%" }}>
+          <DataGrid
+            getRowId={(rows) => rows.id}
+            rows={location}
+            columns={columns}
+            // rowCount={(data && data.total) || 0}
+            rowsPerPageOptions={[20, 50, 100]}
+            pagination
+            page={page}
+            pageSize={pageSize}
+            paginationMode="server"
+            disableRowSelectionOnClick
+            // sortingMode="server"
+            onPageChange={(newPage) => setPage(newPage)}
+            onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
+            // onSortModelChange={(newSortModel) => setSort(...newSortModel)}
+            checkboxSelection
+            // components={{ Toolbar: DataGridCustomToolbar }}
+            // componentsProps={{
+            //   toolbar: { searchInput, setSearchInput, setSearch },
+            // }}
+          />
+        </Box>
+        <div className="spinner">
+          <Loader
+            loaded={loaded}
+            lines={13}
+            length={10}
+            width={5}
+            radius={30}
+            corners={1}
+            rotate={0}
+            direction={1}
+            color="#000"
+            speed={1}
+            trail={60}
+            shadow={false}
+            hwaccel={false}
+            className="spinner"
+            zIndex={2e9}
+            top="50%"
+            left="50%"
+            scale={1.0}
+            loadedClassName="loadedContent"
+          />
+        </div>
       </Box>
-      <div className="spinner">
-        <Loader
-          loaded={loaded}
-          lines={13}
-          length={10}
-          width={5}
-          radius={30}
-          corners={1}
-          rotate={0}
-          direction={1}
-          color="#000"
-          speed={1}
-          trail={60}
-          shadow={false}
-          hwaccel={false}
-          className="spinner"
-          zIndex={2e9}
-          top="50%"
-          left="50%"
-          scale={1.0}
-          loadedClassName="loadedContent"
-        />
-      </div>
-    </Box>
+    </Helmet>
   );
 };
 

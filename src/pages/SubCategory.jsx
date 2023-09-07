@@ -18,6 +18,7 @@ import {
   ModeEditOutlineOutlined,
 } from "@mui/icons-material/";
 import axios, * as others from "axios";
+import Helmet from "components/Helmet/Helmet";
 var FormData = require("form-data");
 
 const SubCategory = () => {
@@ -242,128 +243,130 @@ const SubCategory = () => {
   };
 
   return (
-    <Box m="1.5rem 2.5rem">
-      <Header title="Sub Category" subtitle="Entire list of sub category" />
-      <Box>
-        <form onSubmit={handleSubmit(onSubmit, onError)}>
-          <Grid container spacing={2} alignItems="center">
-            <Grid item md={3} xs={12}>
-              <Controller
-                name="subcategory"
-                control={control}
-                render={({ field }) => (
-                  <TextField
-                    id="sub-category"
-                    label="Sub Category"
-                    variant="outlined"
-                    fullWidth
-                    margin="normal"
-                    sx={{
-                      backgroundColor: theme.palette.primary.light,
-                    }}
-                    value={subCategory}
-                    onChange={(e) => setSubCategory(e.target.value)}
-                    inputProps={{ style: { fontSize: 16, fontWeight: 500 } }}
-                    InputLabelProps={{
-                      style: { fontSize: 16, fontWeight: 500 },
-                    }}
-                  />
-                )}
-              />
+    <Helmet title="Sub Category">
+      <Box m="1.5rem 2.5rem">
+        <Header title="Sub Category" subtitle="Entire list of sub category" />
+        <Box>
+          <form onSubmit={handleSubmit(onSubmit, onError)}>
+            <Grid container spacing={2} alignItems="center">
+              <Grid item md={3} xs={12}>
+                <Controller
+                  name="subcategory"
+                  control={control}
+                  render={({ field }) => (
+                    <TextField
+                      id="sub-category"
+                      label="Sub Category"
+                      variant="outlined"
+                      fullWidth
+                      margin="normal"
+                      sx={{
+                        backgroundColor: theme.palette.primary.light,
+                      }}
+                      value={subCategory}
+                      onChange={(e) => setSubCategory(e.target.value)}
+                      inputProps={{ style: { fontSize: 16, fontWeight: 500 } }}
+                      InputLabelProps={{
+                        style: { fontSize: 16, fontWeight: 500 },
+                      }}
+                    />
+                  )}
+                />
+              </Grid>
+              <Grid item md={3} xs={12}>
+                <Controller
+                  name="category"
+                  control={control}
+                  render={({ field }) => (
+                    <TextField
+                      select
+                      id="category"
+                      label="Category"
+                      variant="outlined"
+                      fullWidth
+                      margin="normal"
+                      sx={{
+                        backgroundColor: theme.palette.primary.light,
+                      }}
+                      value={category}
+                      onChange={(e) => setCategory(e.target.value)}
+                      inputProps={{ style: { fontSize: 16, fontWeight: 500 } }}
+                      InputLabelProps={{
+                        style: { fontSize: 16, fontWeight: 500 },
+                      }}
+                    >
+                      {categories.map((option) => (
+                        <MenuItem key={option} value={option}>
+                          {option}
+                        </MenuItem>
+                      ))}
+                    </TextField>
+                  )}
+                />
+              </Grid>
+              <Grid item md={3} xs={12}>
+                <input
+                  type="file"
+                  placeholder="Image URL"
+                  {...register("subCategoryImage")}
+                />
+              </Grid>
+              <Grid item md={3} xs={12}>
+                <Button
+                  variant="contained"
+                  size="large"
+                  style={{
+                    backgroundColor: theme.palette.secondary.main,
+                    color: theme.palette.neutral[600],
+                    fontWeight: "bold",
+                  }}
+                  type="submit"
+                >
+                  Add Category
+                </Button>
+              </Grid>
             </Grid>
-            <Grid item md={3} xs={12}>
-              <Controller
-                name="category"
-                control={control}
-                render={({ field }) => (
-                  <TextField
-                    select
-                    id="category"
-                    label="Category"
-                    variant="outlined"
-                    fullWidth
-                    margin="normal"
-                    sx={{
-                      backgroundColor: theme.palette.primary.light,
-                    }}
-                    value={category}
-                    onChange={(e) => setCategory(e.target.value)}
-                    inputProps={{ style: { fontSize: 16, fontWeight: 500 } }}
-                    InputLabelProps={{
-                      style: { fontSize: 16, fontWeight: 500 },
-                    }}
-                  >
-                    {categories.map((option) => (
-                      <MenuItem key={option} value={option}>
-                        {option}
-                      </MenuItem>
-                    ))}
-                  </TextField>
-                )}
-              />
-            </Grid>
-            <Grid item md={3} xs={12}>
-              <input
-                type="file"
-                placeholder="Image URL"
-                {...register("subCategoryImage")}
-              />
-            </Grid>
-            <Grid item md={3} xs={12}>
-              <Button
-                variant="contained"
-                size="large"
-                style={{
-                  backgroundColor: theme.palette.secondary.main,
-                  color: theme.palette.neutral[600],
-                  fontWeight: "bold",
-                }}
-                type="submit"
-              >
-                Add Category
-              </Button>
-            </Grid>
-          </Grid>
-        </form>
+          </form>
+        </Box>
+        <Box mt="2.5rem" sx={{ height: 400, width: "100%" }}>
+          <DataGrid
+            rows={rows}
+            columns={columns}
+            initialState={{
+              pagination: {
+                paginationModel: { page: 0, pageSize: 5 },
+              },
+            }}
+            pageSizeOptions={[5, 10]}
+            checkboxSelection
+            getRowHeight={() => "auto"}
+          />
+        </Box>
+        <div className="spinner">
+          <Loader
+            loaded={loaded}
+            lines={13}
+            length={20}
+            width={10}
+            radius={30}
+            corners={1}
+            rotate={0}
+            direction={1}
+            color="#000"
+            speed={1}
+            trail={60}
+            shadow={false}
+            hwaccel={false}
+            className="spinner"
+            zIndex={2e9}
+            top="50%"
+            left="50%"
+            scale={1.0}
+            loadedClassName="loadedContent"
+          />
+        </div>
       </Box>
-      <Box mt="2.5rem" sx={{ height: 400, width: "100%" }}>
-        <DataGrid
-          rows={rows}
-          columns={columns}
-          initialState={{
-            pagination: {
-              paginationModel: { page: 0, pageSize: 5 },
-            },
-          }}
-          pageSizeOptions={[5, 10]}
-          checkboxSelection
-          getRowHeight={() => "auto"}
-        />
-      </Box>
-      <div className="spinner">
-        <Loader
-          loaded={loaded}
-          lines={13}
-          length={20}
-          width={10}
-          radius={30}
-          corners={1}
-          rotate={0}
-          direction={1}
-          color="#000"
-          speed={1}
-          trail={60}
-          shadow={false}
-          hwaccel={false}
-          className="spinner"
-          zIndex={2e9}
-          top="50%"
-          left="50%"
-          scale={1.0}
-          loadedClassName="loadedContent"
-        />
-      </div>
-    </Box>
+    </Helmet>
   );
 };
 

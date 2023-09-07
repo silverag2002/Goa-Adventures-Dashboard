@@ -9,6 +9,7 @@ import JoditEditor from "jodit-react";
 import axios, * as others from "axios";
 import { useNavigate } from "react-router-dom";
 import Loader from "react-loader";
+import Helmet from "components/Helmet/Helmet";
 
 const CreateProduct = () => {
   const theme = useTheme();
@@ -154,7 +155,7 @@ const CreateProduct = () => {
   }
 
   return (
-    <>
+    <Helmet title="Create Product">
       <Box m="1.5rem 2.5rem">
         <FlexBetween>
           <Header
@@ -536,7 +537,7 @@ const CreateProduct = () => {
           loadedClassName="loadedContent"
         />
       </div>
-    </>
+    </Helmet>
   );
 };
 
