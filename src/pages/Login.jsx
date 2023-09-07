@@ -32,6 +32,7 @@ const Login = () => {
   const [loaded, setLoaded] = useState(true);
   const { login } = useAuth();
   const location = useLocation();
+  const [error, setError] = useState("");
   const from = location?.state?.from?.pathname || "/dashboard";
   console.log(theme);
   const {
@@ -56,6 +57,7 @@ const Login = () => {
       })
       .catch((err) => {
         console.log("Err", err);
+        setError(err);
       });
   };
   const onError = (errors) => console.log(errors);
@@ -146,7 +148,7 @@ const Login = () => {
               )}
             />
             <FlexBetween>
-              <FormControlLabel
+              {/* <FormControlLabel
                 sx={{ color: theme.palette.neutral.white }}
                 control={
                   <Checkbox
@@ -158,7 +160,7 @@ const Login = () => {
               />
               <Link href="#" variant="body2" sx={{ color: "white" }}>
                 Forget password?
-              </Link>
+              </Link> */}
             </FlexBetween>
             <Button
               type="submit"
@@ -178,6 +180,7 @@ const Login = () => {
               Sign In
             </Button>
           </Box>
+          {error}
         </form>
       </Container>
 
