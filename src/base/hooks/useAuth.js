@@ -18,6 +18,7 @@ export const useAuth = () => {
 
   const login = (loginData) => {
     return new Promise((resolve, reject) => {
+      loginData.loginType = [0, 2];
       axiosInstance
         .post(URLConstants.passwordLogin(), loginData)
         .then((response) => {
