@@ -23,13 +23,8 @@ import JoditEditor from "jodit-react";
 import axios, * as others from "axios";
 import Loader from "react-loader";
 import ReplyOutlinedIcon from "@mui/icons-material/ReplyOutlined";
-<<<<<<< HEAD
 import Helmet from "components/Helmet/Helmet";
 
-=======
-import { useClient } from "../base/hooks/useClient";
-import FlexBetween from "components/FlexBetween";
->>>>>>> 7d3f050daefc8f099728033160224c35fa1ee661
 var FormData = require("form-data");
 
 const AddProduct = () => {

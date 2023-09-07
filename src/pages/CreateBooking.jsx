@@ -16,11 +16,7 @@ import { URLConstants } from "../base/api/url.constants";
 import Loader from "react-loader";
 import { useNavigate, useLocation } from "react-router-dom";
 import { DatePicker } from "@mui/x-date-pickers";
-<<<<<<< HEAD
 import Helmet from "components/Helmet/Helmet";
-=======
-import { useClient } from "../base/hooks/useClient";
->>>>>>> 7d3f050daefc8f099728033160224c35fa1ee661
 
 const CreateBooking = () => {
   const client = useClient();

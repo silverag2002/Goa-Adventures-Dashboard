@@ -1,11 +1,5 @@
-<<<<<<< HEAD
 import React, { useContext } from "react";
 import Helmet from "components/Helmet/Helmet";
-=======
-import React, { useState, useRef, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import FlexBetween from "components/FlexBetween";
->>>>>>> 7d3f050daefc8f099728033160224c35fa1ee661
 import Header from "components/Header";
 import {
   DownloadOutlined,
