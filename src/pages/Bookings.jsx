@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Box, useTheme, Button, Tabs, Tab, Typography } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { useGetTransactionsQuery } from "state/api";
@@ -11,8 +11,10 @@ import Loader from "react-loader";
 import { Link, useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 import TableSearchBar from "../components/UI/TableSearchBar";
+import { ClientContext } from "../base/contexts/UserContext";
 
 function CustomTabPanel(props) {
+  const { client, setClient } = useContext(ClientContext);
   const { children, value, index, ...other } = props;
   return (
     <div
@@ -43,6 +45,7 @@ function a11yProps(index) {
 const Bookings = () => {
   const theme = useTheme();
   const navigate = useNavigate();
+  const { client, setClient } = useContext(ClientContext);
 
   // values to be sent to the backend
   const [value, setValue] = React.useState(0);
@@ -103,14 +106,16 @@ const Bookings = () => {
 
     return (
       <Box sx={{ display: "flex", gap: "0.8rem" }}>
-        <Button
-          variant="contained"
-          color="secondary"
-          size="small"
-          onClick={(e) => deleteBooking(params.row.id)}
-        >
-          Delete
-        </Button>
+        {client.role == 0 ? (
+          <Button
+            variant="contained"
+            color="secondary"
+            size="small"
+            onClick={(e) => deleteBooking(params.row.id)}
+          >
+            Delete
+          </Button>
+        ) : null}
         <Link to="/create-booking" state={{ booking: bookingInfo[0] }}>
           <Button variant="contained" color="secondary" size="small">
             Edit

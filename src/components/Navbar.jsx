@@ -12,6 +12,8 @@ import { useDispatch } from "react-redux";
 import { setMode } from "state";
 import profileImage from "assets/profile.jpeg";
 import { BsGear, BsBell } from "react-icons/bs";
+import { useNavigate, useLocation } from "react-router-dom";
+
 import {
   AppBar,
   Button,
@@ -24,15 +26,21 @@ import {
   MenuItem,
   useTheme,
 } from "@mui/material";
+import { useAuth } from "../base/hooks/useAuth";
 
 const Navbar = ({ user, isSidebarOpen, setIsSidebarOpen }) => {
+  const navigate = useNavigate();
+  const { logout } = useAuth();
   const dispatch = useDispatch();
   const theme = useTheme();
 
   const [anchorEl, setAnchorEl] = useState(null);
   const isOpen = Boolean(anchorEl);
   const handleClick = (event) => setAnchorEl(event.currentTarget);
-  const handleClose = () => setAnchorEl(null);
+  const handleClose = () => {
+    logout();
+    navigate("/");
+  };
 
   return (
     <AppBar

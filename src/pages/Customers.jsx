@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Box, useTheme, Button } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { useGetTransactionsQuery } from "state/api";
@@ -9,11 +9,12 @@ import { axiosInstance } from "../base/api/axios.util";
 import { URLConstants } from "../base/api/url.constants";
 import Loader from "react-loader";
 import { Link, useNavigate } from "react-router-dom";
+import { ClientContext } from "../base/contexts/UserContext";
 
 const Customers = () => {
   // values to be sent to the backend
   const [page, setPage] = useState(0);
-
+  const { client, setClient } = useContext(ClientContext);
   const [pageSize, setPageSize] = useState(20);
   const [sort, setSort] = useState({});
   const [search, setSearch] = useState("");
@@ -67,14 +68,16 @@ const Customers = () => {
 
     return (
       <Box sx={{ display: "flex", gap: "0.8rem" }}>
-        <Button
-          variant="contained"
-          color="secondary"
-          size="small"
-          onClick={(e) => deleteCustomer(params.id)}
-        >
-          Delete
-        </Button>
+        {client.role == 0 ? (
+          <Button
+            variant="contained"
+            color="secondary"
+            size="small"
+            onClick={(e) => deleteCustomer(params.id)}
+          >
+            Delete
+          </Button>
+        ) : null}
         <Link to="/add-customer" state={{ customer: customerInfo[0] }}>
           <Button variant="contained" color="secondary" size="small">
             Edit
