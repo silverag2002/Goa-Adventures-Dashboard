@@ -34,28 +34,28 @@ function App() {
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <Routes>
-          <Route element={<RequireAuth />}>
-            <Route element={<Layout />}>
-              <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/bookings" element={<Bookings />} />
-              <Route path="/create-booking" element={<CreateBooking />} />
-              <Route path="/instant-quotation" element={<InstantQuotation />} />
-              <Route path="/create-quotation" element={<AddQuotation />} />
-              <Route path="/products" element={<Products />} />
-              <Route path="/add-product" element={<AddProduct />} />
-              <Route path="/customers" element={<Customers />} />
-              <Route path="/add-customer" element={<AddCustomer />} />
-              <Route path="/manage-staff" element={<ManageStaffs />} />
-              <Route path="/add-staff" element={<AddStaff />} />
-              <Route path="/category" element={<Category />} />
-              <Route path="/sub-category" element={<SubCategory />} />
-              <Route path="/location" element={<Location />} />
-              <Route path="/add-location" element={<AddLocation />} />
-              <Route path="/create-product" element={<CreateProduct />} />
-              <Route path="/privacy-policy" element={<PrivacyPolicry />} />
-              <Route path="/terms-conditions" element={<TermsConditions />} />
-            </Route>
+          {/* <Route element={<RequireAuth />}> */}
+          <Route element={<Layout />}>
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/bookings" element={<Bookings />} />
+            <Route path="/create-booking" element={<CreateBooking />} />
+            <Route path="/instant-quotation" element={<InstantQuotation />} />
+            <Route path="/create-quotation" element={<AddQuotation />} />
+            <Route path="/products" element={<Products />} />
+            <Route path="/add-product" element={<AddProduct />} />
+            <Route path="/customers" element={<Customers />} />
+            <Route path="/add-customer" element={<AddCustomer />} />
+            <Route path="/manage-staff" element={<ManageStaffs />} />
+            <Route path="/add-staff" element={<AddStaff />} />
+            <Route path="/category" element={<Category />} />
+            <Route path="/sub-category" element={<SubCategory />} />
+            <Route path="/location" element={<Location />} />
+            <Route path="/add-location" element={<AddLocation />} />
+            <Route path="/create-product" element={<CreateProduct />} />
+            <Route path="/privacy-policy" element={<PrivacyPolicry />} />
+            <Route path="/terms-conditions" element={<TermsConditions />} />
           </Route>
+          {/* </Route> */}
           <Route path="/login" element={<Login />} />
           <Route path="/*" element={<Login />} />
           <Route path="/" element={<Login />} />

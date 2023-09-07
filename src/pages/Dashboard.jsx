@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import FlexBetween from "components/FlexBetween";
 import Header from "components/Header";
 import {
@@ -22,9 +22,12 @@ import OverviewChart from "components/OverviewChart";
 import { useGetDashboardQuery } from "state/api";
 import StatBox from "components/StatBox";
 import EarningCard from "components/Dashboard/EarningCard";
+import { ClientContext } from "../base/contexts/UserContext";
 
 const Dashboard = () => {
   const theme = useTheme();
+  const { client, setClient } = useContext(ClientContext);
+  console.log("Cleint login ", client);
   const isNonMediumScreens = useMediaQuery("(min-width: 1200px)");
   const { data, isLoading } = useGetDashboardQuery();
 

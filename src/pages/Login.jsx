@@ -24,13 +24,13 @@ import FlexBetween from "components/FlexBetween";
 import { useForm, Controller } from "react-hook-form";
 import { useNavigate, useLocation } from "react-router-dom";
 import Loader from "react-loader";
-import useAuth from "../hooks/useAuth";
+import { useAuth } from "../base/hooks/useAuth.js";
 
 const Login = () => {
   const theme = useTheme();
   const navigate = useNavigate();
   const [loaded, setLoaded] = useState(true);
-  const { setAuth } = useAuth();
+  const { login } = useAuth();
   const location = useLocation();
   const from = location?.state?.from?.pathname || "/dashboard";
   console.log(theme);
@@ -46,8 +46,17 @@ const Login = () => {
   const onSubmit = (data) => {
     console.log("Date capiutred in booking", data);
     console.log("From value", from);
-
-    navigate(from, { replace: true });
+    login({
+      email: data.email,
+      password: data.password,
+    })
+      .then((res) => {
+        console.log("Response from login", res);
+        navigate(from, { replace: true });
+      })
+      .catch((err) => {
+        console.log("Err", err);
+      });
   };
   const onError = (errors) => console.log(errors);
 

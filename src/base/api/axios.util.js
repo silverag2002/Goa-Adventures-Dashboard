@@ -5,9 +5,11 @@ import { AuthTokenHandler } from "./auth-token.util";
 const AxiosInstance = axios.create({});
 AxiosInstance.interceptors.request.use((req) => {
   const accessToken = AuthTokenHandler.getAccessToken();
-  const authToken = AuthTokenHandler.getAuthToken();
-  req.headers.Authorization = `${accessToken || ""}`;
-  req.headers.AuthToken = `${authToken || ""}`;
+
+  if (accessToken) {
+    req.headers.Authorization = `${accessToken || ""}`;
+  }
+
   return req;
 });
 AxiosInstance.interceptors.response.use(
