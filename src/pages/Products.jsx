@@ -18,6 +18,7 @@ import Loader from "react-loader";
 import { axiosInstance } from "../base/api/axios.util";
 import { URLConstants } from "../base/api/url.constants";
 import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
+import { useClient } from "../base/hooks/useClient";
 
 const Products = () => {
   const theme = useTheme();
@@ -25,6 +26,13 @@ const Products = () => {
   const [loaded, setLoaded] = useState(true);
   const [products, setProduct] = useState([]);
   const navigate = useNavigate();
+  const client = useClient();
+
+  useEffect(() => {
+    if (client?.client?.role == undefined) {
+      navigate("/");
+    }
+  }, []);
 
   useEffect(() => {
     setLoaded(false);

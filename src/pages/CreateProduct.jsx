@@ -9,8 +9,16 @@ import JoditEditor from "jodit-react";
 import axios, * as others from "axios";
 import { useNavigate } from "react-router-dom";
 import Loader from "react-loader";
+import { useClient } from "../base/hooks/useClient";
 
 const CreateProduct = () => {
+  const client = useClient();
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (client?.client?.role == undefined || client?.client?.role == 2) {
+      navigate("/");
+    }
+  }, []);
   const theme = useTheme();
   const editor1 = useRef();
   const editor2 = useRef();
@@ -20,7 +28,6 @@ const CreateProduct = () => {
   const [stateCities, setStateCities] = useState([]);
   const [highlight, setHighlight] = useState("");
   const [overview, setOverview] = useState("");
-  const navigate = useNavigate();
 
   const {
     handleSubmit,

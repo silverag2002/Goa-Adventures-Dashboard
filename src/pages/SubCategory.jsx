@@ -13,6 +13,8 @@ import { DataGrid } from "@mui/x-data-grid";
 import Loader from "react-loader";
 import { axiosInstance } from "../base/api/axios.util";
 import { URLConstants } from "../base/api/url.constants";
+import { useClient } from "../base/hooks/useClient";
+import { useNavigate } from "react-router-dom";
 import {
   DeleteOutlineOutlined,
   ModeEditOutlineOutlined,
@@ -36,6 +38,13 @@ const SubCategory = () => {
     formState: { errors },
   } = useForm();
   const onError = (errors) => console.log(errors);
+  const client = useClient();
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (client?.client?.role == undefined || client?.client?.role == 2) {
+      navigate("/");
+    }
+  }, []);
 
   // const category = [
   //   "Activity",

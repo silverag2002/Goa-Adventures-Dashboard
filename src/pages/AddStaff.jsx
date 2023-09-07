@@ -18,11 +18,11 @@ import { URLConstants } from "../base/api/url.constants";
 import Loader from "react-loader";
 import { useNavigate, useLocation } from "react-router-dom";
 import axios, * as others from "axios";
+import { useClient } from "../base/hooks/useClient";
 
 var FormData = require("form-data");
 
 const AddStaff = () => {
-  const navigate = useNavigate();
   const theme = useTheme();
   const [loaded, setLoaded] = useState(true);
   const [reloadPage, setReloadPage] = useState(false);
@@ -39,6 +39,13 @@ const AddStaff = () => {
   } = useForm({});
 
   var clientDataAssignment = {};
+  const client = useClient();
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (client?.client?.role == undefined || client?.client?.role == 2) {
+      navigate("/");
+    }
+  }, []);
 
   console.log("LOcaltion", location);
   if (location.state) {

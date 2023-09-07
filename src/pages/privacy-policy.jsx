@@ -6,6 +6,8 @@ import JoditEditor from "jodit-react";
 import Loader from "react-loader";
 import { axiosInstance } from "../base/api/axios.util";
 import { URLConstants } from "../base/api/url.constants";
+import { useClient } from "../base/hooks/useClient";
+import { useNavigate } from "react-router-dom";
 
 const PrivacyPolicry = () => {
   const location = useLocation();
@@ -14,6 +16,13 @@ const PrivacyPolicry = () => {
   const [loaded, setLoaded] = useState(true);
   const editor = useRef();
   const [reloadPage, setReloadPage] = useState(false);
+  const client = useClient();
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (client?.client?.role == undefined || client?.client?.role == 2) {
+      navigate("/");
+    }
+  }, []);
 
   const getSunEditorInstance = (sunEditor) => {
     editor.current = sunEditor;

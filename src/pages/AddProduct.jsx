@@ -23,10 +23,18 @@ import JoditEditor from "jodit-react";
 import axios, * as others from "axios";
 import Loader from "react-loader";
 import ReplyOutlinedIcon from "@mui/icons-material/ReplyOutlined";
+import { useClient } from "../base/hooks/useClient";
 import FlexBetween from "components/FlexBetween";
 var FormData = require("form-data");
 
 const AddProduct = () => {
+  const client = useClient();
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (client?.client?.role == undefined) {
+      navigate("/");
+    }
+  }, []);
   const theme = useTheme();
   const editor = useRef();
   const location = useLocation();
@@ -51,8 +59,6 @@ const AddProduct = () => {
   console.log(imageUrl);
 
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
-
-  const navigate = useNavigate();
 
   useEffect(() => {
     if (selectedImage) {

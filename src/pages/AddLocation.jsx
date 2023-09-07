@@ -18,8 +18,17 @@ import Header from "components/Header";
 import JoditEditor from "jodit-react";
 import { useForm, Controller } from "react-hook-form";
 import ReplyOutlinedIcon from "@mui/icons-material/ReplyOutlined";
+import { ClientContext } from "../base/contexts/UserContext";
+import { useClient } from "../base/hooks/useClient";
 
 const AddLocation = () => {
+  const client = useClient();
+
+  useEffect(() => {
+    if (client?.client?.role == undefined || client?.client?.role == 2) {
+      navigate("/");
+    }
+  }, []);
   const [description, setDescription] = useState("");
   const [parentLocation, setParentLocation] = useState([]);
   const [loaded, setLoaded] = useState(true);

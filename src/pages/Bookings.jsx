@@ -12,9 +12,20 @@ import { Link, useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 import TableSearchBar from "../components/UI/TableSearchBar";
 import { ClientContext } from "../base/contexts/UserContext";
-
+import { useClient } from "../base/hooks/useClient";
 function CustomTabPanel(props) {
-  const { client, setClient } = useContext(ClientContext);
+  const client = useClient();
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (client?.client?.role == undefined) {
+      navigate("/");
+    } else {
+      console.log("CLeint else condiiotn", client?.client?.role);
+    }
+  }, []);
+
+  console.log("Client in bookings testing useCLient", client);
+
   const { children, value, index, ...other } = props;
   return (
     <div

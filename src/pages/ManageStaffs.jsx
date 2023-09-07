@@ -9,6 +9,7 @@ import { axiosInstance } from "../base/api/axios.util";
 import { URLConstants } from "../base/api/url.constants";
 import Loader from "react-loader";
 import { Link, useNavigate } from "react-router-dom";
+import { useClient } from "../base/hooks/useClient";
 
 const ManageStaffs = () => {
   const theme = useTheme();
@@ -23,7 +24,13 @@ const ManageStaffs = () => {
   const [searchInput, setSearchInput] = useState("");
   const [reloadPage, setReloadPage] = useState(false);
 
+  const client = useClient();
   const navigate = useNavigate();
+  useEffect(() => {
+    if (client?.client?.role == undefined || client?.client?.role == 2) {
+      navigate("/");
+    }
+  }, []);
   const { data, isLoading } = useGetTransactionsQuery({
     page,
     pageSize,

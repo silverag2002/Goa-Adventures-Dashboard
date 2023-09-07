@@ -9,17 +9,25 @@ import DataGridCustomToolbar from "components/DataGridCustomToolbar";
 import Loader from "react-loader";
 import { axiosInstance } from "../base/api/axios.util";
 import { URLConstants } from "../base/api/url.constants";
+import { useClient } from "../base/hooks/useClient";
 
 const Location = () => {
   const theme = useTheme();
   const [reloadPage, setReloadPage] = useState(false);
   const [loaded, setLoaded] = useState(true);
   const [location, setLocation] = useState([]);
-  const navigate = useNavigate();
+
   const [page, setPage] = useState(0);
   const [pageSize, setPageSize] = useState(20);
   const [sort, setSort] = useState({});
   const [search, setSearch] = useState("");
+  const client = useClient();
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (client?.client?.role == undefined || client?.client?.role == 2) {
+      navigate("/");
+    }
+  }, []);
 
   const [searchInput, setSearchInput] = useState("");
 

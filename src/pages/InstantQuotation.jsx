@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Box, useTheme } from "@mui/material";
 import Header from "components/Header";
 import { useNavigate } from "react-router-dom";
 import { DataGrid } from "@mui/x-data-grid";
 import DataGridCustomToolbar from "components/DataGridCustomToolbar";
+import { useClient } from "../base/hooks/useClient";
 
 const InstantQuotation = () => {
   const [page, setPage] = useState(0);
@@ -13,7 +14,13 @@ const InstantQuotation = () => {
   const [searchInput, setSearchInput] = useState("");
 
   const theme = useTheme();
+  const client = useClient();
   const navigate = useNavigate();
+  useEffect(() => {
+    if (client?.client?.role == undefined || client?.client?.role == 2) {
+      navigate("/");
+    }
+  }, []);
 
   const columns = [
     { field: "id", headerName: "ID" },
