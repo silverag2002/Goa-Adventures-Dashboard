@@ -45,6 +45,7 @@ const Login = () => {
   } = useForm({});
 
   const onSubmit = (data) => {
+    setLoaded(false);
     console.log("Date capiutred in booking", data);
     console.log("From value", from);
     login({
@@ -52,10 +53,12 @@ const Login = () => {
       password: data.password,
     })
       .then((res) => {
+        setLoaded(true);
         console.log("Response from login", res);
         navigate(from, { replace: true });
       })
       .catch((err) => {
+        setLoaded(true);
         console.log("Err", err);
         setError(err);
       });

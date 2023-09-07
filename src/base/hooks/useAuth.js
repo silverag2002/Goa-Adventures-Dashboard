@@ -30,7 +30,7 @@ export const useAuth = () => {
             AuthTokenHandler.setAccessToken(data?.tokens?.accessToken);
             AuthTokenHandler.setAuthToken(data?.tokens?.authToken);
             localStorage.setItem("jwtToken", response.tokens);
-
+            console.log("Setting client ", client);
             setClient(client);
           } catch (error) {
             console.error(error);
