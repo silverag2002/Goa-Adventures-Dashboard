@@ -9,13 +9,24 @@ import { axiosInstance } from "../base/api/axios.util";
 import { URLConstants } from "../base/api/url.constants";
 import Loader from "react-loader";
 import { Link, useNavigate } from "react-router-dom";
+<<<<<<< HEAD
 import { ClientContext } from "../base/contexts/UserContext";
 import Helmet from "components/Helmet/Helmet";
+=======
+import { useClient } from "../base/hooks/useClient";
+>>>>>>> 7d3f050daefc8f099728033160224c35fa1ee661
 
 const Customers = () => {
   // values to be sent to the backend
   const [page, setPage] = useState(0);
-  const { client, setClient } = useContext(ClientContext);
+  const client = useClient();
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (client?.client?.role == undefined) {
+      navigate("/");
+    }
+  }, []);
+
   const [pageSize, setPageSize] = useState(20);
   const [sort, setSort] = useState({});
   const [search, setSearch] = useState("");
@@ -25,7 +36,6 @@ const Customers = () => {
   const [reloadPage, setReloadPage] = useState(false);
 
   const theme = useTheme();
-  const navigate = useNavigate();
 
   const { data, isLoading } = useGetTransactionsQuery({
     page,

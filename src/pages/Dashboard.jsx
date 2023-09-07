@@ -1,5 +1,11 @@
+<<<<<<< HEAD
 import React, { useContext } from "react";
 import Helmet from "components/Helmet/Helmet";
+=======
+import React, { useState, useRef, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import FlexBetween from "components/FlexBetween";
+>>>>>>> 7d3f050daefc8f099728033160224c35fa1ee661
 import Header from "components/Header";
 import {
   DownloadOutlined,
@@ -23,10 +29,19 @@ import { useGetDashboardQuery } from "state/api";
 import StatBox from "components/StatBox";
 import EarningCard from "components/Dashboard/EarningCard";
 import { ClientContext } from "../base/contexts/UserContext";
+import { useClient } from "../base/hooks/useClient";
 
 const Dashboard = () => {
   const theme = useTheme();
-  const { client, setClient } = useContext(ClientContext);
+
+  const client = useClient();
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (client?.client?.role == undefined) {
+      console.log("(!client?.client?.role", !client?.client?.role);
+      navigate("/");
+    }
+  }, []);
   console.log("Cleint login ", client);
   const isNonMediumScreens = useMediaQuery("(min-width: 1200px)");
   const { data, isLoading } = useGetDashboardQuery();

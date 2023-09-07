@@ -17,11 +17,19 @@ import { axiosInstance } from "../base/api/axios.util";
 import { URLConstants } from "../base/api/url.constants";
 import Loader from "react-loader";
 import { useNavigate, useLocation } from "react-router-dom";
+import { ClientContext } from "../base/contexts/UserContext";
+import { useClient } from "../base/hooks/useClient";
 import axios, * as others from "axios";
 var FormData = require("form-data");
 
 const AddCustomer = () => {
+  const client = useClient();
   const navigate = useNavigate();
+  useEffect(() => {
+    if (client?.client?.role == undefined) {
+      navigate("/");
+    }
+  }, []);
   const theme = useTheme();
   const [loaded, setLoaded] = useState(true);
   const [customers, setCustomers] = useState([]);

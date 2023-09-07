@@ -6,7 +6,12 @@ import JoditEditor from "jodit-react";
 import Loader from "react-loader";
 import { axiosInstance } from "../base/api/axios.util";
 import { URLConstants } from "../base/api/url.constants";
+<<<<<<< HEAD
 import Helmet from "components/Helmet/Helmet";
+=======
+import { useClient } from "../base/hooks/useClient";
+import { useNavigate } from "react-router-dom";
+>>>>>>> 7d3f050daefc8f099728033160224c35fa1ee661
 
 const TermsConditions = () => {
   const location = useLocation();
@@ -30,6 +35,13 @@ const TermsConditions = () => {
         console.log(err);
       });
   }, [reloadPage]);
+  const client = useClient();
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (client?.client?.role == undefined || client?.client?.role == 2) {
+      navigate("/");
+    }
+  }, []);
 
   const getSunEditorInstance = (sunEditor) => {
     editor.current = sunEditor;

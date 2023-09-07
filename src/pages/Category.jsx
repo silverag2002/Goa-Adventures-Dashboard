@@ -8,7 +8,12 @@ import { axiosInstance } from "../base/api/axios.util";
 import { URLConstants } from "../base/api/url.constants";
 import axios, * as others from "axios";
 import { Link } from "react-router-dom";
+<<<<<<< HEAD
 import Helmet from "components/Helmet/Helmet";
+=======
+import { useClient } from "../base/hooks/useClient";
+import { useLocation, useNavigate } from "react-router-dom";
+>>>>>>> 7d3f050daefc8f099728033160224c35fa1ee661
 import {
   DeleteOutlineOutlined,
   ModeEditOutlineOutlined,
@@ -17,6 +22,13 @@ import {
 var FormData = require("form-data");
 
 const Category = () => {
+  const client = useClient();
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (client?.client?.role == undefined || client?.client?.role == 2) {
+      navigate("/");
+    }
+  }, []);
   const theme = useTheme();
   const [loaded, setLoaded] = useState(true);
   const [rows, setRows] = useState([]);

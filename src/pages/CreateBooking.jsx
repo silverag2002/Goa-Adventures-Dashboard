@@ -16,9 +16,20 @@ import { URLConstants } from "../base/api/url.constants";
 import Loader from "react-loader";
 import { useNavigate, useLocation } from "react-router-dom";
 import { DatePicker } from "@mui/x-date-pickers";
+<<<<<<< HEAD
 import Helmet from "components/Helmet/Helmet";
+=======
+import { useClient } from "../base/hooks/useClient";
+>>>>>>> 7d3f050daefc8f099728033160224c35fa1ee661
 
 const CreateBooking = () => {
+  const client = useClient();
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (client?.client?.role == undefined) {
+      navigate("/");
+    }
+  }, []);
   const [loaded, setLoaded] = useState(true);
   const [customers, setCustomers] = useState([]);
   const [reloadPage, setReloadPage] = useState(false);
@@ -36,7 +47,6 @@ const CreateBooking = () => {
   const [productId, setProductId] = useState("");
   const location = useLocation();
 
-  const navigate = useNavigate();
   const theme = useTheme();
 
   var clientDataAssignment = {};

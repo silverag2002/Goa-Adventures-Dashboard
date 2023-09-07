@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import ReplyOutlinedIcon from "@mui/icons-material/ReplyOutlined";
 import { useForm, Controller } from "react-hook-form";
 import JoditEditor from "jodit-react";
@@ -19,12 +19,20 @@ import {
   Divider,
 } from "@mui/material";
 import Header from "components/Header";
+import { useClient } from "../base/hooks/useClient";
 
 const AddQuotation = () => {
+  const client = useClient();
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (client?.client?.role == undefined || client?.client?.role == 2) {
+      navigate("/");
+    }
+  }, []);
   const [itinerary, setItinerary] = useState("");
   const theme = useTheme();
   const editor = useRef();
-  const navigate = useNavigate();
+
   const {
     handleSubmit,
     register,
