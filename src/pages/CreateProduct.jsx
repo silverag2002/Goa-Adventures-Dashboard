@@ -9,11 +9,7 @@ import JoditEditor from "jodit-react";
 import axios, * as others from "axios";
 import { useNavigate } from "react-router-dom";
 import Loader from "react-loader";
-<<<<<<< HEAD
 import Helmet from "components/Helmet/Helmet";
-=======
-import { useClient } from "../base/hooks/useClient";
->>>>>>> 7d3f050daefc8f099728033160224c35fa1ee661
 
 const CreateProduct = () => {
   const client = useClient();

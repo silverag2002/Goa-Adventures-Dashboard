@@ -12,12 +12,8 @@ import { Link, useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 import TableSearchBar from "../components/UI/TableSearchBar";
 import { ClientContext } from "../base/contexts/UserContext";
-<<<<<<< HEAD
 import Helmet from "components/Helmet/Helmet";
 
-=======
-import { useClient } from "../base/hooks/useClient";
->>>>>>> 7d3f050daefc8f099728033160224c35fa1ee661
 function CustomTabPanel(props) {
   const client = useClient();
   const navigate = useNavigate();
@@ -114,6 +110,7 @@ const Bookings = () => {
 
   //Tabs Handle Change
   const handleChange = (event, newValue) => {
+    console.log("Value", value);
     setValue(newValue);
   };
 
