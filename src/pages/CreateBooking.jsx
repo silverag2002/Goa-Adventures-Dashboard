@@ -33,14 +33,14 @@ const CreateBooking = () => {
   const [categories, setCategories] = useState([]);
   const [subcategories, setSubCategories] = useState([]);
   const [product, setProduct] = useState([]);
-  const [pendingAmount, setPendingAmount] = useState("");
-  const [depositAmount, setDepositAmount] = useState("");
-  const [mobileNumber, setMobileNumber] = useState("");
-  const [customerId, setCustomerId] = useState("");
-  const [categoryId, setCategoryId] = useState("");
-  const [subCategoryId, setSubCategoryId] = useState("");
+  const [pendingAmount, setPendingAmount] = useState(null);
+  const [depositAmount, setDepositAmount] = useState(null);
+  const [mobileNumber, setMobileNumber] = useState(null);
+  const [customerId, setCustomerId] = useState(null);
+  const [categoryId, setCategoryId] = useState(null);
+  const [subCategoryId, setSubCategoryId] = useState(null);
   const [productLocations, setProducLocation] = useState([]);
-  const [dest_location, setDestLocation] = useState("");
+  const [dest_location, setDestLocation] = useState(null);
   const [productId, setProductId] = useState("");
   const location = useLocation();
 
@@ -94,21 +94,21 @@ const CreateBooking = () => {
       });
   }, [reloadPage]);
 
-  // useEffect(() => {
-  //   setLoaded(false);
-  //   axiosInstance
-  //     .get(URLConstants.subcategories())
-  //     .then((res) => {
-  //       console.log("Response", res);
+  useEffect(() => {
+    setLoaded(false);
+    axiosInstance
+      .get(URLConstants.subcategories())
+      .then((res) => {
+        console.log("Response", res);
 
-  //       setSubCategories(res);
-  //       setLoaded(true);
-  //     })
-  //     .catch((err) => {
-  //       console.log("Error", err);
-  //       setLoaded(true);
-  //     });
-  // }, [reloadPage]);
+        setSubCategories(res);
+        setLoaded(true);
+      })
+      .catch((err) => {
+        console.log("Error", err);
+        setLoaded(true);
+      });
+  }, [reloadPage]);
 
   useEffect(() => {
     setLoaded(false);
@@ -136,6 +136,7 @@ const CreateBooking = () => {
     setValue("booking_status", clientDataAssignment?.booking_status);
     setValue("total_seat", clientDataAssignment?.total_seat);
     setValue("total_amount", clientDataAssignment?.total_amount);
+    setDestLocation(clientDataAssignment?.destination_location);
     setDepositAmount(clientDataAssignment?.deposit_amount);
     setPendingAmount(clientDataAssignment?.pending_amount);
     setMobileNumber(clientDataAssignment?.customer_mobile_number);
@@ -145,6 +146,7 @@ const CreateBooking = () => {
     setValue("payment_mode", clientDataAssignment?.payment_mode);
     setValue("reporting_time", clientDataAssignment?.reporting_time);
     setValue("meeting_point", clientDataAssignment?.meeting_point);
+    setValue("note", clientDataAssignment?.note);
   }, [reloadPage]);
 
   function handleCategoryChange(categoryId) {
@@ -188,9 +190,9 @@ const CreateBooking = () => {
     console.log("Date capiutred in booking", data);
     setLoaded(false);
     data.quantity = 1;
-    data.product_id = productId;
+
     data.category_id = categoryId;
-    data.destination_location = dest_location;
+
     data.sub_category_id = subCategoryId;
     data.pending_amount = pendingAmount;
     data.deposit_amount = depositAmount;
@@ -384,6 +386,7 @@ const CreateBooking = () => {
                       variant="outlined"
                       fullWidth
                       margin="normal"
+                      {...field}
                     />
                   )}
                 />
@@ -542,11 +545,11 @@ const CreateBooking = () => {
                   render={({ field }) => (
                     <TextField
                       id="destination_location"
-                      label="Destiantion"
+                      label="Destination"
                       variant="outlined"
-                      value={dest_location}
                       fullWidth
                       margin="normal"
+                      {...field}
                     />
                   )}
                 />
