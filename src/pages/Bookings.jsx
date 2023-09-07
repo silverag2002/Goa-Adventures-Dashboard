@@ -129,7 +129,7 @@ const Bookings = () => {
   };
 
   const renderDetailsButton = (params) => {
-    let bookingInfo = bookings.filter((book) => (book.id = params.id));
+    let bookingInfo = manualBookings.filter((book) => (book.id = params.id));
 
     return (
       <Box sx={{ display: "flex", gap: "0.8rem" }}>

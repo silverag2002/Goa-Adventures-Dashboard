@@ -125,23 +125,26 @@ const CreateBooking = () => {
     //     setLoaded(true);
     //   });
 
-    setValue("product_id", clientDataAssignment.product_id);
-    setValue("destination_location", clientDataAssignment.destination_location);
-    setValue("category_id", clientDataAssignment.category_id);
-    setValue("sub_category_id", clientDataAssignment.sub_category_id);
+    setValue("product_name", clientDataAssignment?.product_name);
+    setValue(
+      "destination_location",
+      clientDataAssignment?.destination_location
+    );
+    setValue("category_id", clientDataAssignment?.category_id);
+    setValue("sub_category_id", clientDataAssignment?.sub_category_id);
 
-    setValue("booking_status", clientDataAssignment.booking_status);
-    setValue("total_seat", clientDataAssignment.total_seat);
-    setValue("total_amount", clientDataAssignment.total_amount);
-    setDepositAmount(clientDataAssignment.deposit_amount);
-    setPendingAmount(clientDataAssignment.pending_amount);
-    setMobileNumber(clientDataAssignment.customer_mobile_number);
-    setCustomerId(clientDataAssignment.customer_id);
-    setValue("start_date", clientDataAssignment.start_date);
-    setValue("end_date", clientDataAssignment.end_date);
-    setValue("payment_mode", clientDataAssignment.payment_mode);
-    setValue("reporting_time", clientDataAssignment.reporting_time);
-    setValue("meeting_point", clientDataAssignment.meeting_point);
+    setValue("booking_status", clientDataAssignment?.booking_status);
+    setValue("total_seat", clientDataAssignment?.total_seat);
+    setValue("total_amount", clientDataAssignment?.total_amount);
+    setDepositAmount(clientDataAssignment?.deposit_amount);
+    setPendingAmount(clientDataAssignment?.pending_amount);
+    setMobileNumber(clientDataAssignment?.customer_mobile_number);
+    setCustomerId(clientDataAssignment?.customer_id);
+    setValue("start_date", clientDataAssignment?.start_date);
+    setValue("end_date", clientDataAssignment?.end_date);
+    setValue("payment_mode", clientDataAssignment?.payment_mode);
+    setValue("reporting_time", clientDataAssignment?.reporting_time);
+    setValue("meeting_point", clientDataAssignment?.meeting_point);
   }, [reloadPage]);
 
   function handleCategoryChange(categoryId) {
@@ -191,7 +194,7 @@ const CreateBooking = () => {
     data.sub_category_id = subCategoryId;
     data.pending_amount = pendingAmount;
     data.deposit_amount = depositAmount;
-    if (!clientDataAssignment.booking_date) {
+    if (!clientDataAssignment?.booking_date) {
       data.booking_date = new Date();
     }
     data.booked_by = "SUPER_ADMIN";
@@ -200,9 +203,9 @@ const CreateBooking = () => {
     data.customer_id = customerId;
 
     console.log("Data entered", data);
-    if (clientDataAssignment.id) {
+    if (clientDataAssignment?.id) {
       axiosInstance
-        .put(URLConstants.modifyBookings(clientDataAssignment.id), data)
+        .put(URLConstants.modifyManualBookings(clientDataAssignment?.id), data)
         .then((res) => {
           setLoaded(true);
           console.log("Responsse form booking post method", res);
@@ -214,7 +217,7 @@ const CreateBooking = () => {
         });
     } else {
       axiosInstance
-        .post(URLConstants.bookings(), data)
+        .post(URLConstants.manualbookings(), data)
         .then((res) => {
           setLoaded(true);
           console.log("Responsse form booking post method", res);
@@ -315,8 +318,8 @@ const CreateBooking = () => {
                       margin="normal"
                       fullWidth
                       defaultValue={
-                        clientDataAssignment.category_id
-                          ? clientDataAssignment.category_id
+                        clientDataAssignment?.category_id
+                          ? clientDataAssignment?.category_id
                           : ""
                       }
                       onChange={(e) => {
@@ -349,8 +352,8 @@ const CreateBooking = () => {
                       fullWidth
                       margin="normal"
                       defaultValue={
-                        clientDataAssignment.sub_category_id
-                          ? clientDataAssignment.sub_category_id
+                        clientDataAssignment?.sub_category_id
+                          ? clientDataAssignment?.sub_category_id
                           : ""
                       }
                       onChange={(e) => {
@@ -372,11 +375,11 @@ const CreateBooking = () => {
             <Grid item xs={12} md={6}>
               <Box>
                 <Controller
-                  name="product_id"
+                  name="product_name"
                   control={control}
                   render={({ field }) => (
                     <TextField
-                      id="productName"
+                      id="product_name"
                       label="Product Name"
                       variant="outlined"
                       fullWidth
@@ -491,8 +494,8 @@ const CreateBooking = () => {
                       fullWidth
                       margin="normal"
                       defaultValue={
-                        clientDataAssignment.payment_mode
-                          ? clientDataAssignment.payment_mode
+                        clientDataAssignment?.payment_mode
+                          ? clientDataAssignment?.payment_mode
                           : ""
                       }
                       {...field}
@@ -518,8 +521,8 @@ const CreateBooking = () => {
                       fullWidth
                       margin="normal"
                       defaultValue={
-                        clientDataAssignment.paying_full
-                          ? clientDataAssignment.paying_full
+                        clientDataAssignment?.paying_full
+                          ? clientDataAssignment?.paying_full
                           : ""
                       }
                       {...field}
