@@ -180,24 +180,29 @@ const Bookings = () => {
   ];
 
   const manualColumns = [
-    { field: "id", headerName: "id" },
-    { field: "booking_date", headerName: "Booking Date" },
-    { field: "customerName", headerName: "Customer Name" },
-    { field: "mobileNumber", headerName: "Mobile Number" },
-    { field: "itemName", headerName: "Item Name" },
-    { field: "category", headerName: "Category" },
-    { field: "subCategory", headerName: "Sub Category" },
-    { field: "totalSeat", headerName: "Total Seat" },
-    { field: "totalamount", headerName: "Total Amount" },
-    { field: "depositamount", headerName: "Deposit Amount" },
-    { field: "pendingamount", headerName: "Pending Amount" },
-    { field: "startDate", headerName: "Start Date" },
-    { field: "endDate", headerName: "End Date" },
-    { field: "meetingPoint", headerName: "Meeting Point" },
-    { field: "destination", headerName: "Destination" },
-    { field: "reportingTime", headerName: "Reporting Time" },
-    { field: "paymentMode", headerName: "Payment Mode" },
-    { field: "partialPaid", headerName: "Paying Full" },
+    { field: "id", headerName: "id", hide: true },
+    { field: "booking_date", headerName: "Booking Date", hide: false },
+    { field: "cusotmer_id", headerName: "Customer Name", hide: false },
+
+    {
+      field: "customer_mobile_number",
+      headerName: "Mobile Number",
+      hide: false,
+    },
+    { field: "product_name", headerName: "Item Name", hide: false },
+    { field: "category_id", headerName: "Category", hide: true },
+    { field: "sub_category_id", headerName: "Sub Category", hide: true },
+    { field: "total_seat", headerName: "Total Seat", hide: true },
+    { field: "total_amount", headerName: "Total Amount", hide: false },
+    { field: "deposit_amount", headerName: "Deposit Amount", hide: true },
+    { field: "pendingamount", headerName: "Pending Amount", hide: true },
+    { field: "start_date", headerName: "Start Date", hide: false },
+    { field: "end_date", headerName: "End Date", hide: false },
+    { field: "meeting_point", headerName: "Meeting Point", hide: true },
+    { field: "destination_location", headerName: "Destination", hide: true },
+    { field: "reporting_time", headerName: "Reporting Time", hide: true },
+    { field: "payment_mode", headerName: "Payment Mode", hide: true },
+    { field: "partial_full", headerName: "Paying Full", hide: true },
     {
       field: "action",
       headerName: "Action",
@@ -445,7 +450,7 @@ const Bookings = () => {
                 <DataGrid
                   getRowId={(rows) => rows.id}
                   rows={bookings}
-                  columns={columns}
+                  initialState={columns}
                   density="compact"
                   // rowCount={(data && data.total) || 0}
                   rowsPerPageOptions={[20, 50, 100]}
