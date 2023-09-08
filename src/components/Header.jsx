@@ -1,16 +1,17 @@
 import React from "react";
-import { Typography, useTheme, Button } from "@mui/material";
+import { Typography, useTheme, Button, useMediaQuery } from "@mui/material";
 import Heading from "./Heading";
 import FlexBetween from "./FlexBetween";
 
 const Header = ({ title, subtitle, buttonText, onClick, icon }) => {
   const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   return (
     <FlexBetween>
       <Heading title={title} subtitle={subtitle} />
       {buttonText && (
         <Button
-          size="large"
+          size={isMobile ? "medium" : "large"}
           variant="contained"
           onClick={onClick}
           style={{

@@ -1,10 +1,17 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Box, useTheme, Button, Tabs, Tab, IconButton } from "@mui/material";
+import {
+  Box,
+  useTheme,
+  Button,
+  Tabs,
+  Tab,
+  IconButton,
+  useMediaQuery,
+} from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { useGetTransactionsQuery } from "state/api";
 import Header from "components/Header";
 import DataGridCustomToolbar from "components/DataGridCustomToolbar";
-import FlexBetween from "../components/FlexBetween";
 import { axiosInstance } from "../base/api/axios.util";
 import { URLConstants } from "../base/api/url.constants";
 import Loader from "react-loader";
@@ -60,6 +67,8 @@ const Bookings = () => {
   const theme = useTheme();
   const navigate = useNavigate();
   const { client, setClient } = useContext(ClientContext);
+
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   // values to be sent to the backend
   const [value, setValue] = React.useState(0);
@@ -184,9 +193,13 @@ const Bookings = () => {
       field: "booking_date",
       headerName: "Booking Date",
       hide: false,
-      minWidth: 175,
     },
-    { field: "cusotmer_id", headerName: "Customer Name", hide: false },
+    {
+      field: "customer_name",
+      headerName: "Customer Name",
+      hide: false,
+      width: 150,
+    },
 
     {
       field: "customer_mobile_number",
@@ -199,8 +212,8 @@ const Bookings = () => {
       hide: false,
       minWidth: 200,
     },
-    { field: "category_id", headerName: "Category", hide: true },
-    { field: "sub_category_id", headerName: "Sub Category", hide: true },
+    { field: "category", headerName: "Category", hide: true },
+    { field: "subcategory", headerName: "Sub Category", hide: false },
     { field: "total_seat", headerName: "Total Seat", hide: true },
     { field: "total_amount", headerName: "Total Amount", hide: false },
     { field: "deposit_amount", headerName: "Deposit Amount", hide: true },
@@ -222,7 +235,11 @@ const Bookings = () => {
 
   return (
     <Helmet title="Bookings">
-      <Box m="1.5rem 2.5rem">
+      <Box
+        sx={{
+          padding: `${isMobile ? "0.5rem" : "1rem 1.5rem"}`,
+        }}
+      >
         <Header
           title="Bookings"
           buttonText="Create Booking"
@@ -256,11 +273,11 @@ const Bookings = () => {
                   },
                   "& .MuiDataGrid-cell": {
                     borderBottom: "none",
+                    fontWeight: "bold",
                   },
                   "& .MuiDataGrid-columnHeaders": {
-                    backgroundColor: theme.palette.background.default,
                     color: theme.palette.neutral.grey700,
-                    borderBottom: "none",
+                    fontWeight: "bold",
                   },
                   "& .MuiDataGrid-virtualScroller": {
                     backgroundColor: theme.palette.neutral.main,
@@ -293,10 +310,9 @@ const Bookings = () => {
                   onPageChange={(newPage) => setPage(newPage)}
                   onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
                   onSortModelChange={(newSortModel) => setSort(...newSortModel)}
-                  components={{ Toolbar: TableSearchBar }}
+                  components={{ Toolbar: DataGridCustomToolbar }}
                   componentsProps={{
                     toolbar: {
-                      title: "Online Booking",
                       searchInput,
                       setSearchInput,
                       setSearch,
@@ -412,10 +428,9 @@ const Bookings = () => {
                   onPageChange={(newPage) => setPage(newPage)}
                   onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
                   onSortModelChange={(newSortModel) => setSort(...newSortModel)}
-                  components={{ Toolbar: TableSearchBar }}
+                  components={{ Toolbar: DataGridCustomToolbar }}
                   componentsProps={{
                     toolbar: {
-                      title: "Online Booking",
                       searchInput,
                       setSearchInput,
                       setSearch,
