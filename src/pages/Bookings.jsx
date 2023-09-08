@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Box, useTheme, Button, Tabs, Tab, Typography } from "@mui/material";
+import { Box, useTheme, Button, Tabs, Tab, IconButton } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { useGetTransactionsQuery } from "state/api";
 import Header from "components/Header";
@@ -14,6 +14,7 @@ import TableSearchBar from "../components/UI/TableSearchBar";
 import { ClientContext } from "../base/contexts/UserContext";
 import Helmet from "components/Helmet/Helmet";
 import { useClient } from "../base/hooks/useClient";
+import { AiOutlineDelete, AiOutlineEdit } from "react-icons/ai";
 
 function CustomTabPanel(props) {
   const client = useClient();
@@ -134,20 +135,18 @@ const Bookings = () => {
     return (
       <Box sx={{ display: "flex", gap: "0.8rem" }}>
         {client.role == 0 ? (
-          <Button
-            variant="contained"
-            color="secondary"
-            size="small"
-            onClick={(e) => deleteBooking(params.row.id)}
-          >
-            Delete
-          </Button>
+          <IconButton aria-label="delete">
+            <AiOutlineDelete
+              onClick={(e) => deleteBooking(params.row.id)}
+              color={theme.palette.warning.main}
+            />
+          </IconButton>
         ) : null}
-        <Link to="/create-booking" state={{ booking: bookingInfo[0] }}>
-          <Button variant="contained" color="secondary" size="small">
-            Edit
-          </Button>
-        </Link>
+        <IconButton sx={{ color: "red" }}>
+          <Link to="/create-booking" state={{ booking: bookingInfo[0] }}>
+            <AiOutlineEdit />
+          </Link>
+        </IconButton>
       </Box>
     );
   };
@@ -181,7 +180,12 @@ const Bookings = () => {
 
   const manualColumns = [
     { field: "id", headerName: "id", hide: true },
-    { field: "booking_date", headerName: "Booking Date", hide: false },
+    {
+      field: "booking_date",
+      headerName: "Booking Date",
+      hide: false,
+      minWidth: 175,
+    },
     { field: "cusotmer_id", headerName: "Customer Name", hide: false },
 
     {
@@ -189,7 +193,12 @@ const Bookings = () => {
       headerName: "Mobile Number",
       hide: false,
     },
-    { field: "product_name", headerName: "Item Name", hide: false },
+    {
+      field: "product_name",
+      headerName: "Item Name",
+      hide: false,
+      minWidth: 200,
+    },
     { field: "category_id", headerName: "Category", hide: true },
     { field: "sub_category_id", headerName: "Sub Category", hide: true },
     { field: "total_seat", headerName: "Total Seat", hide: true },
