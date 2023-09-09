@@ -6,6 +6,7 @@ import { DataGrid } from "@mui/x-data-grid";
 import DataGridCustomToolbar from "components/DataGridCustomToolbar";
 import Helmet from "components/Helmet/Helmet";
 import { useClient } from "../base/hooks/useClient";
+import Wrapper from "components/UI/Wrapper";
 
 const InstantQuotation = () => {
   const [page, setPage] = useState(0);
@@ -51,7 +52,7 @@ const InstantQuotation = () => {
 
   return (
     <Helmet title="Instant Quotation">
-      <Box m="1.5rem 2.5rem">
+      <Wrapper>
         <Header
           title="Instant Quotation"
           subtitle="Create online quotation"
@@ -108,7 +109,7 @@ const InstantQuotation = () => {
             }}
           />
         </Box>
-      </Box>
+      </Wrapper>
     </Helmet>
   );
 };

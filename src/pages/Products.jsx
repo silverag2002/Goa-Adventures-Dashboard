@@ -10,6 +10,7 @@ import { URLConstants } from "../base/api/url.constants";
 import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
 import { useClient } from "../base/hooks/useClient";
 import Helmet from "components/Helmet/Helmet";
+import Wrapper from "components/UI/Wrapper";
 
 const Products = () => {
   const theme = useTheme();
@@ -42,7 +43,7 @@ const Products = () => {
   }, [reloadPage]);
   return (
     <Helmet title="Products">
-      <Box m="1.5rem 2.5rem">
+      <Wrapper>
         <Header
           title="All Products"
           subtitle="Entire list of products"
@@ -95,7 +96,7 @@ const Products = () => {
             loadedClassName="loadedContent"
           />
         </div>
-      </Box>
+      </Wrapper>
     </Helmet>
   );
 };

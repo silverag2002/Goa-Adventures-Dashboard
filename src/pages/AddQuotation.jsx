@@ -20,6 +20,7 @@ import {
 } from "@mui/material";
 import Header from "components/Header";
 import { useClient } from "../base/hooks/useClient";
+import Wrapper from "components/UI/Wrapper";
 
 const AddQuotation = () => {
   const client = useClient();
@@ -54,7 +55,7 @@ const AddQuotation = () => {
 
   return (
     <Helmet title="Add Quotation">
-      <Box m="1.5rem 2.5rem">
+      <Wrapper>
         <Header
           title="Create Quotation"
           subtitle="Fill the details to create quotation"
@@ -417,7 +418,7 @@ const AddQuotation = () => {
             </Stack>
           </form>
         </Box>
-      </Box>
+      </Wrapper>
     </Helmet>
   );
 };

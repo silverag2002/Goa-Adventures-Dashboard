@@ -26,6 +26,7 @@ import { ClientContext } from "../base/contexts/UserContext";
 import { useClient } from "../base/hooks/useClient";
 
 import { useNavigate } from "react-router-dom";
+import Wrapper from "components/UI/Wrapper";
 
 const Dashboard = () => {
   const theme = useTheme();
@@ -75,7 +76,7 @@ const Dashboard = () => {
 
   return (
     <Helmet title="Dashboard">
-      <Box m="1.5rem 2.5rem">
+      <Wrapper>
         <Header
           title="Dashboard"
           subtitle="Welcome to your dashboard"
@@ -91,7 +92,7 @@ const Dashboard = () => {
             </Grid>
           </Grid>
         </Grid>
-      </Box>
+      </Wrapper>
     </Helmet>
   );
 };

@@ -3,6 +3,7 @@ import Header from "components/Header";
 import FlexBetween from "components/FlexBetween";
 import ReplyOutlinedIcon from "@mui/icons-material/ReplyOutlined";
 import Helmet from "components/Helmet/Helmet";
+import Wrapper from "components/UI/Wrapper";
 import {
   Box,
   Grid,
@@ -125,7 +126,7 @@ const AddStaff = () => {
   const onError = (errors) => console.log(errors);
   return (
     <Helmet title="Add Staff">
-      <Box sx={{ flexGrow: 1, margin: "1.5rem 2.5rem" }}>
+      <Wrapper sx={{ flexGrow: 1 }}>
         <Header
           title="Add New Staff"
           subtitle="Fill the details to add new staff"
@@ -320,7 +321,7 @@ const AddStaff = () => {
             </div>
           </form>
         </Box>
-      </Box>
+      </Wrapper>
     </Helmet>
   );
 };

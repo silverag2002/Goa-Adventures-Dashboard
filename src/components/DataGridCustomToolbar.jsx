@@ -5,6 +5,8 @@ import {
   TextField,
   InputAdornment,
   Typography,
+  useMediaQuery,
+  useTheme,
 } from "@mui/material";
 import {
   GridToolbarDensitySelector,
@@ -15,17 +17,21 @@ import {
 import FlexBetween from "./FlexBetween";
 
 const DataGridCustomToolbar = ({ searchInput, setSearchInput, setSearch }) => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   return (
     <GridToolbarContainer>
       <FlexBetween width="100%">
-        <FlexBetween>
-          <GridToolbarColumnsButton />
-          <GridToolbarDensitySelector />
-          <GridToolbarExport />
-        </FlexBetween>
+        {!isMobile && (
+          <FlexBetween>
+            <GridToolbarColumnsButton />
+            <GridToolbarDensitySelector />
+            <GridToolbarExport />
+          </FlexBetween>
+        )}
         <TextField
           label="Search..."
-          sx={{ mb: "0.5rem", width: "15rem" }}
+          sx={{ mb: "0.5rem", width: `${isMobile ? "100%" : "15rem"}` }}
           onChange={(e) => setSearchInput(e.target.value)}
           value={searchInput}
           variant="standard"

@@ -11,6 +11,7 @@ import { axiosInstance } from "../base/api/axios.util";
 import { URLConstants } from "../base/api/url.constants";
 import Helmet from "components/Helmet/Helmet";
 import { useClient } from "../base/hooks/useClient";
+import Wrapper from "components/UI/Wrapper";
 
 const Location = () => {
   const theme = useTheme();
@@ -108,7 +109,7 @@ const Location = () => {
 
   return (
     <Helmet title="Location">
-      <Box m="1.5rem 2.5rem">
+      <Wrapper>
         <Header
           title="Location"
           subtitle="Entire list of locations"
@@ -162,7 +163,7 @@ const Location = () => {
             loadedClassName="loadedContent"
           />
         </div>
-      </Box>
+      </Wrapper>
     </Helmet>
   );
 };

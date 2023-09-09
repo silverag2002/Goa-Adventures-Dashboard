@@ -18,6 +18,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { DatePicker } from "@mui/x-date-pickers";
 import Helmet from "components/Helmet/Helmet";
 import { useClient } from "../base/hooks/useClient";
+import Wrapper from "components/UI/Wrapper";
 
 const CreateBooking = () => {
   const client = useClient();
@@ -235,7 +236,7 @@ const CreateBooking = () => {
   const onError = (errors) => console.log(errors);
   return (
     <Helmet title="Create Booking">
-      <Box sx={{ flexGrow: 1, margin: "1.5rem 2.5rem" }}>
+      <Wrapper sx={{ flexGrow: 1 }}>
         <Header
           title="Create Booking"
           subtitle="Create manual booking"
@@ -710,7 +711,7 @@ const CreateBooking = () => {
             />
           </div>
         </form>
-      </Box>
+      </Wrapper>
     </Helmet>
   );
 };

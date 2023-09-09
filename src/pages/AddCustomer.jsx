@@ -11,6 +11,7 @@ import {
   useTheme,
   Typography,
   Stack,
+  useMediaQuery,
 } from "@mui/material";
 import { useForm, Controller } from "react-hook-form";
 import { axiosInstance } from "../base/api/axios.util";
@@ -20,6 +21,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { ClientContext } from "../base/contexts/UserContext";
 import { useClient } from "../base/hooks/useClient";
 import axios, * as others from "axios";
+import Wrapper from "components/UI/Wrapper";
 var FormData = require("form-data");
 
 const AddCustomer = () => {
@@ -31,6 +33,7 @@ const AddCustomer = () => {
     }
   }, []);
   const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const [loaded, setLoaded] = useState(true);
   const [customers, setCustomers] = useState([]);
   const [reloadPage, setReloadPage] = useState(false);
@@ -147,7 +150,11 @@ const AddCustomer = () => {
   const onError = (errors) => console.log(errors);
   return (
     <Helmet title="Add Customer">
-      <Box sx={{ flexGrow: 1, margin: "1.5rem 2.5rem" }}>
+      <Wrapper
+        sx={{
+          flexGrow: 1,
+        }}
+      >
         <Header
           title="Create Customer"
           buttonText="Go Back"
@@ -357,7 +364,7 @@ const AddCustomer = () => {
             />
           </div>
         </form>
-      </Box>
+      </Wrapper>
     </Helmet>
   );
 };

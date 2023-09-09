@@ -8,6 +8,7 @@ import { axiosInstance } from "../base/api/axios.util";
 import { URLConstants } from "../base/api/url.constants";
 import Helmet from "components/Helmet/Helmet";
 import { useClient } from "../base/hooks/useClient";
+import Wrapper from "components/UI/Wrapper";
 
 const TermsConditions = () => {
   const location = useLocation();
@@ -67,7 +68,7 @@ const TermsConditions = () => {
 
   return (
     <Helmet title="Terms & Conditions">
-      <Box m="1.5rem 2.5rem">
+      <Wrapper>
         <Header
           title="Terms & Conditions"
           subtitle="Add your website terms and conditions"
@@ -131,7 +132,7 @@ const TermsConditions = () => {
             loadedClassName="loadedContent"
           />
         </div>
-      </Box>
+      </Wrapper>
     </Helmet>
   );
 };

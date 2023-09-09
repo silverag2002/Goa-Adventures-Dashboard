@@ -11,6 +11,7 @@ import Loader from "react-loader";
 import { Link, useNavigate } from "react-router-dom";
 import { useClient } from "../base/hooks/useClient";
 import Helmet from "components/Helmet/Helmet";
+import Wrapper from "components/UI/Wrapper";
 
 const Customers = () => {
   // values to be sent to the backend
@@ -181,7 +182,7 @@ const Customers = () => {
 
   return (
     <Helmet title="Customer">
-      <Box m="1.5rem 2.5rem">
+      <Wrapper>
         <Header
           title="Customers"
           subtitle="Entire list of customers"
@@ -263,7 +264,7 @@ const Customers = () => {
             loadedClassName="loadedContent"
           />
         </div>
-      </Box>
+      </Wrapper>
     </Helmet>
   );
 };

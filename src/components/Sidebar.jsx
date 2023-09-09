@@ -262,6 +262,7 @@ const Sidebar = ({
                       onClick={() => {
                         navigate(`/${lcText}`);
                         setActive(lcText);
+                        setIsSidebarOpen(!isSidebarOpen);
                       }}
                       sx={{
                         backgroundColor:

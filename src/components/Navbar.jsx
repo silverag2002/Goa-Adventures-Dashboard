@@ -25,6 +25,7 @@ import {
   Menu,
   MenuItem,
   useTheme,
+  useMediaQuery,
 } from "@mui/material";
 import { useAuth } from "../base/hooks/useAuth";
 
@@ -33,6 +34,7 @@ const Navbar = ({ user, isSidebarOpen, setIsSidebarOpen }) => {
   const { logout } = useAuth();
   const dispatch = useDispatch();
   const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   const [anchorEl, setAnchorEl] = useState(null);
   const isOpen = Boolean(anchorEl);
@@ -48,12 +50,11 @@ const Navbar = ({ user, isSidebarOpen, setIsSidebarOpen }) => {
         position: "sticky",
         background: theme.palette.neutral.white,
         boxShadow: "none",
-        padding: "0.5rem",
       }}
     >
       <Toolbar sx={{ justifyContent: "space-between" }}>
         {/* LEFT SIDE */}
-        <FlexBetween gap="0.5rem">
+        <FlexBetween>
           <IconButton
             onClick={() => setIsSidebarOpen(!isSidebarOpen)}
             sx={{
@@ -68,21 +69,23 @@ const Navbar = ({ user, isSidebarOpen, setIsSidebarOpen }) => {
               }}
             />
           </IconButton>
-          <FlexBetween
-            backgroundColor={theme.palette.neutral.grey100}
-            borderRadius="10px"
-            gap="3rem"
-            p="0.3rem 1.5rem"
-          >
-            <InputBase placeholder="Search..." />
-            <IconButton>
-              <Search />
-            </IconButton>
-          </FlexBetween>
+          {!isMobile && (
+            <FlexBetween
+              backgroundColor={theme.palette.neutral.grey100}
+              borderRadius="10px"
+              gap="3rem"
+              p="0.3rem 1.5rem"
+            >
+              <InputBase placeholder="Search..." />
+              <IconButton>
+                <Search />
+              </IconButton>
+            </FlexBetween>
+          )}
         </FlexBetween>
 
         {/* RIGHT SIDE */}
-        <FlexBetween gap="1.5rem">
+        <FlexBetween gap={`${isMobile ? "0.6rem" : "1.5rem"}`}>
           <IconButton
             onClick={() => dispatch(setMode())}
             sx={{

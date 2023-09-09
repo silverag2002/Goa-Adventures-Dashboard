@@ -8,6 +8,7 @@ import { axiosInstance } from "../base/api/axios.util";
 import { URLConstants } from "../base/api/url.constants";
 import Helmet from "components/Helmet/Helmet";
 import { useClient } from "../base/hooks/useClient";
+import Wrapper from "components/UI/Wrapper";
 
 const PrivacyPolicry = () => {
   const location = useLocation();
@@ -67,7 +68,7 @@ const PrivacyPolicry = () => {
 
   return (
     <Helmet title="Privacy Policy">
-      <Box m="1.5rem 2.5rem">
+      <Wrapper>
         <Header
           title="Privacy Policy"
           subtitle="Add your website privacy policy"
@@ -131,7 +132,7 @@ const PrivacyPolicry = () => {
             loadedClassName="loadedContent"
           />
         </div>
-      </Box>
+      </Wrapper>
     </Helmet>
   );
 };

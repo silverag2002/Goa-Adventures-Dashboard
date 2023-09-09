@@ -22,6 +22,7 @@ import { ClientContext } from "../base/contexts/UserContext";
 import Helmet from "components/Helmet/Helmet";
 import { useClient } from "../base/hooks/useClient";
 import { AiOutlineDelete, AiOutlineEdit } from "react-icons/ai";
+import Wrapper from "components/UI/Wrapper";
 
 function CustomTabPanel(props) {
   const client = useClient();
@@ -235,28 +236,51 @@ const Bookings = () => {
 
   return (
     <Helmet title="Bookings">
-      <Box
-        sx={{
-          padding: `${isMobile ? "0.5rem" : "1rem 1.5rem"}`,
-        }}
-      >
+      <Wrapper>
         <Header
           title="Bookings"
           buttonText="Create Booking"
           onClick={() => navigate("/create-booking")}
         />
 
-        <Box>
-          <Tabs value={value} selectionFollowsFocus onChange={handleChange}>
+        <Box
+          sx={{
+            margin: "1rem 0",
+            "& .MuiButtonBase-root.MuiTab-root.Mui-selected": {
+              color: theme.palette.secondary.purple500,
+              background: theme.palette.secondary.main,
+            },
+          }}
+        >
+          <Tabs
+            value={value}
+            selectionFollowsFocus
+            onChange={handleChange}
+            centered={isMobile ? true : false}
+            variant={isMobile ? "fullWidth" : "standard"}
+            TabIndicatorProps={{
+              style: { background: theme.palette.secondary.purple500 },
+            }}
+          >
             <Tab
               label="Online Booking"
               {...a11yProps(0)}
-              sx={{ boxShadow: "0px 3px 2px 0px rgba(0,0,0,0.4)" }}
+              sx={{
+                boxShadow: "0px 3px 2px 0px rgba(0,0,0,0.4)",
+                fontWeight: "600",
+                color: theme.palette.neutral.grey900,
+                backgroundColor: theme.palette.neutral.grey200,
+              }}
             />
             <Tab
               label="Manual Booking"
               {...a11yProps(1)}
-              sx={{ boxShadow: "0px 3px 2px 0px rgba(0,0,0,0.4)" }}
+              sx={{
+                boxShadow: "0px 3px 2px 0px rgba(0,0,0,0.4)",
+                fontWeight: "600",
+                color: theme.palette.neutral.grey900,
+                backgroundColor: theme.palette.neutral.grey200,
+              }}
             />
           </Tabs>
         </Box>
@@ -523,7 +547,7 @@ const Bookings = () => {
             loadedClassName="loadedContent"
           />
         </div>
-      </Box>
+      </Wrapper>
     </Helmet>
   );
 };

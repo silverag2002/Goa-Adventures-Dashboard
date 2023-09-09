@@ -11,6 +11,7 @@ import Loader from "react-loader";
 import { Link, useNavigate } from "react-router-dom";
 import { useClient } from "../base/hooks/useClient";
 import Helmet from "components/Helmet/Helmet";
+import Wrapper from "components/UI/Wrapper";
 
 const ManageStaffs = () => {
   const theme = useTheme();
@@ -175,7 +176,7 @@ const ManageStaffs = () => {
 
   return (
     <Helmet title="Manage Staff">
-      <Box m="1.5rem 2.5rem">
+      <Wrapper>
         <Header
           title="Staff"
           subtitle="Entire list of staff"
@@ -256,7 +257,7 @@ const ManageStaffs = () => {
             loadedClassName="loadedContent"
           />
         </div>
-      </Box>
+      </Wrapper>
     </Helmet>
   );
 };

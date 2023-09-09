@@ -25,6 +25,7 @@ import Loader from "react-loader";
 import ReplyOutlinedIcon from "@mui/icons-material/ReplyOutlined";
 import Helmet from "components/Helmet/Helmet";
 import { useClient } from "../base/hooks/useClient";
+import Wrapper from "components/UI/Wrapper";
 
 var FormData = require("form-data");
 
@@ -59,7 +60,7 @@ const AddProduct = () => {
 
   console.log(imageUrl);
 
-  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   useEffect(() => {
     if (selectedImage) {
@@ -364,7 +365,11 @@ const AddProduct = () => {
 
   return (
     <Helmet title="Add Product">
-      <Box sx={{ flexGrow: 1, margin: "1.5rem 2.5rem" }}>
+      <Wrapper
+        sx={{
+          flexGrow: 1,
+        }}
+      >
         <Header
           title="Add Product"
           subtitle="Fill the details to add product"
@@ -1082,7 +1087,7 @@ const AddProduct = () => {
             </div>
           </form>
         </Box>
-      </Box>
+      </Wrapper>
     </Helmet>
   );
 };

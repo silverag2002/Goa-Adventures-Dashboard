@@ -9,6 +9,7 @@ import { URLConstants } from "../base/api/url.constants";
 import axios, * as others from "axios";
 import { Link } from "react-router-dom";
 import Helmet from "components/Helmet/Helmet";
+import Wrapper from "components/UI/Wrapper";
 import {
   DeleteOutlineOutlined,
   ModeEditOutlineOutlined,
@@ -210,7 +211,7 @@ const Category = () => {
 
   return (
     <Helmet title="Category">
-      <Box m="1.5rem 2.5rem">
+      <Wrapper>
         <Header title="Category" subtitle="Entire list of category" />
         <Box>
           <form onSubmit={handleSubmit(onSubmit, onError)}>
@@ -295,7 +296,7 @@ const Category = () => {
             loadedClassName="loadedContent"
           />
         </div>
-      </Box>
+      </Wrapper>
     </Helmet>
   );
 };

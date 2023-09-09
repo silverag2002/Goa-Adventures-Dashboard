@@ -1,8 +1,8 @@
 export class URLConstants {}
 
-URLConstants.BASE_URL = "http://localhost:4000";
+// URLConstants.BASE_URL = "http://localhost:4000";
 
-// URLConstants.BASE_URL = "https://backend.goaadventure.in";
+URLConstants.BASE_URL = "https://backend.goaadventure.in";
 // URLConstants.BASE_URL =
 //   "http://ec2-65-2-166-56.ap-south-1.compute.amazonaws.com:4000";
 // AUTH ROUTES

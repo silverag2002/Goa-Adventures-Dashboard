@@ -3,6 +3,7 @@ import {
   Box,
   Button,
   useTheme,
+  useMediaQuery,
   Grid,
   Stack,
   TextField,
@@ -20,6 +21,7 @@ import ReplyOutlinedIcon from "@mui/icons-material/ReplyOutlined";
 import { ClientContext } from "../base/contexts/UserContext";
 import { useClient } from "../base/hooks/useClient";
 import Helmet from "components/Helmet/Helmet";
+import Wrapper from "components/UI/Wrapper";
 
 const AddLocation = () => {
   const client = useClient();
@@ -34,6 +36,7 @@ const AddLocation = () => {
   const [loaded, setLoaded] = useState(true);
   const navigate = useNavigate();
   const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const editor = useRef();
   const location = useLocation();
 
@@ -150,7 +153,7 @@ const AddLocation = () => {
 
   return (
     <Helmet title="Add Location">
-      <Box m="1.5rem 2.5rem">
+      <Wrapper>
         <Header
           title="Add Location"
           subtitle="Fill the details to add location"
@@ -289,7 +292,7 @@ const AddLocation = () => {
             loadedClassName="loadedContent"
           />
         </div>
-      </Box>
+      </Wrapper>
     </Helmet>
   );
 };

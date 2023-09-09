@@ -21,6 +21,8 @@ import {
 } from "@mui/icons-material/";
 import axios, * as others from "axios";
 import Helmet from "components/Helmet/Helmet";
+import Wrapper from "components/UI/Wrapper";
+
 var FormData = require("form-data");
 
 const SubCategory = () => {
@@ -253,7 +255,7 @@ const SubCategory = () => {
 
   return (
     <Helmet title="Sub Category">
-      <Box m="1.5rem 2.5rem">
+      <Wrapper>
         <Header title="Sub Category" subtitle="Entire list of sub category" />
         <Box>
           <form onSubmit={handleSubmit(onSubmit, onError)}>
@@ -374,7 +376,7 @@ const SubCategory = () => {
             loadedClassName="loadedContent"
           />
         </div>
-      </Box>
+      </Wrapper>
     </Helmet>
   );
 };
