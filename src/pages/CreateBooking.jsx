@@ -248,6 +248,56 @@ const CreateBooking = () => {
         <form onSubmit={handleSubmit(onSubmit, onError)}>
           <Grid container spacing={2}>
             <Grid item xs={12} md={3}>
+              <Controller
+                name="status"
+                control={control}
+                onChange={(e) => console.log("Ankit", e.target.value)}
+                render={({ field }) => (
+                  <TextField
+                    select
+                    id="staff_name"
+                    label="Status"
+                    variant="outlined"
+                    margin="normal"
+                    fullWidth
+                    inputProps={{ style: { fontSize: 16 } }}
+                    InputLabelProps={{ style: { fontSize: 16 } }}
+                  >
+                    <MenuItem value="0">Enquiry</MenuItem>
+                    <MenuItem value="1">Confirmed</MenuItem>
+                    <MenuItem value="2">Cancelled</MenuItem>
+                    <MenuItem value="3">Refund</MenuItem>
+                  </TextField>
+                )}
+              />
+            </Grid>
+            <Grid item xs={12} md={3}>
+              <Controller
+                name="staff_name"
+                control={control}
+                onChange={(e) => console.log("Ankit", e.target.value)}
+                render={({ field }) => (
+                  <TextField
+                    select
+                    id="staff_name"
+                    label="Staff Name"
+                    variant="outlined"
+                    margin="normal"
+                    fullWidth
+                    inputProps={{ style: { fontSize: 16 } }}
+                    InputLabelProps={{ style: { fontSize: 16 } }}
+                  >
+                    <MenuItem value="Masood Altaf">Masood Altaf</MenuItem>
+                    <MenuItem value="Mozammil Ansari">Mozammil Ansari</MenuItem>
+                    <MenuItem value="Md Daud">Md Daud</MenuItem>
+                    <MenuItem value="Aquib Javed">Aquib Javed</MenuItem>
+                    <MenuItem value="Nazim Alam">Nazim Alam</MenuItem>
+                    <MenuItem value="Md Amjad">Md Amjad</MenuItem>
+                  </TextField>
+                )}
+              />
+            </Grid>
+            <Grid item xs={12} md={3}>
               <Box>
                 <Controller
                   name="customer_id"
@@ -277,6 +327,8 @@ const CreateBooking = () => {
 
                         console.log("MOb num", mobNum);
                       }}
+                      inputProps={{ style: { fontSize: 16 } }}
+                      InputLabelProps={{ style: { fontSize: 16 } }}
                     >
                       {customers.map((cust) => (
                         <MenuItem key={cust.id} value={cust.id}>
@@ -301,6 +353,30 @@ const CreateBooking = () => {
                       value={mobileNumber}
                       fullWidth
                       margin="normal"
+                      inputProps={{ style: { fontSize: 16 } }}
+                      InputLabelProps={{ style: { fontSize: 16 } }}
+                      focused
+                    />
+                  )}
+                />
+              </Box>
+            </Grid>
+
+            <Grid item xs={12} md={6}>
+              <Box>
+                <Controller
+                  name="product_name"
+                  control={control}
+                  render={({ field }) => (
+                    <TextField
+                      id="product_name"
+                      label="Product Name"
+                      variant="outlined"
+                      fullWidth
+                      margin="normal"
+                      inputProps={{ style: { fontSize: 16 } }}
+                      InputLabelProps={{ style: { fontSize: 16 } }}
+                      {...field}
                     />
                   )}
                 />
@@ -320,6 +396,8 @@ const CreateBooking = () => {
                       variant="outlined"
                       margin="normal"
                       fullWidth
+                      inputProps={{ style: { fontSize: 16 } }}
+                      InputLabelProps={{ style: { fontSize: 16 } }}
                       defaultValue={
                         clientDataAssignment?.category_id
                           ? clientDataAssignment?.category_id
@@ -354,6 +432,8 @@ const CreateBooking = () => {
                       variant="outlined"
                       fullWidth
                       margin="normal"
+                      inputProps={{ style: { fontSize: 16 } }}
+                      InputLabelProps={{ style: { fontSize: 16 } }}
                       defaultValue={
                         clientDataAssignment?.sub_category_id
                           ? clientDataAssignment?.sub_category_id
@@ -375,24 +455,6 @@ const CreateBooking = () => {
                 />
               </Box>
             </Grid>
-            <Grid item xs={12} md={6}>
-              <Box>
-                <Controller
-                  name="product_name"
-                  control={control}
-                  render={({ field }) => (
-                    <TextField
-                      id="product_name"
-                      label="Product Name"
-                      variant="outlined"
-                      fullWidth
-                      margin="normal"
-                      {...field}
-                    />
-                  )}
-                />
-              </Box>
-            </Grid>
             <Grid item xs={12} md={3}>
               <Box>
                 <Controller
@@ -406,6 +468,29 @@ const CreateBooking = () => {
                       type="number"
                       fullWidth
                       margin="normal"
+                      inputProps={{ style: { fontSize: 16 } }}
+                      InputLabelProps={{ style: { fontSize: 16 } }}
+                      {...field}
+                    />
+                  )}
+                />
+              </Box>
+            </Grid>
+            <Grid item xs={12} md={3}>
+              <Box>
+                <Controller
+                  name="per_person"
+                  control={control}
+                  render={({ field }) => (
+                    <TextField
+                      id="per_person"
+                      label="Per Person ₹"
+                      variant="outlined"
+                      type="number"
+                      fullWidth
+                      margin="normal"
+                      inputProps={{ style: { fontSize: 16 } }}
+                      InputLabelProps={{ style: { fontSize: 16 } }}
                       {...field}
                     />
                   )}
@@ -420,11 +505,13 @@ const CreateBooking = () => {
                   render={({ field }) => (
                     <TextField
                       id="total_amount"
-                      label="Total Amount"
+                      label="Total Amount ₹"
                       variant="outlined"
                       type="number"
                       fullWidth
                       margin="normal"
+                      inputProps={{ style: { fontSize: 16 } }}
+                      InputLabelProps={{ style: { fontSize: 16 } }}
                       {...field}
                     />
                   )}
@@ -444,6 +531,8 @@ const CreateBooking = () => {
                       type="number"
                       fullWidth
                       margin="normal"
+                      inputProps={{ style: { fontSize: 16 } }}
+                      InputLabelProps={{ style: { fontSize: 16 } }}
                       value={depositAmount}
                       onChange={(e) => {
                         console.log("Testing getValues", field);
@@ -478,6 +567,9 @@ const CreateBooking = () => {
                       variant="outlined"
                       fullWidth
                       margin="normal"
+                      inputProps={{ style: { fontSize: 16 } }}
+                      InputLabelProps={{ style: { fontSize: 16 } }}
+                      focused
                       value={pendingAmount}
                     />
                   )}
@@ -497,6 +589,8 @@ const CreateBooking = () => {
                       variant="outlined"
                       fullWidth
                       margin="normal"
+                      inputProps={{ style: { fontSize: 16 } }}
+                      InputLabelProps={{ style: { fontSize: 16 } }}
                       defaultValue={
                         clientDataAssignment?.payment_mode
                           ? clientDataAssignment?.payment_mode
@@ -524,6 +618,8 @@ const CreateBooking = () => {
                       variant="outlined"
                       fullWidth
                       margin="normal"
+                      inputProps={{ style: { fontSize: 16 } }}
+                      InputLabelProps={{ style: { fontSize: 16 } }}
                       defaultValue={
                         clientDataAssignment?.paying_full
                           ? clientDataAssignment?.paying_full
@@ -550,6 +646,8 @@ const CreateBooking = () => {
                       variant="outlined"
                       fullWidth
                       margin="normal"
+                      inputProps={{ style: { fontSize: 16 } }}
+                      InputLabelProps={{ style: { fontSize: 16 } }}
                       {...field}
                     />
                   )}
@@ -569,6 +667,9 @@ const CreateBooking = () => {
                       variant="outlined"
                       fullWidth
                       margin="normal"
+                      inputProps={{ style: { fontSize: 16 } }}
+                      InputLabelProps={{ style: { fontSize: 16 } }}
+                      focused
                       {...field}
                     />
                   )}
@@ -588,6 +689,9 @@ const CreateBooking = () => {
                       variant="outlined"
                       fullWidth
                       margin="normal"
+                      inputProps={{ style: { fontSize: 16 } }}
+                      InputLabelProps={{ style: { fontSize: 16 } }}
+                      focused
                       {...field}
                     />
                   )}
@@ -607,6 +711,9 @@ const CreateBooking = () => {
                       type="time"
                       fullWidth
                       margin="normal"
+                      inputProps={{ style: { fontSize: 16 } }}
+                      InputLabelProps={{ style: { fontSize: 16 } }}
+                      focused
                       {...field}
                     />
                   )}
@@ -625,6 +732,46 @@ const CreateBooking = () => {
                       variant="outlined"
                       fullWidth
                       margin="normal"
+                      inputProps={{ style: { fontSize: 16 } }}
+                      InputLabelProps={{ style: { fontSize: 16 } }}
+                      {...field}
+                    />
+                  )}
+                />
+              </Box>
+            </Grid>
+            <Grid item xs={12} md={3}>
+              <Box>
+                <Controller
+                  name="hotel_name"
+                  control={control}
+                  render={({ field }) => (
+                    <TextField
+                      id="hotel_name"
+                      label="Hotel Name"
+                      variant="outlined"
+                      fullWidth
+                      margin="normal"
+                      {...field}
+                    />
+                  )}
+                />
+              </Box>
+            </Grid>
+            <Grid item xs={12} md={3}>
+              <Box>
+                <Controller
+                  name="company_name"
+                  control={control}
+                  render={({ field }) => (
+                    <TextField
+                      id="company_name"
+                      label="Company Name"
+                      variant="outlined"
+                      fullWidth
+                      margin="normal"
+                      inputProps={{ style: { fontSize: 16 } }}
+                      InputLabelProps={{ style: { fontSize: 16 } }}
                       {...field}
                     />
                   )}
@@ -646,6 +793,8 @@ const CreateBooking = () => {
                       rows={5}
                       fullWidth
                       margin="normal"
+                      inputProps={{ style: { fontSize: 16 } }}
+                      InputLabelProps={{ style: { fontSize: 16 } }}
                       {...field}
                     />
                   )}
