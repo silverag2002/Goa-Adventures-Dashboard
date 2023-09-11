@@ -9,24 +9,15 @@ import {
   CardMedia,
   CardContent,
   CardActions,
-  Stack,
-  Button,
   IconButton,
-  Container,
-  ButtonGroup,
+  useMediaQuery,
 } from "@mui/material";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import EditIcon from "@mui/icons-material/Edit";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
-import { Palette } from "@mui/icons-material";
-import PlaceOutlinedIcon from "@mui/icons-material/PlaceOutlined";
 import { Link } from "react-router-dom";
-import {
-  CurrencyRupee,
-  FmdGoodOutlined,
-  CategoryOutlined,
-} from "@mui/icons-material";
+import { CurrencyRupee, FmdGoodOutlined } from "@mui/icons-material";
 import { axiosInstance } from "base/api/axios.util";
 
 import { URLConstants } from "../base/api/url.constants";
@@ -34,12 +25,15 @@ import { URLConstants } from "../base/api/url.constants";
 const ProductCard = ({ product, setLoaded, setReloadPage }) => {
   const [visible, setVisible] = useState(true);
   const [finalProduct, setFinalProduct] = useState(product);
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+
   console.log("PRoduct received", product);
 
   const productStatusHandler = () => {
     setVisible(!visible);
   };
-  const theme = useTheme();
+
   console.log("PRoiduct", product);
 
   function deleteProduct(productId) {
@@ -64,11 +58,11 @@ const ProductCard = ({ product, setLoaded, setReloadPage }) => {
         height: "100%",
         backgroundColor: theme.palette.background.default,
         boxShadow: 3,
-        borderRadius: "7%",
+        borderRadius: "2%",
       }}
     >
       <CardMedia
-        sx={{ height: 175 }}
+        sx={{ height: `${isMobile ? "120px" : "175px"}` }}
         image={product.featured_image}
         title="green iguana"
       />

@@ -267,6 +267,7 @@ const CreateBooking = () => {
                     <MenuItem value="1">Confirmed</MenuItem>
                     <MenuItem value="2">Cancelled</MenuItem>
                     <MenuItem value="3">Refund</MenuItem>
+                    <MenuItem value="4">Refund</MenuItem>
                   </TextField>
                 )}
               />

@@ -20,11 +20,6 @@ import {
   HomeOutlined,
   ShoppingCartOutlined,
   Groups2Outlined,
-  PublicOutlined,
-  CalendarMonthOutlined,
-  AdminPanelSettingsOutlined,
-  TrendingUpOutlined,
-  PieChartOutlined,
   ScubaDivingOutlined,
   CategoryOutlined,
   ManageAccountsOutlined,
@@ -41,62 +36,6 @@ import goaAdventureLogo from "assets/goaadventure_color_logo.svg";
 import goaAdventureWhite from "assets/goaadventure_white_logo.svg";
 import { ClientContext } from "../base/contexts/UserContext";
 
-// const navItems = [
-//   {
-//     text: "Dashboard",
-//     icon: <HomeOutlined />,
-//   },
-//   {
-//     text: "Bookings",
-//     icon: <ShoppingCartOutlined />,
-//   },
-
-//   {
-//     text: "Instant Quotation",
-//     icon: <SummarizeOutlined />,
-//   },
-//   {
-//     text: "Products",
-//     icon: <ScubaDivingOutlined />,
-//   },
-//   {
-//     text: "Category",
-//     icon: <CategoryOutlined />,
-//   },
-//   {
-//     text: "Sub Category",
-//     icon: <CategoryOutlined />,
-//   },
-//   {
-//     text: "Location",
-//     icon: <AddLocationAltOutlined />,
-//   },
-//   {
-//     text: "Customers",
-//     icon: <Groups2Outlined />,
-//   },
-//   {
-//     text: "Manage Staff",
-//     icon: <ManageAccountsOutlined />,
-//   },
-//   {
-//     text: "Privacy Policy",
-//     icon: <VerifiedUserOutlined />,
-//   },
-//   {
-//     text: "Terms Conditions",
-//     icon: <ArticleOutlined />,
-//   },
-//   {
-//     text: "Business Analytics",
-//     icon: null,
-//   },
-//   {
-//     text: "Geography",
-//     icon: <ArticleOutlined />,
-//   },
-// ];
-
 const Sidebar = ({
   user,
   drawerWidth,
@@ -105,6 +44,7 @@ const Sidebar = ({
   isNonMobile,
 }) => {
   const { client, setClient } = useContext(ClientContext);
+
   let navItems = [];
   if (client?.role == 0) {
     navItems = [
@@ -186,6 +126,7 @@ const Sidebar = ({
   const [active, setActive] = useState("");
   const navigate = useNavigate();
   const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   useEffect(() => {
     setActive(pathname.substring(1));
@@ -262,7 +203,9 @@ const Sidebar = ({
                       onClick={() => {
                         navigate(`/${lcText}`);
                         setActive(lcText);
-                        setIsSidebarOpen(!isSidebarOpen);
+                        if (isMobile) {
+                          setIsSidebarOpen(!isSidebarOpen);
+                        }
                       }}
                       sx={{
                         backgroundColor:

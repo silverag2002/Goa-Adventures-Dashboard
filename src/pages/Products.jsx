@@ -61,7 +61,7 @@ const Products = () => {
           marginTop="40px"
         >
           {products.map((item, index) => (
-            <Grid item xs={6} md={4} lg={3}>
+            <Grid item xs={12} sm={6} md={3}>
               <ProductCard
                 product={item}
                 key={item.id}
