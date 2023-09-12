@@ -42,7 +42,11 @@ const CreateBooking = () => {
   const [subCategoryId, setSubCategoryId] = useState(null);
   const [productLocations, setProducLocation] = useState([]);
   const [dest_location, setDestLocation] = useState(null);
+  const [totalAmount, setTotalAmount] = useState(null);
   const [productId, setProductId] = useState("");
+  const [staff, setStaff] = useState([]);
+  const [staffId, setStaffId] = useState("");
+  const [perPersonPrice, setPerPersonPrice] = useState(null);
   const location = useLocation();
 
   const theme = useTheme();
@@ -113,6 +117,22 @@ const CreateBooking = () => {
 
   useEffect(() => {
     setLoaded(false);
+    axiosInstance
+      .get(URLConstants.staff())
+      .then((res) => {
+        console.log("Response from staff", res);
+
+        setStaff(res);
+        setLoaded(true);
+      })
+      .catch((err) => {
+        console.log("Error", err);
+        setLoaded(true);
+      });
+  }, [reloadPage]);
+
+  useEffect(() => {
+    setLoaded(false);
     // axiosInstance
     //   .get(URLConstants.product())
     //   .then((res) => {
@@ -131,10 +151,12 @@ const CreateBooking = () => {
       "destination_location",
       clientDataAssignment?.destination_location
     );
+    setValue("hotel_name", clientDataAssignment?.hotel_name);
     setValue("category_id", clientDataAssignment?.category_id);
     setValue("sub_category_id", clientDataAssignment?.sub_category_id);
-
+    setValue("company_name", clientDataAssignment?.company_name);
     setValue("booking_status", clientDataAssignment?.booking_status);
+    setStaffId(clientDataAssignment?.staff_id);
     setValue("total_seat", clientDataAssignment?.total_seat);
     setValue("total_amount", clientDataAssignment?.total_amount);
     setDestLocation(clientDataAssignment?.destination_location);
@@ -142,6 +164,7 @@ const CreateBooking = () => {
     setPendingAmount(clientDataAssignment?.pending_amount);
     setMobileNumber(clientDataAssignment?.customer_mobile_number);
     setCustomerId(clientDataAssignment?.customer_id);
+    setTotalAmount(clientDataAssignment?.total_amount);
     setValue("start_date", clientDataAssignment?.start_date);
     setValue("end_date", clientDataAssignment?.end_date);
     setValue("payment_mode", clientDataAssignment?.payment_mode);
@@ -190,11 +213,14 @@ const CreateBooking = () => {
   const onSubmit = (data) => {
     console.log("Date capiutred in booking", data);
     setLoaded(false);
-    data.quantity = 1;
+
+    data.quantity = data.total_seat;
+    data.price_per_person = perPersonPrice;
 
     data.category_id = categoryId;
-
+    data.staff_id = staffId;
     data.sub_category_id = subCategoryId;
+    data.total_amount = totalAmount;
     data.pending_amount = pendingAmount;
     data.deposit_amount = depositAmount;
     if (!clientDataAssignment?.booking_date) {
@@ -249,32 +275,36 @@ const CreateBooking = () => {
           <Grid container spacing={2}>
             <Grid item xs={12} md={3}>
               <Controller
-                name="status"
+                name="booking_status"
                 control={control}
-                onChange={(e) => console.log("Ankit", e.target.value)}
                 render={({ field }) => (
                   <TextField
                     select
-                    id="staff_name"
+                    id="booking_status"
                     label="Status"
                     variant="outlined"
                     margin="normal"
                     fullWidth
                     inputProps={{ style: { fontSize: 16 } }}
                     InputLabelProps={{ style: { fontSize: 16 } }}
+                    defaultValue={
+                      clientDataAssignment?.booking_status
+                        ? clientDataAssignment?.booking_status
+                        : ""
+                    }
+                    {...field}
                   >
-                    <MenuItem value="0">Enquiry</MenuItem>
-                    <MenuItem value="1">Confirmed</MenuItem>
-                    <MenuItem value="2">Cancelled</MenuItem>
-                    <MenuItem value="3">Refund</MenuItem>
-                    <MenuItem value="4">Refund</MenuItem>
+                    <MenuItem value={3}>Enquiry</MenuItem>
+                    <MenuItem value={1}>Confirmed</MenuItem>
+                    <MenuItem value={2}>Cancelled</MenuItem>
+                    <MenuItem value={4}>Refund</MenuItem>
                   </TextField>
                 )}
               />
             </Grid>
             <Grid item xs={12} md={3}>
               <Controller
-                name="staff_name"
+                name="staff_id"
                 control={control}
                 onChange={(e) => console.log("Ankit", e.target.value)}
                 render={({ field }) => (
@@ -285,15 +315,17 @@ const CreateBooking = () => {
                     variant="outlined"
                     margin="normal"
                     fullWidth
+                    onChange={(e) => {
+                      setStaffId(e.target.value);
+                    }}
                     inputProps={{ style: { fontSize: 16 } }}
                     InputLabelProps={{ style: { fontSize: 16 } }}
                   >
-                    <MenuItem value="Masood Altaf">Masood Altaf</MenuItem>
-                    <MenuItem value="Mozammil Ansari">Mozammil Ansari</MenuItem>
-                    <MenuItem value="Md Daud">Md Daud</MenuItem>
-                    <MenuItem value="Aquib Javed">Aquib Javed</MenuItem>
-                    <MenuItem value="Nazim Alam">Nazim Alam</MenuItem>
-                    <MenuItem value="Md Amjad">Md Amjad</MenuItem>
+                    {staff.map((cust) => (
+                      <MenuItem key={cust.id} value={cust.id}>
+                        {cust.name}
+                      </MenuItem>
+                    ))}
                   </TextField>
                 )}
               />
@@ -480,19 +512,35 @@ const CreateBooking = () => {
             <Grid item xs={12} md={3}>
               <Box>
                 <Controller
-                  name="per_person"
+                  name="total_per_person"
                   control={control}
                   render={({ field }) => (
                     <TextField
-                      id="per_person"
+                      id="total_per_person"
                       label="Per Person ₹"
                       variant="outlined"
                       type="number"
                       fullWidth
                       margin="normal"
+                      value={perPersonPrice}
                       inputProps={{ style: { fontSize: 16 } }}
                       InputLabelProps={{ style: { fontSize: 16 } }}
-                      {...field}
+                      onChange={(e) => {
+                        setPerPersonPrice(e.target.value);
+                        console.log(
+                          "Testing getValues",
+                          getValues("total_seat")
+                        );
+
+                        if (getValues("total_seat")) {
+                          let amount =
+                            Number(getValues("total_seat")) *
+                            Number(e.target.value);
+                          setTotalAmount(amount);
+                        } else {
+                          setTotalAmount(0);
+                        }
+                      }}
                     />
                   )}
                 />
@@ -511,9 +559,9 @@ const CreateBooking = () => {
                       type="number"
                       fullWidth
                       margin="normal"
+                      value={totalAmount}
                       inputProps={{ style: { fontSize: 16 } }}
                       InputLabelProps={{ style: { fontSize: 16 } }}
-                      {...field}
                     />
                   )}
                 />
@@ -538,13 +586,9 @@ const CreateBooking = () => {
                       onChange={(e) => {
                         console.log("Testing getValues", field);
                         setDepositAmount(e.target.value);
-                        if (
-                          Number(getValues("total_amount")) >
-                          Number(e.target.value)
-                        ) {
+                        if (totalAmount > Number(e.target.value)) {
                           let amount =
-                            Number(getValues("total_amount")) -
-                            Number(e.target.value);
+                            Number(totalAmount) - Number(e.target.value);
                           setPendingAmount(amount);
                         } else {
                           setPendingAmount(0);
