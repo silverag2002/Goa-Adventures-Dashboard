@@ -2,7 +2,7 @@ export class URLConstants {}
 
 //URLConstants.BASE_URL = "http://localhost:4000";
 
-URLConstants.BASE_URL = "https://backend.goaadventure.in";
+//URLConstants.BASE_URL = "https://backend.goaadventure.in";
 // URLConstants.BASE_URL =
 //   "http://ec2-65-2-166-56.ap-south-1.compute.amazonaws.com:4000";
 // AUTH ROUTES
@@ -22,9 +22,11 @@ URLConstants.manualbookings = () =>
 URLConstants.staff = () => `${URLConstants.BASE_URL}/v1/staff/`;
 
 //booking routes
-
 URLConstants.modifyBookings = (bookingId) =>
   `${URLConstants.BASE_URL}/v1/booking/${bookingId}`;
+
+URLConstants.modifyManualBookings = (bookingId) =>
+  `${URLConstants.BASE_URL}/v1/manual-booking/${bookingId}`;
 
 //manual booking routes
 

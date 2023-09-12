@@ -123,7 +123,7 @@ const Bookings = () => {
   function deleteBooking(bookingId) {
     setLoaded(false);
     axiosInstance
-      .delete(URLConstants.modifyBookings(bookingId))
+      .delete(URLConstants.modifyManualBookings(bookingId))
       .then((response) => {
         setLoaded(true);
         console.log("Response form bookings", response);
