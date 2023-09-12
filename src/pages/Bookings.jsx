@@ -72,7 +72,7 @@ const Bookings = () => {
   const { client, setClient } = useContext(ClientContext);
 
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
-
+  const isTable = useMediaQuery(theme.breakpoints.down("md"));
   // values to be sent to the backend
   const [value, setValue] = React.useState(1);
   const [page, setPage] = useState(0);
@@ -255,20 +255,21 @@ const Bookings = () => {
         moment(params.row.booking_date).format("DD-MM-yyyy"),
     },
     {
-      field: "staff_id",
-      headerName: "Staff ID",
+      field: "staff_name",
+      headerName: "Staff",
       hide: false,
     },
     {
       field: "customer_name",
       headerName: "Customer Name",
       hide: false,
-      width: 150,
+      width: 120,
     },
 
     {
       field: "customer_mobile_number",
-      headerName: "Mobile Number",
+      headerName: "Mobile No",
+      width: 120,
       hide: false,
     },
     {
@@ -277,13 +278,22 @@ const Bookings = () => {
       hide: false,
       minWidth: 200,
     },
-    { field: "category", headerName: "Category", hide: true },
+    {
+      field: "category",
+      headerName: "Category",
+      hide: true,
+    },
     { field: "subcategory", headerName: "Sub Category", hide: true },
     { field: "total_seat", headerName: "Total Seat", hide: true },
     { field: "price_per_person", headerName: "Per Person ₹", hide: true },
     { field: "total_amount", headerName: "Total Amount", hide: true },
     { field: "deposit_amount", headerName: "Deposit Amount", hide: true },
-    { field: "pendingamount", headerName: "Pending Amount", hide: false },
+    {
+      field: "pending_amount",
+      headerName: "Pending Amount",
+      width: 120,
+      hide: false,
+    },
     { field: "start_date", headerName: "Start Date", hide: false },
     { field: "end_date", headerName: "End Date", hide: true },
     { field: "meeting_point", headerName: "Meeting Point", hide: true },
@@ -302,7 +312,7 @@ const Bookings = () => {
     {
       field: "action",
       headerName: "Action",
-      width: 175,
+      width: 100,
       renderCell: renderDetailsButton,
     },
   ];
@@ -428,11 +438,14 @@ const Bookings = () => {
                   },
                   "& .MuiDataGrid-cell": {
                     borderBottom: "none",
+                    fontSize: "0.9rem",
+                    color: theme.palette.neutral.grey900,
                   },
                   "& .MuiDataGrid-columnHeaders": {
-                    backgroundColor: theme.palette.background.default,
-                    color: theme.palette.neutral.grey700,
+                    backgroundColor: theme.palette.primary.light,
+                    color: theme.palette.neutral.grey900,
                     borderBottom: "none",
+                    fontSize: "0.8rem",
                   },
                   "& .MuiDataGrid-virtualScroller": {
                     backgroundColor: theme.palette.neutral.main,
