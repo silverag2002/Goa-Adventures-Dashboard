@@ -6,6 +6,7 @@ import {
   Tabs,
   Tab,
   IconButton,
+  Typography,
   useMediaQuery,
 } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
@@ -23,6 +24,7 @@ import Helmet from "components/Helmet/Helmet";
 import { useClient } from "../base/hooks/useClient";
 import { AiOutlineDelete, AiOutlineEdit } from "react-icons/ai";
 import Wrapper from "components/UI/Wrapper";
+import moment from "moment/moment";
 
 function CustomTabPanel(props) {
   const client = useClient();
@@ -72,7 +74,7 @@ const Bookings = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   // values to be sent to the backend
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = React.useState(1);
   const [page, setPage] = useState(0);
   const [pageSize, setPageSize] = useState(20);
   const [sort, setSort] = useState({});
@@ -139,6 +141,57 @@ const Bookings = () => {
     setValue(newValue);
   };
 
+  //Manual Booking Status
+  const renderStatus = (params) => {
+    switch (params.value) {
+      case 1:
+        return (
+          <Button
+            variant="Contained"
+            sx={{
+              backgroundColor: "green",
+              color: theme.palette.neutral.white,
+            }}
+          >
+            Confirmed
+          </Button>
+        );
+      case 2:
+        return (
+          <Button
+            variant="Contained"
+            sx={{ backgroundColor: "red", color: theme.palette.neutral.white }}
+          >
+            Cancelled
+          </Button>
+        );
+      case 3:
+        return (
+          <Button
+            variant="Contained"
+            sx={{
+              backgroundColor: theme.palette.primary.main,
+              color: theme.palette.neutral.white,
+            }}
+          >
+            Enquiry
+          </Button>
+        );
+      case 4:
+        return (
+          <Button
+            variant="Contained"
+            sx={{
+              backgroundColor: theme.palette.secondary.purple500,
+              color: theme.palette.neutral.white,
+            }}
+          >
+            Refund
+          </Button>
+        );
+    }
+  };
+
   const renderDetailsButton = (params) => {
     let bookingInfo = manualBookings.filter((book) => (book.id = params.id));
 
@@ -180,6 +233,10 @@ const Bookings = () => {
     { field: "reportingTime", headerName: "Reporting Time" },
     { field: "paymentMode", headerName: "Payment Mode" },
     { field: "partialPaid", headerName: "Paying Full" },
+    {
+      field: "booking_status",
+      headerName: "Booking Status",
+    },
     // {
     //   field: "action",
     //   headerName: "Action",
@@ -193,6 +250,13 @@ const Bookings = () => {
     {
       field: "booking_date",
       headerName: "Booking Date",
+      hide: false,
+      renderCell: (params) =>
+        moment(params.row.booking_date).format("DD-MM-yyyy"),
+    },
+    {
+      field: "staff_id",
+      headerName: "Staff ID",
       hide: false,
     },
     {
@@ -214,18 +278,27 @@ const Bookings = () => {
       minWidth: 200,
     },
     { field: "category", headerName: "Category", hide: true },
-    { field: "subcategory", headerName: "Sub Category", hide: false },
+    { field: "subcategory", headerName: "Sub Category", hide: true },
     { field: "total_seat", headerName: "Total Seat", hide: true },
-    { field: "total_amount", headerName: "Total Amount", hide: false },
+    { field: "price_per_person", headerName: "Per Person ₹", hide: true },
+    { field: "total_amount", headerName: "Total Amount", hide: true },
     { field: "deposit_amount", headerName: "Deposit Amount", hide: true },
-    { field: "pendingamount", headerName: "Pending Amount", hide: true },
+    { field: "pendingamount", headerName: "Pending Amount", hide: false },
     { field: "start_date", headerName: "Start Date", hide: false },
-    { field: "end_date", headerName: "End Date", hide: false },
+    { field: "end_date", headerName: "End Date", hide: true },
     { field: "meeting_point", headerName: "Meeting Point", hide: true },
     { field: "destination_location", headerName: "Destination", hide: true },
     { field: "reporting_time", headerName: "Reporting Time", hide: true },
     { field: "payment_mode", headerName: "Payment Mode", hide: true },
     { field: "partial_full", headerName: "Paying Full", hide: true },
+    { field: "hotel_name", headerName: "Hotel Name", hide: true },
+    {
+      field: "booking_status",
+      headerName: "Booking Status",
+      width: 150,
+      renderCell: renderStatus,
+      hide: false,
+    },
     {
       field: "action",
       headerName: "Action",
