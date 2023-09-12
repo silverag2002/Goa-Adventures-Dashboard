@@ -121,7 +121,9 @@ const CreateBooking = () => {
       .get(URLConstants.staff())
       .then((res) => {
         console.log("Response from staff", res);
-
+        if (clientDataAssignment?.staff_id) {
+          setStaffId(clientDataAssignment?.staff_id);
+        }
         setStaff(res);
         setLoaded(true);
       })
@@ -147,6 +149,8 @@ const CreateBooking = () => {
     //   });
 
     setValue("product_name", clientDataAssignment?.product_name);
+
+    setPerPersonPrice(clientDataAssignment.price_per_person);
     setValue(
       "destination_location",
       clientDataAssignment?.destination_location
@@ -162,6 +166,8 @@ const CreateBooking = () => {
     setDestLocation(clientDataAssignment?.destination_location);
     setDepositAmount(clientDataAssignment?.deposit_amount);
     setPendingAmount(clientDataAssignment?.pending_amount);
+    setCategoryId(clientDataAssignment?.category_id);
+    setSubCategoryId(clientDataAssignment?.sub_category_id);
     setMobileNumber(clientDataAssignment?.customer_mobile_number);
     setCustomerId(clientDataAssignment?.customer_id);
     setTotalAmount(clientDataAssignment?.total_amount);
@@ -320,6 +326,11 @@ const CreateBooking = () => {
                     }}
                     inputProps={{ style: { fontSize: 16 } }}
                     InputLabelProps={{ style: { fontSize: 16 } }}
+                    defaultValue={
+                      clientDataAssignment?.staff_id
+                        ? clientDataAssignment?.staff_id
+                        : ""
+                    }
                   >
                     {staff.map((cust) => (
                       <MenuItem key={cust.id} value={cust.id}>
