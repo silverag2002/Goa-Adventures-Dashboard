@@ -193,7 +193,8 @@ const Bookings = () => {
   };
 
   const renderDetailsButton = (params) => {
-    let bookingInfo = manualBookings.filter((book) => (book.id = params.id));
+    let bookingInfo = manualBookings.filter((book) => book.id == params.row.id);
+    console.log("Booking fixed", params);
 
     return (
       <Box sx={{ display: "flex", gap: "0.8rem" }}>
