@@ -169,7 +169,7 @@ const CreateBooking = () => {
     setCategoryId(clientDataAssignment?.category_id);
     setSubCategoryId(clientDataAssignment?.sub_category_id);
     setMobileNumber(clientDataAssignment?.customer_mobile_number);
-    setCustomerId(clientDataAssignment?.customer_id);
+    setCustomerId(clientDataAssignment?.customer_name);
     setTotalAmount(clientDataAssignment?.total_amount);
     setValue("start_date", clientDataAssignment?.start_date);
     setValue("end_date", clientDataAssignment?.end_date);
@@ -234,8 +234,8 @@ const CreateBooking = () => {
     }
     data.booked_by = "SUPER_ADMIN";
 
-    data.customer_mobile_number = mobileNumber;
-    data.customer_id = customerId;
+    // data.customer_mobile_number = mobileNumber;
+    // data.customer_id = customerId;
 
     console.log("Data entered", data);
     if (clientDataAssignment?.id) {
@@ -341,7 +341,7 @@ const CreateBooking = () => {
                 )}
               />
             </Grid>
-            <Grid item xs={12} md={3}>
+            {/* <Grid item xs={12} md={3}>
               <Box>
                 <Controller
                   name="customer_id"
@@ -383,8 +383,51 @@ const CreateBooking = () => {
                   )}
                 />
               </Box>
+            </Grid> */}
+
+            <Grid item xs={12} md={3}>
+              <Box>
+                <Controller
+                  name="customer_name"
+                  control={control}
+                  render={({ field }) => (
+                    <TextField
+                      id="customer_name"
+                      label="Customer Name"
+                      variant="outlined"
+                      type="text"
+                      fullWidth
+                      margin="normal"
+                      inputProps={{ style: { fontSize: 16 } }}
+                      InputLabelProps={{ style: { fontSize: 16 } }}
+                      {...field}
+                    />
+                  )}
+                />
+              </Box>
             </Grid>
             <Grid item xs={12} md={3}>
+              <Box>
+                <Controller
+                  name="customer_mobile_number"
+                  control={control}
+                  render={({ field }) => (
+                    <TextField
+                      id="customer_mobile_number"
+                      label="Customer Mobile Number"
+                      variant="outlined"
+                      type="text"
+                      fullWidth
+                      margin="normal"
+                      inputProps={{ style: { fontSize: 16 } }}
+                      InputLabelProps={{ style: { fontSize: 16 } }}
+                      {...field}
+                    />
+                  )}
+                />
+              </Box>
+            </Grid>
+            {/* <Grid item xs={12} md={3}>
               <Box>
                 <Controller
                   name="customer_mobile_number"
@@ -404,7 +447,7 @@ const CreateBooking = () => {
                   )}
                 />
               </Box>
-            </Grid>
+            </Grid> */}
 
             <Grid item xs={12} md={6}>
               <Box>
