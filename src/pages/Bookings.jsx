@@ -25,6 +25,7 @@ import { useClient } from "../base/hooks/useClient";
 import { AiOutlineDelete, AiOutlineEdit } from "react-icons/ai";
 import Wrapper from "components/UI/Wrapper";
 import moment from "moment/moment";
+import { format } from "date-fns";
 
 function CustomTabPanel(props) {
   const client = useClient();
@@ -258,13 +259,14 @@ const Bookings = () => {
     {
       field: "staff_name",
       headerName: "Staff",
+      width: 150,
       hide: false,
     },
     {
       field: "customer_name",
       headerName: "Customer Name",
+      width: 175,
       hide: false,
-      width: 120,
     },
 
     {
@@ -295,13 +297,28 @@ const Bookings = () => {
       width: 120,
       hide: false,
     },
-    { field: "start_date", headerName: "Start Date", hide: false },
-    { field: "end_date", headerName: "End Date", hide: true },
+
+    {
+      field: "start_date",
+      headerName: "Start Date",
+      width: 120,
+      hide: false,
+      type: "date",
+      renderCell: (params) =>
+        moment(params.row.start_date).format("DD-MM-yyyy"),
+    },
+    {
+      field: "end_date",
+      headerName: "End Date",
+      width: 100,
+      hide: true,
+      renderCell: (params) => moment(params.row.end_date).format("DD-MM-yyyy"),
+    },
     { field: "meeting_point", headerName: "Meeting Point", hide: true },
     { field: "destination_location", headerName: "Destination", hide: true },
     { field: "reporting_time", headerName: "Reporting Time", hide: true },
     { field: "payment_mode", headerName: "Payment Mode", hide: true },
-    { field: "partial_full", headerName: "Paying Full", hide: true },
+    { field: "paying_full", headerName: "Paying Full", hide: true },
     { field: "hotel_name", headerName: "Hotel Name", hide: true },
     {
       field: "booking_status",
@@ -475,7 +492,7 @@ const Bookings = () => {
                   page={page}
                   pageSize={pageSize}
                   paginationMode="server"
-                  sortingMode="server"
+                  sortingMode="client"
                   onPageChange={(newPage) => setPage(newPage)}
                   onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
                   onSortModelChange={(newSortModel) => setSort(...newSortModel)}

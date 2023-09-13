@@ -168,12 +168,16 @@ const CreateBooking = () => {
     setPendingAmount(clientDataAssignment?.pending_amount);
     setCategoryId(clientDataAssignment?.category_id);
     setSubCategoryId(clientDataAssignment?.sub_category_id);
-    setMobileNumber(clientDataAssignment?.customer_mobile_number);
-    setCustomerId(clientDataAssignment?.customer_name);
+    setValue(
+      "customer_mobile_number",
+      clientDataAssignment?.customer_mobile_number
+    );
+    setValue("customer_name", clientDataAssignment?.customer_name);
     setTotalAmount(clientDataAssignment?.total_amount);
     setValue("start_date", clientDataAssignment?.start_date);
     setValue("end_date", clientDataAssignment?.end_date);
     setValue("payment_mode", clientDataAssignment?.payment_mode);
+    setValue("paying_full", clientDataAssignment?.paying_full);
     setValue("reporting_time", clientDataAssignment?.reporting_time);
     setValue("meeting_point", clientDataAssignment?.meeting_point);
     setValue("note", clientDataAssignment?.note);
