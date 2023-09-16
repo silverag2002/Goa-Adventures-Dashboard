@@ -25,11 +25,38 @@ import Wrapper from "components/UI/Wrapper";
 const AddQuotation = () => {
   const client = useClient();
   const navigate = useNavigate();
+  const [totalAmount, setTotalAmount] = useState("");
+  const [childPrice, setChildPrice] = useState("");
+  const [adultPrice, setAdultPrice] = useState("");
   useEffect(() => {
     if (client?.client?.role == undefined || client?.client?.role == 2) {
       navigate("/");
     }
   }, []);
+
+  const getDaysBtwDate = (startDate, endDate) => {
+    var one_day = 1000 * 60 * 60 * 24;
+
+    // To set present_dates to two variables
+    var present_date = new Date(startDate);
+
+    // 0-11 is Month in JavaScript
+    var end_day = new Date(endDate);
+
+    // To Calculate next year's Christmas if passed already.
+    if (present_date.getMonth() == 11 && present_date.getdate() > 25)
+      end_day.setFullYear(end_day.getFullYear() + 1);
+
+    // To Calculate the result in milliseconds and then converting into days
+    var Result =
+      Math.round(end_day.getTime() - present_date.getTime()) / one_day;
+
+    // To remove the decimals from the (Result) resulting days value
+    var finalDays = Result.toFixed(0);
+
+    //To display the final_result value
+    return Number(finalDays) + 1;
+  };
   const [itinerary, setItinerary] = useState("");
   const theme = useTheme();
   const editor = useRef();
@@ -39,6 +66,7 @@ const AddQuotation = () => {
     register,
     control,
     setValue,
+    getValues,
     formState: { errors },
   } = useForm({});
 
@@ -50,7 +78,19 @@ const AddQuotation = () => {
     setItinerary(content);
   };
 
-  const onSubmit = () => {};
+  const onSubmit = (data) => {
+    data.itinerary = itinerary;
+    data.adult_amount = adultPrice;
+    data.total_amount = totalAmount;
+    data.child_amount = childPrice;
+    if (data.check_in && data.check_out) {
+      let numOfdays = Number(getDaysBtwDate(data.check_in, data.check_out));
+      data.days = numOfdays + 1;
+      data.nights = numOfdays + 2;
+    }
+
+    console.log("Data enterd ", data);
+  };
   const onError = (errors) => console.log(errors);
 
   return (
@@ -69,11 +109,11 @@ const AddQuotation = () => {
             <Grid container spacing={2}>
               <Grid item xs={12} sm={12} md={4} lg={4}>
                 <Controller
-                  name="fullname"
+                  name="name"
                   control={control}
                   render={({ field }) => (
                     <TextField
-                      id="fullname"
+                      id="name"
                       label="Full Name"
                       variant="filled"
                       placeholder=""
@@ -87,11 +127,11 @@ const AddQuotation = () => {
               </Grid>
               <Grid item xs={12} sm={12} md={4} lg={4}>
                 <Controller
-                  name="mobileNumber"
+                  name="mobile_number"
                   control={control}
                   render={({ field }) => (
                     <TextField
-                      id="mobileNumber"
+                      id="mobile_number"
                       label="Mobile Number"
                       variant="filled"
                       placeholder=""
@@ -105,11 +145,11 @@ const AddQuotation = () => {
               </Grid>
               <Grid item xs={12} sm={12} md={4} lg={4}>
                 <Controller
-                  name="emailId"
+                  name="email"
                   control={control}
                   render={({ field }) => (
                     <TextField
-                      id="emailId"
+                      id="email"
                       label="Email ID"
                       variant="filled"
                       placeholder=""
@@ -141,11 +181,11 @@ const AddQuotation = () => {
               </Grid>
               <Grid item xs={12} sm={12} md={4} lg={4}>
                 <Controller
-                  name="hotel"
+                  name="hotel_name"
                   control={control}
                   render={({ field }) => (
                     <TextField
-                      id="hotel"
+                      id="hotel_name"
                       label="Hotel Name"
                       variant="filled"
                       placeholder=""
@@ -159,7 +199,7 @@ const AddQuotation = () => {
               </Grid>
               <Grid item xs={12} sm={12} md={4} lg={4}>
                 <Controller
-                  name="checkIn"
+                  name="check_in"
                   control={control}
                   render={({ field }) => (
                     <TextField
@@ -178,7 +218,7 @@ const AddQuotation = () => {
               </Grid>
               <Grid item xs={12} sm={12} md={4} lg={4}>
                 <Controller
-                  name="checkOut"
+                  name="check_out"
                   control={control}
                   render={({ field }) => (
                     <TextField
@@ -266,7 +306,25 @@ const AddQuotation = () => {
                       fullWidth
                       margin="normal"
                       size="small"
-                      {...field}
+                      value={adultPrice}
+                      onChange={(e) => {
+                        setAdultPrice(e.target.value);
+                        let adultPric = e.target.value;
+
+                        if (adultPric > 0 && getValues("adult")) {
+                          let amount =
+                            Number(adultPric) * Number(getValues("adult"));
+                          console.log("Values of amoutn", Number(adultPric));
+                          if (childPrice.length > 0 && getValues("child")) {
+                            amount += Number(childPrice) * getValues("child");
+                            setTotalAmount(amount);
+                          } else {
+                            setTotalAmount(amount);
+                          }
+                        } else {
+                          setTotalAmount(0);
+                        }
+                      }}
                     />
                   )}
                 />
@@ -284,7 +342,36 @@ const AddQuotation = () => {
                       fullWidth
                       margin="normal"
                       size="small"
-                      {...field}
+                      value={childPrice}
+                      onChange={(e) => {
+                        console.log("Testing getValues", field);
+                        setChildPrice(e.target.value);
+                        let childPric = e.target.value;
+                        if (childPric > 0 && getValues("child")) {
+                          let amount =
+                            Number(childPric) * Number(getValues("child"));
+                          console.log(
+                            "Vlaue of total amount",
+                            totalAmount.length
+                          );
+                          console.log(
+                            "Vlaue of adult amount",
+                            adultPrice.length
+                          );
+                          console.log(
+                            "Vlaue of getvalue adult",
+                            getValues("adult")
+                          );
+                          if (adultPrice.length > 0 && getValues("adult")) {
+                            amount += Number(adultPrice) * getValues("adult");
+                            setTotalAmount(amount);
+                          } else {
+                            setTotalAmount(amount);
+                          }
+                        } else {
+                          setTotalAmount(0);
+                        }
+                      }}
                     />
                   )}
                 />
@@ -302,7 +389,7 @@ const AddQuotation = () => {
                       fullWidth
                       margin="normal"
                       size="small"
-                      {...field}
+                      value={totalAmount}
                     />
                   )}
                 />
@@ -365,7 +452,7 @@ const AddQuotation = () => {
               </Grid>
               <Grid item xs={12} sm={12} md={4} lg={4}>
                 <Controller
-                  name="cancellationPolicy"
+                  name="cancellation_policy"
                   control={control}
                   render={({ field }) => (
                     <TextField
