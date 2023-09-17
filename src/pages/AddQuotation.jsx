@@ -82,10 +82,11 @@ const AddQuotation = () => {
   };
 
   const onSubmit = (data) => {
+    setLoaded(false);
     data.itinerary = itinerary;
-    data.adult_amount = adultPrice;
+    data.adult_price = adultPrice;
     data.total_amount = totalAmount;
-    data.child_amount = childPrice;
+    data.child_price = childPrice;
     if (data.check_in && data.check_out) {
       let numOfdays = Number(getDaysBtwDate(data.check_in, data.check_out));
       data.days = numOfdays + 1;
