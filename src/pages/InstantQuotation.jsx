@@ -7,6 +7,9 @@ import DataGridCustomToolbar from "components/DataGridCustomToolbar";
 import Helmet from "components/Helmet/Helmet";
 import { useClient } from "../base/hooks/useClient";
 import Wrapper from "components/UI/Wrapper";
+import { axiosInstance } from "../base/api/axios.util";
+import { URLConstants } from "../base/api/url.constants";
+import Loader from "react-loader";
 
 const InstantQuotation = () => {
   const [page, setPage] = useState(0);
@@ -14,6 +17,8 @@ const InstantQuotation = () => {
   const [sort, setSort] = useState({});
   const [search, setSearch] = useState("");
   const [searchInput, setSearchInput] = useState("");
+  const [loaded, setLoaded] = useState(true);
+  const [quotation, setQuotation] = useState([]);
 
   const theme = useTheme();
   const client = useClient();
@@ -21,16 +26,29 @@ const InstantQuotation = () => {
   useEffect(() => {
     if (client?.client?.role == undefined || client?.client?.role == 2) {
       navigate("/");
+    } else {
+      setLoaded(false);
+      axiosInstance
+        .get(URLConstants.quotation())
+        .then((response) => {
+          setLoaded(true);
+          console.log("Response form setQuotation", response);
+          setQuotation(response);
+        })
+        .catch((err) => {
+          setLoaded(true);
+          console.log(err);
+        });
     }
   }, []);
 
   const columns = [
     { field: "id", headerName: "ID" },
     { field: "name", headerName: "Customer Name" },
-    { field: "mobileNumber", headerName: "Mobile No" },
-    { field: "emailId", headerName: "Email ID" },
+    { field: "mobile_number", headerName: "Mobile No" },
+    { field: "email", headerName: "Email ID" },
     { field: "title", headerName: "Quotation Title" },
-    { field: "hotel", headerName: "Hotel Name" },
+    { field: "hotel_name", headerName: "Hotel Name" },
     { field: "adults", headerName: "Adults" },
     { field: "child", headerName: "Child" },
     { field: "rooms", headerName: "Rooms" },
@@ -91,7 +109,7 @@ const InstantQuotation = () => {
         >
           <DataGrid
             getRowId={(rows) => rows.id}
-            rows={rows}
+            rows={quotation}
             columns={columns}
             // rowCount={(data && data.total) || 0}
             rowsPerPageOptions={[20, 50, 100]}
@@ -110,6 +128,29 @@ const InstantQuotation = () => {
           />
         </Box>
       </Wrapper>
+      <div className="spinner">
+        <Loader
+          loaded={loaded}
+          lines={13}
+          length={20}
+          width={10}
+          radius={30}
+          corners={1}
+          rotate={0}
+          direction={1}
+          color="#000"
+          speed={1}
+          trail={60}
+          shadow={false}
+          hwaccel={false}
+          className="spinner"
+          zIndex={2e9}
+          top="50%"
+          left="50%"
+          scale={1.0}
+          loadedClassName="loadedContent"
+        />
+      </div>
     </Helmet>
   );
 };

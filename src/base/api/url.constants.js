@@ -19,6 +19,9 @@ URLConstants.bookings = () => `${URLConstants.BASE_URL}/v1/booking/`;
 URLConstants.manualbookings = () =>
   `${URLConstants.BASE_URL}/v1/manual-booking/`;
 URLConstants.staff = () => `${URLConstants.BASE_URL}/v1/staff/`;
+//quotation routes
+
+URLConstants.quotation = () => `${URLConstants.BASE_URL}/v1/quotation/`;
 
 //booking routes
 URLConstants.modifyBookings = (bookingId) =>

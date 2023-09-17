@@ -4,6 +4,8 @@ import { useForm, Controller } from "react-hook-form";
 import JoditEditor from "jodit-react";
 import Helmet from "components/Helmet/Helmet";
 import { useNavigate } from "react-router-dom";
+import { axiosInstance } from "../base/api/axios.util";
+import { URLConstants } from "../base/api/url.constants";
 import {
   Box,
   Grid,
@@ -25,6 +27,7 @@ import Wrapper from "components/UI/Wrapper";
 const AddQuotation = () => {
   const client = useClient();
   const navigate = useNavigate();
+  const [loaded, setLoaded] = useState(true);
   const [totalAmount, setTotalAmount] = useState("");
   const [childPrice, setChildPrice] = useState("");
   const [adultPrice, setAdultPrice] = useState("");
@@ -90,6 +93,32 @@ const AddQuotation = () => {
     }
 
     console.log("Data enterd ", data);
+
+    // if (clientDataAssignment?.id) {
+    //   axiosInstance
+    //     .put(URLConstants.editQuotation(clientDataAssignment?.id), data)
+    //     .then((res) => {
+    //       setLoaded(true);
+    //       console.log("Responsse form booking post method", res);
+    //       navigate("/bookings");
+    //     })
+    //     .catch((err) => {
+    //       setLoaded(true);
+    //       console.log("error", err);
+    //     });
+    // } else {
+    axiosInstance
+      .post(URLConstants.quotation(), data)
+      .then((res) => {
+        setLoaded(true);
+        console.log("Responsse form booking post method", res);
+        navigate("/instant-quotation");
+      })
+      .catch((err) => {
+        setLoaded(true);
+        console.log("error", err);
+      });
+    // }
   };
   const onError = (errors) => console.log(errors);
 
@@ -456,7 +485,7 @@ const AddQuotation = () => {
                   control={control}
                   render={({ field }) => (
                     <TextField
-                      id="cancellationPolicy"
+                      id="cancellation_policy"
                       label="Cancellation Policy"
                       variant="filled"
                       multiline
