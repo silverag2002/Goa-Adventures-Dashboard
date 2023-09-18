@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Box, useTheme } from "@mui/material";
+import { Box, useTheme, Button, ButtonGroup } from "@mui/material";
 import Header from "components/Header";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { DataGrid } from "@mui/x-data-grid";
 import DataGridCustomToolbar from "components/DataGridCustomToolbar";
 import Helmet from "components/Helmet/Helmet";
@@ -10,6 +10,9 @@ import Wrapper from "components/UI/Wrapper";
 import { axiosInstance } from "../base/api/axios.util";
 import { URLConstants } from "../base/api/url.constants";
 import Loader from "react-loader";
+import moment from "moment";
+import { AiOutlineDelete, AiOutlineEdit } from "react-icons/ai";
+import { BsDownload } from "react-icons/bs";
 
 const InstantQuotation = () => {
   const [page, setPage] = useState(0);
@@ -23,6 +26,7 @@ const InstantQuotation = () => {
   const theme = useTheme();
   const client = useClient();
   const navigate = useNavigate();
+
   useEffect(() => {
     if (client?.client?.role == undefined || client?.client?.role == 2) {
       navigate("/");
@@ -42,29 +46,87 @@ const InstantQuotation = () => {
     }
   }, []);
 
-  const columns = [
-    { field: "id", headerName: "ID" },
-    { field: "name", headerName: "Customer Name" },
-    { field: "mobile_number", headerName: "Mobile No" },
-    { field: "email", headerName: "Email ID" },
-    { field: "title", headerName: "Quotation Title" },
-    { field: "hotel_name", headerName: "Hotel Name" },
-    { field: "adults", headerName: "Adults" },
-    { field: "child", headerName: "Child" },
-    { field: "rooms", headerName: "Rooms" },
-  ];
+  console.log("Quotation", quotation);
 
-  const rows = [
+  const renderDetailsButton = (params) => {
+    let quotationInfo = columns.filter((item) => item.id == params.row.id);
+    console.log(params);
+
+    return (
+      <Box sx={{ display: "flex", gap: "0.8rem" }}>
+        <Button
+          size="small"
+          variant="contained"
+          sx={{ backgroundColor: "#4caf50" }}
+        >
+          <AiOutlineEdit fontSize="20" />
+        </Button>
+        <Button
+          size="small"
+          variant="contained"
+          sx={{ backgroundColor: "#f50057" }}
+        >
+          <AiOutlineDelete fontSize="20" />
+        </Button>
+        <Button
+          size="small"
+          variant="contained"
+          sx={{ backgroundColor: "#ff9800" }}
+        >
+          <BsDownload fontSize="20" />
+        </Button>
+      </Box>
+    );
+  };
+
+  const columns = [
+    { field: "id", headerName: "ID", hide: true },
     {
-      id: "1",
-      customerName: "",
-      mobileNumber: "",
-      emailId: "",
-      title: "",
-      hote: "",
-      adults: "",
-      child: "",
-      rooms: "",
+      field: "createdAt",
+      headerName: "Date",
+      hide: false,
+      renderCell: (params) => moment(params.row.createdAt).format("DD-MM-yyy"),
+    },
+
+    { field: "name", headerName: "Customer Name", hide: false, width: 175 },
+    {
+      field: "mobile_number",
+      headerName: "Mobile No",
+      hide: false,
+      width: 120,
+    },
+    { field: "email", headerName: "Email ID", hide: true, width: 175 },
+    { field: "title", headerName: "Quotation Title", hide: false, width: 175 },
+    { field: "hotel_name", headerName: "Hotel Name", hide: false, width: 150 },
+    {
+      field: "check_in",
+      headerName: "Check In",
+      hide: false,
+      renderCell: (params) => moment(params.row.check_in).format("DD-MM-yyy"),
+    },
+    {
+      field: "check_out",
+      headerName: "Check Out",
+      hide: true,
+      renderCell: (params) => moment(params.row.check_out).format("DD-MM-yyy"),
+    },
+    { field: "adult", headerName: "Adults", hide: false },
+    { field: "adult_price", headerName: "Adults Price", hide: true },
+    { field: "child", headerName: "Child", hide: true },
+    { field: "child_price", headerName: "Child Price", hide: true },
+    { field: "rooms", headerName: "Rooms", hide: false },
+    { field: "total_amount", headerName: "Total Amount", hide: false },
+    {
+      field: "updatedAt",
+      headerName: "Updated",
+      hide: true,
+      renderCell: (params) => moment(params.row.updatedAt).format("DD-MM-yyy"),
+    },
+    {
+      field: "action",
+      headerName: "Action",
+      flex: 1,
+      renderCell: renderDetailsButton,
     },
   ];
 
@@ -84,12 +146,15 @@ const InstantQuotation = () => {
               border: "none",
             },
             "& .MuiDataGrid-cell": {
-              borderBottom: "none",
+              borderBottom: `1px solid ${theme.palette.neutral.grey300}`,
+              fontSize: "0.9rem",
+              color: theme.palette.neutral.grey900,
             },
             "& .MuiDataGrid-columnHeaders": {
-              backgroundColor: theme.palette.background.default,
-              color: theme.palette.neutral.grey700,
+              backgroundColor: theme.palette.primary.light,
+              color: theme.palette.neutral.grey900,
               borderBottom: "none",
+              fontSize: "0.8rem",
             },
             "& .MuiDataGrid-virtualScroller": {
               backgroundColor: theme.palette.neutral.main,
@@ -116,6 +181,7 @@ const InstantQuotation = () => {
             pagination
             page={page}
             pageSize={pageSize}
+            density="compact"
             paginationMode="server"
             sortingMode="server"
             onPageChange={(newPage) => setPage(newPage)}

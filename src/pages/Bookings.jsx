@@ -30,6 +30,7 @@ import { format } from "date-fns";
 function CustomTabPanel(props) {
   const client = useClient();
   const navigate = useNavigate();
+
   useEffect(() => {
     if (client?.client?.role == undefined) {
       navigate("/");
@@ -455,7 +456,7 @@ const Bookings = () => {
                     border: "none",
                   },
                   "& .MuiDataGrid-cell": {
-                    borderBottom: "none",
+                    borderBottom: `1px solid ${theme.palette.neutral.grey300}`,
                     fontSize: "0.9rem",
                     color: theme.palette.neutral.grey900,
                   },
