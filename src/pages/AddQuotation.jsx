@@ -91,23 +91,30 @@ const AddQuotation = () => {
       navigate("/");
     }
 
-    setValue("mobile_number", clientDataAssignment.title);
-    setValue("adult", clientDataAssignment.adult);
+    setValue("mobile_number", clientDataAssignment?.mobile_number);
+    setValue("adult", clientDataAssignment?.adult);
 
     setValue("hotel_name", clientDataAssignment.hotel_name);
     if (clientDataAssignment?.itinerary) {
       setItinerary(clientDataAssignment?.itinerary);
     }
     if (clientDataAssignment?.adult_price) {
-      setItinerary(clientDataAssignment?.adult_price);
+      setAdultPrice(clientDataAssignment?.adult_price);
     }
     if (clientDataAssignment?.child_price) {
-      setItinerary(clientDataAssignment?.child_price);
+      setChildPrice(clientDataAssignment?.child_price);
     }
     if (clientDataAssignment?.itinerary) {
-      setItinerary(clientDataAssignment?.total_amount);
+      setTotalAmount(clientDataAssignment?.total_amount);
     }
     setValue("exclusion", clientDataAssignment.exclusion);
+    setValue("rooms", clientDataAssignment.rooms);
+    setValue("email", clientDataAssignment.email);
+    setValue("check_in", clientDataAssignment.check_in);
+    setValue("check_out", clientDataAssignment.check_out);
+    setValue("cancellation_policy", clientDataAssignment.cancellation_policy);
+    setValue("title", clientDataAssignment.title);
+
     setValue("inclusion", clientDataAssignment.inclusion);
   }, []);
 

@@ -49,7 +49,7 @@ const InstantQuotation = () => {
   console.log("Quotation", quotation);
 
   const renderDetailsButton = (params) => {
-    let quotationInfo = columns.filter((item) => item.id == params.row.id);
+    let quotationInfo = quotation.filter((item) => item.id == params.row.id);
     console.log(params);
 
     return (
