@@ -22,6 +22,8 @@ URLConstants.staff = () => `${URLConstants.BASE_URL}/v1/staff/`;
 //quotation routes
 
 URLConstants.quotation = () => `${URLConstants.BASE_URL}/v1/quotation/`;
+URLConstants.editQuotation = (quotationId) =>
+  `${URLConstants.BASE_URL}/v1/quotation/${quotationId}`;
 
 //booking routes
 URLConstants.modifyBookings = (bookingId) =>

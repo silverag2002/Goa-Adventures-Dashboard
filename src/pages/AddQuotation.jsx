@@ -3,7 +3,7 @@ import ReplyOutlinedIcon from "@mui/icons-material/ReplyOutlined";
 import { useForm, Controller } from "react-hook-form";
 import JoditEditor from "jodit-react";
 import Helmet from "components/Helmet/Helmet";
-import { useNavigate } from "react-router-dom";
+
 import { axiosInstance } from "../base/api/axios.util";
 import { URLConstants } from "../base/api/url.constants";
 import Loader from "react-loader";
@@ -24,19 +24,23 @@ import {
 import Header from "components/Header";
 import { useClient } from "../base/hooks/useClient";
 import Wrapper from "components/UI/Wrapper";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const AddQuotation = () => {
   const client = useClient();
   const navigate = useNavigate();
+  const location = useLocation();
   const [loaded, setLoaded] = useState(true);
   const [totalAmount, setTotalAmount] = useState("");
   const [childPrice, setChildPrice] = useState("");
   const [adultPrice, setAdultPrice] = useState("");
-  useEffect(() => {
-    if (client?.client?.role == undefined || client?.client?.role == 2) {
-      navigate("/");
-    }
-  }, []);
+  var clientDataAssignment = {};
+
+  console.log("LOcaltion", location);
+  if (location.state) {
+    clientDataAssignment = location.state.quotation;
+  }
+  console.log("ASsingment issue", clientDataAssignment);
 
   const getDaysBtwDate = (startDate, endDate) => {
     var one_day = 1000 * 60 * 60 * 24;
@@ -82,6 +86,31 @@ const AddQuotation = () => {
     setItinerary(content);
   };
 
+  useEffect(() => {
+    if (client?.client?.role == undefined || client?.client?.role == 2) {
+      navigate("/");
+    }
+
+    setValue("mobile_number", clientDataAssignment.title);
+    setValue("adult", clientDataAssignment.adult);
+
+    setValue("hotel_name", clientDataAssignment.hotel_name);
+    if (clientDataAssignment?.itinerary) {
+      setItinerary(clientDataAssignment?.itinerary);
+    }
+    if (clientDataAssignment?.adult_price) {
+      setItinerary(clientDataAssignment?.adult_price);
+    }
+    if (clientDataAssignment?.child_price) {
+      setItinerary(clientDataAssignment?.child_price);
+    }
+    if (clientDataAssignment?.itinerary) {
+      setItinerary(clientDataAssignment?.total_amount);
+    }
+    setValue("exclusion", clientDataAssignment.exclusion);
+    setValue("inclusion", clientDataAssignment.inclusion);
+  }, []);
+
   const onSubmit = (data) => {
     setLoaded(false);
     data.itinerary = itinerary;
@@ -96,31 +125,31 @@ const AddQuotation = () => {
 
     console.log("Data enterd ", data);
 
-    // if (clientDataAssignment?.id) {
-    //   axiosInstance
-    //     .put(URLConstants.editQuotation(clientDataAssignment?.id), data)
-    //     .then((res) => {
-    //       setLoaded(true);
-    //       console.log("Responsse form booking post method", res);
-    //       navigate("/bookings");
-    //     })
-    //     .catch((err) => {
-    //       setLoaded(true);
-    //       console.log("error", err);
-    //     });
-    // } else {
-    axiosInstance
-      .post(URLConstants.quotation(), data)
-      .then((res) => {
-        setLoaded(true);
-        console.log("Responsse form booking post method", res);
-        navigate("/instant-quotation");
-      })
-      .catch((err) => {
-        setLoaded(true);
-        console.log("error", err);
-      });
-    // }
+    if (clientDataAssignment?.id) {
+      axiosInstance
+        .put(URLConstants.editQuotation(clientDataAssignment?.id), data)
+        .then((res) => {
+          setLoaded(true);
+          console.log("Responsse form booking post method", res);
+          navigate("/instant-quotation");
+        })
+        .catch((err) => {
+          setLoaded(true);
+          console.log("error", err);
+        });
+    } else {
+      axiosInstance
+        .post(URLConstants.quotation(), data)
+        .then((res) => {
+          setLoaded(true);
+          console.log("Responsse form booking post method", res);
+          navigate("/instant-quotation");
+        })
+        .catch((err) => {
+          setLoaded(true);
+          console.log("error", err);
+        });
+    }
   };
   const onError = (errors) => console.log(errors);
 

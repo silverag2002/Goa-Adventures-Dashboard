@@ -54,13 +54,17 @@ const InstantQuotation = () => {
 
     return (
       <Box sx={{ display: "flex", gap: "0.8rem" }}>
-        <Button
-          size="small"
-          variant="contained"
-          sx={{ backgroundColor: "#4caf50" }}
-        >
-          <AiOutlineEdit fontSize="20" />
-        </Button>
+        <Link to="/create-quotation" state={{ quotation: quotationInfo[0] }}>
+          <Button
+            size="small"
+            variant="contained"
+            sx={{ backgroundColor: "#4caf50" }}
+          >
+            <AiOutlineEdit />
+
+            <AiOutlineEdit fontSize="20" />
+          </Button>
+        </Link>
         <Button
           size="small"
           variant="contained"
