@@ -10,7 +10,6 @@ import {
   useMediaQuery,
 } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
-import { useGetTransactionsQuery } from "state/api";
 import Header from "components/Header";
 import DataGridCustomToolbar from "components/DataGridCustomToolbar";
 import { axiosInstance } from "../base/api/axios.util";
@@ -18,14 +17,13 @@ import { URLConstants } from "../base/api/url.constants";
 import Loader from "react-loader";
 import { Link, useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
-import TableSearchBar from "../components/UI/TableSearchBar";
 import { ClientContext } from "../base/contexts/UserContext";
 import Helmet from "components/Helmet/Helmet";
 import { useClient } from "../base/hooks/useClient";
 import { AiOutlineDelete, AiOutlineEdit } from "react-icons/ai";
 import Wrapper from "components/UI/Wrapper";
 import moment from "moment/moment";
-import { format } from "date-fns";
+import { BsDownload } from "react-icons/bs";
 
 function CustomTabPanel(props) {
   const client = useClient();
@@ -199,20 +197,51 @@ const Bookings = () => {
     console.log("Booking fixed", params);
 
     return (
-      <Box sx={{ display: "flex", gap: "0.8rem" }}>
-        {client.role == 0 ? (
-          <IconButton aria-label="delete">
-            <AiOutlineDelete
-              onClick={(e) => deleteBooking(params.row.id)}
-              color={theme.palette.warning.main}
-            />
-          </IconButton>
-        ) : null}
-        <IconButton sx={{ color: "red" }}>
+      <Box sx={{ display: "flex", gap: "0.5rem" }}>
+        <Button
+          size="small"
+          variant="contained"
+          sx={{ backgroundColor: theme.palette.secondary.main }}
+        >
           <Link to="/create-booking" state={{ booking: bookingInfo[0] }}>
-            <AiOutlineEdit />
+            <AiOutlineEdit
+              fontSize="20"
+              color={theme.palette.secondary.purple500}
+            />
           </Link>
-        </IconButton>
+        </Button>
+        <Link
+          to={"#"}
+          // download={params.row.invoice}
+        >
+          <Button
+            size="small"
+            variant="contained"
+            sx={{ backgroundColor: theme.palette.secondary.main }}
+          >
+            <BsDownload
+              fontSize="20"
+              color={theme.palette.secondary.purple500}
+            />
+          </Button>
+        </Link>
+        {client.role == 0 ? (
+          <Button
+            aria-label="delete"
+            size="small"
+            variant="contained"
+            sx={{ backgroundColor: theme.palette.secondary.main }}
+          >
+            <AiOutlineDelete
+              onClick={(e) => {
+                alert("Do you really want to delete?");
+                deleteBooking(params.row.id);
+              }}
+              fontSize="20"
+              color={theme.palette.secondary.purple500}
+            />
+          </Button>
+        ) : null}
       </Box>
     );
   };
@@ -331,7 +360,7 @@ const Bookings = () => {
     {
       field: "action",
       headerName: "Action",
-      width: 100,
+      width: 225,
       renderCell: renderDetailsButton,
     },
   ];
@@ -632,14 +661,14 @@ const Bookings = () => {
         <div className="spinner">
           <Loader
             loaded={loaded}
-            lines={13}
-            length={20}
-            width={10}
-            radius={30}
+            lines={20}
+            length={15}
+            width={5}
+            radius={20}
             corners={1}
             rotate={0}
             direction={1}
-            color="#000"
+            color={theme.palette.primary.main}
             speed={1}
             trail={60}
             shadow={false}

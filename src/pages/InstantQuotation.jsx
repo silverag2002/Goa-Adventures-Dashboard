@@ -38,6 +38,7 @@ const InstantQuotation = () => {
         .then((response) => {
           setLoaded(true);
           setQuotation(response);
+          console.log("Quotation", response);
         })
         .catch((err) => {
           setLoaded(true);
@@ -47,7 +48,7 @@ const InstantQuotation = () => {
   }, []);
 
   //Delete Function
-  // function deleteBooking(quotationId) {
+  // function deleteQuotation(quotationId) {
   //   setLoaded(false);
   //   axiosInstance
   //     .delete(URLConstants.editQuotation(quotationId))
@@ -64,7 +65,7 @@ const InstantQuotation = () => {
 
   const renderDetailsButton = (params) => {
     let quotationInfo = quotation.filter((item) => item.id == params.row.id);
-    console.log(params.row.id);
+
     return (
       <Box sx={{ display: "flex", gap: "0.8rem" }}>
         <Link to="/create-quotation" state={{ quotation: quotationInfo[0] }}>
@@ -147,7 +148,7 @@ const InstantQuotation = () => {
     {
       field: "action",
       headerName: "Action",
-      flex: 1,
+      width: 175,
       renderCell: renderDetailsButton,
     },
   ];
@@ -219,14 +220,14 @@ const InstantQuotation = () => {
       <div className="spinner">
         <Loader
           loaded={loaded}
-          lines={13}
-          length={20}
-          width={10}
-          radius={30}
+          lines={20}
+          length={15}
+          width={5}
+          radius={20}
           corners={1}
           rotate={0}
           direction={1}
-          color="#000"
+          color={theme.palette.primary.main}
           speed={1}
           trail={60}
           shadow={false}

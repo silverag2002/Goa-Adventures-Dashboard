@@ -244,14 +244,14 @@ const Customers = () => {
         <div className="spinner">
           <Loader
             loaded={loaded}
-            lines={13}
-            length={20}
-            width={10}
-            radius={30}
+            lines={20}
+            length={15}
+            width={5}
+            radius={20}
             corners={1}
             rotate={0}
             direction={1}
-            color="#000"
+            color={theme.palette.primary.main}
             speed={1}
             trail={60}
             shadow={false}
