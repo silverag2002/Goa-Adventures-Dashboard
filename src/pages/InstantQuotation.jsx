@@ -45,23 +45,23 @@ const InstantQuotation = () => {
           console.log(err);
         });
     }
-  }, []);
+  }, [reloadPage]);
 
   //Delete Function
-  // function deleteQuotation(quotationId) {
-  //   setLoaded(false);
-  //   axiosInstance
-  //     .delete(URLConstants.editQuotation(quotationId))
-  //     .then((response) => {
-  //       setLoaded(true);
-  //       console.log("Delete Item Quotation", response);
-  //       setReloadPage(!reloadPage);
-  //     })
-  //     .catch((err) => {
-  //       setLoaded(true);
-  //       console.log(err);
-  //     });
-  // }
+  function deleteQuotation(quotationId) {
+    setLoaded(false);
+    axiosInstance
+      .delete(URLConstants.editQuotation(quotationId))
+      .then((response) => {
+        setLoaded(true);
+        console.log("Delete Item Quotation", response);
+        setReloadPage(!reloadPage);
+      })
+      .catch((err) => {
+        setLoaded(true);
+        console.log(err);
+      });
+  }
 
   const renderDetailsButton = (params) => {
     let quotationInfo = quotation.filter((item) => item.id == params.row.id);
@@ -77,14 +77,14 @@ const InstantQuotation = () => {
             <AiOutlineEdit fontSize="20" />
           </Button>
         </Link>
-        {/* <Button
+        <Button
           size="small"
           variant="contained"
           sx={{ backgroundColor: "#f50057" }}
-          onClick={deleteBooking(params.row.id)}
+          onClick={() => deleteQuotation(params.row.id)}
         >
           <AiOutlineDelete fontSize="20" />
-        </Button> */}
+        </Button>
         <Link
           to={params.row.quotationurl}
           download={params.row.quotationurl}
