@@ -22,6 +22,7 @@ const InstantQuotation = () => {
   const [searchInput, setSearchInput] = useState("");
   const [loaded, setLoaded] = useState(true);
   const [quotation, setQuotation] = useState([]);
+  const [reloadPage, setReloadPage] = useState(false);
 
   const theme = useTheme();
   const client = useClient();
@@ -36,7 +37,6 @@ const InstantQuotation = () => {
         .get(URLConstants.quotation())
         .then((response) => {
           setLoaded(true);
-          console.log("Response form setQuotation", response);
           setQuotation(response);
         })
         .catch((err) => {
@@ -46,12 +46,25 @@ const InstantQuotation = () => {
     }
   }, []);
 
-  console.log("Quotation", quotation);
+  //Delete Function
+  function deleteBooking(quotationId) {
+    setLoaded(false);
+    axiosInstance
+      .delete(URLConstants.editQuotation(quotationId))
+      .then((response) => {
+        setLoaded(true);
+        console.log("Delete Item Quotation", response);
+        setReloadPage(!reloadPage);
+      })
+      .catch((err) => {
+        setLoaded(true);
+        console.log(err);
+      });
+  }
 
   const renderDetailsButton = (params) => {
     let quotationInfo = quotation.filter((item) => item.id == params.row.id);
-    console.log(params);
-
+    console.log(params.row.id);
     return (
       <Box sx={{ display: "flex", gap: "0.8rem" }}>
         <Link to="/create-quotation" state={{ quotation: quotationInfo[0] }}>
@@ -60,8 +73,6 @@ const InstantQuotation = () => {
             variant="contained"
             sx={{ backgroundColor: "#4caf50" }}
           >
-            <AiOutlineEdit />
-
             <AiOutlineEdit fontSize="20" />
           </Button>
         </Link>
@@ -69,16 +80,23 @@ const InstantQuotation = () => {
           size="small"
           variant="contained"
           sx={{ backgroundColor: "#f50057" }}
+          onClick={deleteBooking(params.row.id)}
         >
           <AiOutlineDelete fontSize="20" />
         </Button>
-        <Button
-          size="small"
-          variant="contained"
-          sx={{ backgroundColor: "#ff9800" }}
+        <Link
+          to={params.row.quotationurl}
+          download={params.row.quotationurl}
+          target="_blank"
         >
-          <BsDownload fontSize="20" />
-        </Button>
+          <Button
+            size="small"
+            variant="contained"
+            sx={{ backgroundColor: "#ff9800" }}
+          >
+            <BsDownload fontSize="20" />
+          </Button>
+        </Link>
       </Box>
     );
   };
