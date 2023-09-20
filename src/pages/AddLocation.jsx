@@ -224,7 +224,7 @@ const AddLocation = () => {
                 // config={{ theme: "dark" }}
                 getSunEditorInstance={getSunEditorInstance}
                 value={description}
-                onChange={descriptionChangeHandler}
+                onBlur={descriptionChangeHandler}
                 setContents={description}
               />
             </Grid>

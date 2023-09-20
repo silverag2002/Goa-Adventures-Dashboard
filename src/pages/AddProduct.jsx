@@ -509,7 +509,7 @@ const AddProduct = () => {
                     // config={{ theme: "dark" }}
                     getSunEditorInstance={getSunEditorInstance}
                     value={overview}
-                    onChange={handleOverviewChange}
+                    onBlur={handleOverviewChange}
                     setContents={overview}
                   />
                 </Box>

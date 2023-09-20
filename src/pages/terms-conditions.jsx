@@ -82,7 +82,7 @@ const TermsConditions = () => {
               // config={{ theme: "dark" }}
               getSunEditorInstance={getSunEditorInstance}
               value={termsConditions}
-              onChange={privaacyPolicyHandler}
+              onBlur={privaacyPolicyHandler}
               setContents={termsConditions}
             />
           </Box>

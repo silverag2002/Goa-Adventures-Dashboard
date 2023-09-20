@@ -473,7 +473,7 @@ const AddQuotation = () => {
                   // config={{ theme: "dark" }}
                   getSunEditorInstance={getSunEditorInstance}
                   value={itinerary}
-                  onChange={itineraryChangeHandler}
+                  onBlur={itineraryChangeHandler}
                   setContents={itinerary}
                 />
               </Grid>

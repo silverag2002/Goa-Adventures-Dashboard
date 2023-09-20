@@ -82,7 +82,7 @@ const PrivacyPolicry = () => {
               // config={{ theme: "dark" }}
               getSunEditorInstance={getSunEditorInstance}
               value={privacyPolicy}
-              onChange={privaacyPolicyHandler}
+              onBlur={privaacyPolicyHandler}
               setContents={privacyPolicy}
             />
           </Box>
