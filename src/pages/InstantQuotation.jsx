@@ -111,7 +111,7 @@ const InstantQuotation = () => {
       renderCell: (params) => moment(params.row.createdAt).format("DD-MM-yyy"),
     },
 
-    { field: "name", headerName: "Customer Name", hide: false, width: 175 },
+    { field: "name", headerName: "Customer Name", hide: false, width: 150 },
     {
       field: "mobile_number",
       headerName: "Mobile No",
@@ -148,7 +148,7 @@ const InstantQuotation = () => {
     {
       field: "action",
       headerName: "Action",
-      width: 175,
+      width: 250,
       renderCell: renderDetailsButton,
     },
   ];
