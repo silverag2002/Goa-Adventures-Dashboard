@@ -376,20 +376,25 @@ const AddQuotation = () => {
                       value={adultPrice}
                       onChange={(e) => {
                         setAdultPrice(e.target.value);
-                        let adultPric = e.target.value;
+                        const adultPric = e.target.value;
 
                         if (adultPric > 0 && getValues("adult")) {
                           let amount =
                             Number(adultPric) * Number(getValues("adult"));
-                          console.log("Values of amoutn", Number(adultPric));
+
                           if (childPrice.length > 0 && getValues("child")) {
                             amount += Number(childPrice) * getValues("child");
-                            setTotalAmount(amount);
-                          } else {
-                            setTotalAmount(amount);
                           }
+
+                          setTotalAmount(amount);
                         } else {
-                          setTotalAmount(0);
+                          if (childPrice.length > 0 && getValues("child")) {
+                            setTotalAmount(
+                              Number(childPrice) * getValues("child")
+                            );
+                          } else {
+                            setTotalAmount(0);
+                          }
                         }
                       }}
                     />
@@ -411,32 +416,26 @@ const AddQuotation = () => {
                       size="small"
                       value={childPrice}
                       onChange={(e) => {
-                        console.log("Testing getValues", field);
                         setChildPrice(e.target.value);
-                        let childPric = e.target.value;
+                        const childPric = e.target.value;
+
                         if (childPric > 0 && getValues("child")) {
                           let amount =
                             Number(childPric) * Number(getValues("child"));
-                          console.log(
-                            "Vlaue of total amount",
-                            totalAmount.length
-                          );
-                          console.log(
-                            "Vlaue of adult amount",
-                            adultPrice.length
-                          );
-                          console.log(
-                            "Vlaue of getvalue adult",
-                            getValues("adult")
-                          );
+
                           if (adultPrice.length > 0 && getValues("adult")) {
                             amount += Number(adultPrice) * getValues("adult");
-                            setTotalAmount(amount);
-                          } else {
-                            setTotalAmount(amount);
                           }
+
+                          setTotalAmount(amount);
                         } else {
-                          setTotalAmount(0);
+                          if (adultPrice.length > 0 && getValues("adult")) {
+                            setTotalAmount(
+                              Number(adultPrice) * getValues("adult")
+                            );
+                          } else {
+                            setTotalAmount(0);
+                          }
                         }
                       }}
                     />
