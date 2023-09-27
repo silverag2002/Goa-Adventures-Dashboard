@@ -91,22 +91,6 @@ const AddProduct = () => {
     formState: { errors },
   } = useForm({});
 
-  const category = [
-    "Activity",
-    "Tour",
-    "Drama Show",
-    "DJ Night",
-    "Dinner Cruise",
-    "Park Ticket",
-  ];
-
-  const categoryType = [
-    "Scuba Diving",
-    "Watersports",
-    "Bangee Jump",
-    "Sightseeing",
-  ];
-
   var clientDataAssignment = {};
 
   console.log("LOcaltion", location);
@@ -114,6 +98,7 @@ const AddProduct = () => {
     clientDataAssignment = location.state.product;
   }
   console.log("ASsingment issue", clientDataAssignment);
+  console.log("ASsingment issue", clientDataAssignment.gallery[0]);
 
   useEffect(() => {
     setLoaded(false);
@@ -952,7 +937,12 @@ const AddProduct = () => {
                   cols={1}
                   rowHeight={80}
                   gap={4}
-                  sx={{ width: 100, height: 100, paddingTop: "10px" }}
+                  sx={{
+                    width: 100,
+                    height: 100,
+                    marginTop: "1rem",
+                    border: "0px",
+                  }}
                 >
                   <ImageListItem>
                     <img
@@ -963,6 +953,23 @@ const AddProduct = () => {
                     />
                   </ImageListItem>
                 </ImageList>
+                {clientDataAssignment.featured_image && (
+                  <ImageList
+                    cols={1}
+                    rowHeight={80}
+                    gap={4}
+                    sx={{ width: 100, height: 100, paddingTop: "10px" }}
+                  >
+                    <ImageListItem>
+                      <img
+                        src={clientDataAssignment.featured_image}
+                        width="50px"
+                        height="50px"
+                        loading="lazy"
+                      />
+                    </ImageListItem>
+                  </ImageList>
+                )}
               </Grid>
               <Grid item xs={12} md={4}>
                 <Box>
@@ -1001,6 +1008,26 @@ const AddProduct = () => {
                       </ImageListItem>
                     ))}
                   </ImageList>
+                  {clientDataAssignment && (
+                    <ImageList
+                      cols={6}
+                      rowHeight={80}
+                      gap={4}
+                      sx={{ width: 500, marginTop: "1.5rem" }}
+                    >
+                      {clientDataAssignment.gallery?.map((item, index) => (
+                        <ImageListItem key={index}>
+                          <img
+                            src={item}
+                            width="50px"
+                            height="50px"
+                            alt="Gallery Image"
+                            loading="lazy"
+                          />
+                        </ImageListItem>
+                      ))}
+                    </ImageList>
+                  )}
                 </Box>
               </Grid>
               <Grid item xs={12} md={4}>

@@ -250,21 +250,21 @@ const Bookings = () => {
     { field: "id", headerName: "id" },
     { field: "booking_date", headerName: "Booking Date" },
     { field: "customerName", headerName: "Customer Name" },
-    { field: "mobileNumber", headerName: "Mobile Number" },
+    { field: "customer_mobile_number", headerName: "Mobile Number" },
     { field: "itemName", headerName: "Item Name" },
     { field: "category", headerName: "Category" },
     { field: "subCategory", headerName: "Sub Category" },
-    { field: "totalSeat", headerName: "Total Seat" },
-    { field: "totalamount", headerName: "Total Amount" },
-    { field: "depositamount", headerName: "Deposit Amount" },
-    { field: "pendingamount", headerName: "Pending Amount" },
-    { field: "startDate", headerName: "Start Date" },
+    { field: "quantity", headerName: "Total Seat" },
+    { field: "total_amount", headerName: "Total Amount" },
+    { field: "deposit_amount", headerName: "Deposit Amount" },
+    { field: "pending_amount", headerName: "Pending Amount" },
+    { field: "start_date", headerName: "Start Date" },
     { field: "endDate", headerName: "End Date" },
     { field: "meetingPoint", headerName: "Meeting Point" },
-    { field: "destination", headerName: "Destination" },
-    { field: "reportingTime", headerName: "Reporting Time" },
+    { field: "destination_location", headerName: "Destination" },
+    { field: "reporting_time", headerName: "Reporting Time" },
     { field: "paymentMode", headerName: "Payment Mode" },
-    { field: "partialPaid", headerName: "Paying Full" },
+    { field: "partial_full", headerName: "Paying Full" },
     {
       field: "booking_status",
       headerName: "Booking Status",
@@ -364,6 +364,8 @@ const Bookings = () => {
       renderCell: renderDetailsButton,
     },
   ];
+
+  console.log("Online Booking", bookings);
 
   return (
     <Helmet title="Bookings">
@@ -516,12 +518,17 @@ const Bookings = () => {
                   rows={manualBookings}
                   columns={manualColumns}
                   density="compact"
+                  initialState={{
+                    sorting: {
+                      sortModel: [{ field: "booking_date", sort: "desc" }],
+                    },
+                  }}
                   // rowCount={(data && data.total) || 0}
                   rowsPerPageOptions={[20, 50, 100]}
                   pagination
                   page={page}
                   pageSize={pageSize}
-                  paginationMode="server"
+                  paginationMode="client"
                   sortingMode="client"
                   onPageChange={(newPage) => setPage(newPage)}
                   onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
@@ -548,12 +555,15 @@ const Bookings = () => {
                     border: "none",
                   },
                   "& .MuiDataGrid-cell": {
-                    borderBottom: "none",
+                    borderBottom: `1px solid ${theme.palette.neutral.grey300}`,
+                    fontSize: "0.9rem",
+                    color: theme.palette.neutral.grey900,
                   },
                   "& .MuiDataGrid-columnHeaders": {
-                    backgroundColor: theme.palette.background.default,
-                    color: theme.palette.neutral.grey700,
+                    backgroundColor: theme.palette.primary.light,
+                    color: theme.palette.neutral.grey900,
                     borderBottom: "none",
+                    fontSize: "0.8rem",
                   },
                   "& .MuiDataGrid-virtualScroller": {
                     backgroundColor: theme.palette.neutral.main,

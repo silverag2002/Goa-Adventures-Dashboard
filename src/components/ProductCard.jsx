@@ -11,6 +11,7 @@ import {
   CardActions,
   IconButton,
   useMediaQuery,
+  Grid,
 } from "@mui/material";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import EditIcon from "@mui/icons-material/Edit";
@@ -18,6 +19,7 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { Link } from "react-router-dom";
 import { CurrencyRupee, FmdGoodOutlined } from "@mui/icons-material";
+import { BiImages } from "react-icons/bi";
 import { axiosInstance } from "base/api/axios.util";
 
 import { URLConstants } from "../base/api/url.constants";
@@ -64,21 +66,17 @@ const ProductCard = ({ product, setLoaded, setReloadPage }) => {
       <CardMedia
         sx={{ height: `${isMobile ? "120px" : "175px"}` }}
         image={product.featured_image}
-        title="green iguana"
+        title={product.title}
       />
       <CardContent sx={{ padding: "6px" }}>
         <Typography gutterBottom variant="h5" fontSize={14} fontWeight={500}>
           {product.title}
         </Typography>
-
         <Box
           sx={{
             display: "flex",
-            flexDirection: "row",
-            gap: "4px",
-            alignItems: "start",
+            alignItems: "center",
             justifyContent: "space-between",
-            paddingTop: "0.5rem",
           }}
         >
           <Typography
@@ -92,15 +90,17 @@ const ProductCard = ({ product, setLoaded, setReloadPage }) => {
           <Typography
             variant="body1"
             color="text.secondary"
-            sx={{ fontWeight: "500", fontSize: "0.9rem" }}
+            sx={{
+              fontWeight: "500",
+              fontSize: "1rem",
+              fontWeight: 600,
+              display: "flex",
+              alignItems: "center",
+              gap: "0.3rem",
+            }}
           >
-            {product.category === "Activity" ? (
-              <KitesurfingIcon />
-            ) : (
-              <TourIcon />
-            )}
-
-            {product.category}
+            <BiImages />
+            {product.gallery.length}
           </Typography>
         </Box>
       </CardContent>
@@ -161,17 +161,17 @@ const ProductCard = ({ product, setLoaded, setReloadPage }) => {
           <IconButton
             aria-label="edit"
             sx={{
-              backgroundColor: theme.palette.background.alt,
-              color: theme.palette.neutral.main,
+              backgroundColor: theme.palette.secondary.main,
+              color: theme.palette.secondary.purple500,
               fontSize: "inherit",
-              ":hover": {
-                bgcolor: "white",
-                color: theme.palette.neutral.main,
-              },
             }}
             // onClick={() => editProduct(product.id)}
           >
-            <Link to="/add-product" state={{ product: product }}>
+            <Link
+              to="/add-product"
+              state={{ product: product }}
+              style={{ color: theme.palette.secondary.purple500 }}
+            >
               <EditIcon />
             </Link>
           </IconButton>
@@ -180,8 +180,8 @@ const ProductCard = ({ product, setLoaded, setReloadPage }) => {
             onClick={productStatusHandler}
             aria-label="visible"
             sx={{
-              backgroundColor: theme.palette.background.alt,
-              color: theme.palette.neutral.main,
+              backgroundColor: theme.palette.secondary.main,
+              color: theme.palette.secondary.purple500,
               ":hover": {
                 bgcolor: "white",
                 color: theme.palette.neutral.main,
@@ -194,8 +194,8 @@ const ProductCard = ({ product, setLoaded, setReloadPage }) => {
             aria-label="delete"
             variant="contained"
             sx={{
-              backgroundColor: theme.palette.background.alt,
-              color: theme.palette.neutral.main,
+              backgroundColor: theme.palette.secondary.main,
+              color: theme.palette.secondary.purple500,
               ":hover": {
                 bgcolor: "white",
                 color: theme.palette.neutral.main,

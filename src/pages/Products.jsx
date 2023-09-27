@@ -41,6 +41,8 @@ const Products = () => {
         setLoaded(true);
       });
   }, [reloadPage]);
+
+  console.log(products);
   return (
     <Helmet title="Products">
       <Wrapper>
