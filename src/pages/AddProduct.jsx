@@ -98,7 +98,6 @@ const AddProduct = () => {
     clientDataAssignment = location.state.product;
   }
   console.log("ASsingment issue", clientDataAssignment);
-  console.log("ASsingment issue", clientDataAssignment.gallery[0]);
 
   useEffect(() => {
     setLoaded(false);
@@ -260,10 +259,10 @@ const AddProduct = () => {
     console.log("featured", data.featured_image);
     console.log("Data check", data);
     var formData = new FormData();
-    if (data.featured_image[0]?.size) {
+    if (data?.featured_image[0]?.size) {
       formData.append("featured_image", data.featured_image[0]);
     }
-    if (data.gallery[0]?.size) {
+    if (data?.gallery[0]?.size) {
       for (let i = 0; i < data.gallery.length; i++) {
         formData.append("gallery", data.gallery[i]);
       }
