@@ -137,7 +137,7 @@ const InstantQuotation = () => {
     { field: "adult_price", headerName: "Adults Price", hide: true },
     { field: "child", headerName: "Child", hide: true },
     { field: "child_price", headerName: "Child Price", hide: true },
-    { field: "rooms", headerName: "Rooms", hide: false },
+    { field: "rooms", headerName: "Rooms", hide: true },
     { field: "total_amount", headerName: "Total Amount", hide: false },
     {
       field: "updatedAt",
@@ -204,9 +204,14 @@ const InstantQuotation = () => {
             pagination
             page={page}
             pageSize={pageSize}
+            initialState={{
+              sorting: {
+                sortModel: [{ field: "createdAt", sort: "desc" }],
+              },
+            }}
             density="compact"
-            paginationMode="server"
-            sortingMode="server"
+            paginationMode="client"
+            sortingMode="client"
             onPageChange={(newPage) => setPage(newPage)}
             onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
             onSortModelChange={(newSortModel) => setSort(...newSortModel)}

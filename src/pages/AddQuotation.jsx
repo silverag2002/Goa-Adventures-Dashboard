@@ -548,10 +548,15 @@ const AddQuotation = () => {
                 size="large"
                 variant="contained"
                 type="submit"
-                style={{
+                disabled={!loaded}
+                sx={{
                   backgroundColor: theme.palette.secondary.main,
                   color: theme.palette.neutral[600],
                   fontWeight: "bold",
+                  "&.Mui-disabled": {
+                    background: "#eaeaea",
+                    color: "#c0c0c0",
+                  },
                 }}
               >
                 Create Quotation
