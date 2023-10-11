@@ -175,6 +175,14 @@ const AddProduct = () => {
       console.log("ACtivity_Exclusion", newString);
       setValue("exclusion", newString);
     }
+    if (clientDataAssignment?.meeting_point?.length > 0) {
+      let newString = "";
+      for (let i = 0; i < clientDataAssignment?.meeting_point?.length; i++) {
+        newString = newString + clientDataAssignment.meeting_point[i] + "\n";
+      }
+
+      setValue("meeting_point", newString);
+    }
     if (clientDataAssignment?.activity_inclusion?.length > 0) {
       let newString = "";
       for (let i = 0; i < clientDataAssignment.activity_inclusion.length; i++) {
@@ -248,6 +256,7 @@ const AddProduct = () => {
     data.highlight = data.highlight.split("\n");
     data.activity_exclusion = data.exclusion.split("\n");
     data.activity_inclusion = data.inclusion.split("\n");
+    data.meeting_point = data.meeting_point.split("\n");
     delete data.exclusion;
     delete data.inclusion;
     data.country = countrySelected;
@@ -297,6 +306,7 @@ const AddProduct = () => {
       "activity_inclusion",
       JSON.stringify(data.activity_inclusion)
     );
+    formData.append("meeting_point", JSON.stringify(data.meeting_point));
 
     formData.append(
       "activity_exclusion",
@@ -532,6 +542,32 @@ const AddProduct = () => {
                       <TextField
                         id="inclusion"
                         label="Inclusion"
+                        variant="outlined"
+                        multiline
+                        rows={6}
+                        fullWidth
+                        margin="normal"
+                        sx={{
+                          backgroundColor: theme.palette.primary.light,
+                        }}
+                        inputProps={{ style: { fontSize: 16 } }}
+                        InputLabelProps={{ style: { fontSize: 16 } }}
+                        {...field}
+                      />
+                    )}
+                  />
+                </Box>
+              </Grid>
+
+              <Grid item xs={12} md={4}>
+                <Box>
+                  <Controller
+                    name="meeting_point"
+                    control={control}
+                    render={({ field }) => (
+                      <TextField
+                        id="meeting_point"
+                        label="Meeting Point"
                         variant="outlined"
                         multiline
                         rows={6}
