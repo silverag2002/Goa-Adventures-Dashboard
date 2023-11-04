@@ -183,6 +183,15 @@ const AddProduct = () => {
 
       setValue("meeting_point", newString);
     }
+
+    if (clientDataAssignment?.keywords?.length > 0) {
+      let newString = "";
+      for (let i = 0; i < clientDataAssignment?.keywords?.length; i++) {
+        newString = newString + clientDataAssignment.keywords[i] + "\n";
+      }
+
+      setValue("keywords", newString);
+    }
     if (clientDataAssignment?.activity_inclusion?.length > 0) {
       let newString = "";
       for (let i = 0; i < clientDataAssignment.activity_inclusion.length; i++) {
@@ -257,6 +266,7 @@ const AddProduct = () => {
     data.activity_exclusion = data.exclusion.split("\n");
     data.activity_inclusion = data.inclusion.split("\n");
     data.meeting_point = data.meeting_point.split("\n");
+    data.keywords = data.keywords.split("\n");
     delete data.exclusion;
     delete data.inclusion;
     data.country = countrySelected;
@@ -307,6 +317,7 @@ const AddProduct = () => {
       JSON.stringify(data.activity_inclusion)
     );
     formData.append("meeting_point", JSON.stringify(data.meeting_point));
+    formData.append("keywords", JSON.stringify(data.keywords));
 
     formData.append(
       "activity_exclusion",
@@ -568,6 +579,32 @@ const AddProduct = () => {
                       <TextField
                         id="meeting_point"
                         label="Meeting Point"
+                        variant="outlined"
+                        multiline
+                        rows={6}
+                        fullWidth
+                        margin="normal"
+                        sx={{
+                          backgroundColor: theme.palette.primary.light,
+                        }}
+                        inputProps={{ style: { fontSize: 16 } }}
+                        InputLabelProps={{ style: { fontSize: 16 } }}
+                        {...field}
+                      />
+                    )}
+                  />
+                </Box>
+              </Grid>
+
+              <Grid item xs={12} md={4}>
+                <Box>
+                  <Controller
+                    name="keywords"
+                    control={control}
+                    render={({ field }) => (
+                      <TextField
+                        id="keywords"
+                        label="Keywords"
                         variant="outlined"
                         multiline
                         rows={6}
