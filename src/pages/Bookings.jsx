@@ -247,27 +247,49 @@ const Bookings = () => {
   };
 
   const columns = [
-    { field: "id", headerName: "id" },
-    { field: "booking_date", headerName: "Booking Date" },
-    { field: "customerName", headerName: "Customer Name" },
-    { field: "customer_mobile_number", headerName: "Mobile Number" },
-    { field: "itemName", headerName: "Item Name" },
-    { field: "category", headerName: "Category" },
-    { field: "subCategory", headerName: "Sub Category" },
+    { field: "id", headerName: "id", hide: true },
+    {
+      field: "booking_date",
+      headerName: "Booking Date",
+      width: 130,
+      renderCell: (params) =>
+        moment(params.row.booking_date).format("DD-MM-yyyy"),
+    },
+    {
+      field: "customer_name",
+      headerName: "Customer Name",
+      width: 160,
+      resizable: true,
+    },
+    {
+      field: "customer_mobile_number",
+      headerName: "Mobile Number",
+      width: 120,
+    },
+    { field: "product_title", headerName: "Item Name", width: 200 },
+    { field: "category", headerName: "Category", hide: true },
+    { field: "subcategory", headerName: "Sub Category", width: 150 },
+    {
+      field: "start_date",
+      headerName: "Trip Date",
+      width: 120,
+      renderCell: (params) =>
+        moment(params.row.start_date).format("DD-MM-yyyy"),
+    },
     { field: "quantity", headerName: "Total Seat" },
     { field: "total_amount", headerName: "Total Amount" },
     { field: "deposit_amount", headerName: "Deposit Amount" },
     { field: "pending_amount", headerName: "Pending Amount" },
-    { field: "start_date", headerName: "Start Date" },
-    { field: "endDate", headerName: "End Date" },
-    { field: "meetingPoint", headerName: "Meeting Point" },
-    { field: "destination_location", headerName: "Destination" },
-    { field: "reporting_time", headerName: "Reporting Time" },
-    { field: "paymentMode", headerName: "Payment Mode" },
-    { field: "partial_full", headerName: "Paying Full" },
+
+    { field: "meeting_point", headerName: "Meeting Point" },
+    { field: "destination_location", headerName: "Destination", hide: true },
+    { field: "reporting_time", headerName: "Reporting Time", hide: true },
+    { field: "paymentMode", headerName: "Payment Mode", hide: true },
+    { field: "partial_full", headerName: "Paying Full", hide: true },
     {
       field: "booking_status",
       headerName: "Booking Status",
+      hide: true,
     },
     // {
     //   field: "action",
@@ -588,11 +610,16 @@ const Bookings = () => {
                   density="compact"
                   // rowCount={(data && data.total) || 0}
                   rowsPerPageOptions={[20, 50, 100]}
+                  initialState={{
+                    sorting: {
+                      sortModel: [{ field: "booking_date", sort: "desc" }],
+                    },
+                  }}
                   pagination
                   page={page}
                   pageSize={pageSize}
-                  paginationMode="server"
-                  sortingMode="server"
+                  paginationMode="client"
+                  sortingMode="client"
                   onPageChange={(newPage) => setPage(newPage)}
                   onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
                   onSortModelChange={(newSortModel) => setSort(...newSortModel)}
